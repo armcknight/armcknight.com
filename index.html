@@ -7,10 +7,12 @@
 <title>Andrew McKnight</title>
 <meta name="description" content="Aaaaaaall about Andrew McKnight."/>
 <meta name="author" content="Andrew McKnight"/>
-<meta name="copyright" content="Andrew McKnight Copyright (c) 2015"/>
+<meta name="copyright" content="Andrew McKnight Copyright (c) 2016"/>
 <link rel="stylesheet" href="css/foundation.css"/>
 <link rel="stylesheet" href="css/terminal.css">
-<script src="js/vendor/modernizr.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/typed.js"></script>
+<script src="js/armcknight-typed.js"></script>
 </head>
 <body>
 
@@ -35,10 +37,6 @@
 <article>
   <div class="row" style="vertical-align:center;">
     <div class="large-9 columns">
-	  <script src="js/vendor/jquery.js"></script>
-	  <script src="js/vendor/typed.js"></script>
-		 <script src="js/vendor/armcknight-typed.js"></script>
-		   
 		   <div class="window">
 		     <div class="titlebar">
 		       <div class="buttons">
@@ -58,18 +56,18 @@
 	  			<div class="text-body">
 	  				<span id="intro-cursor">$</span> <span id="intro"></span>
 					<br><br>
-	  				<span id="job-cursor" style="visibility: hidden;">$</span> <span id="job"></span>
+	  				<span id="job-cursor" style="display: none;">$</span> <span id="job"></span>
+					<br><br>
+	  				<span id="work-cursor" style="display: none;">$</span> <span id="work"></span>
+					<br><br>
+	  				<span id="prior-work-cursor" style="display: none;">$</span> <span id="prior-work"></span>
+					<br><br>
+	  				<span id="side-work-cursor" style="display: none;">$</span> <span id="side-work"></span>
+					<br><br>
+	  				<span id="interests-cursor" style="display: none;">$</span> <span id="interests"></span>
 	  			</div>
 		     </div>
 		   </div>
-		   
-	  <!-- <span class="element"></span>
-	  <div class="text-editor-wrap">
-	  			<div class="title-bar"><span class="title">About Me &mdash; bash</span></span></div>
-	  			<div class="text-body">
-	  				$ <span id="typed"></span>
-	  			</div>
-	  		</div> -->
     </div>
   </div>
 </article>
@@ -91,7 +89,7 @@
     <p>
       <img src="https://projecteuler.net/profile/amcknight2718.png"/>
 	  <br>
-	  Be my Project Euler friend! 
+	  Be my Project Euler friend:
 	  <br>
 	  <input type="text" onClick="this.setSelectionRange(0, this.value.length)" value="210358_27d447926f0e132931a95a1c025b9841" readonly />
     </p>
@@ -116,23 +114,5 @@
 </div>
 </div>
 </footer>
-<script>
-  document.write('<script src=js/vendor/' +
-  ('__proto__' in {} ? 'zepto' : 'jquery') +
-  '.js><\/script>')
-  </script>
-<script src="../../assets/js/jquery.js"></script>
-<script src="js/foundation.min.js"></script>
-<script>
-    $(document).foundation();
-  </script>
-<script src="../assets/js/templates/jquery.js"></script>
-<script src="../assets/js/templates/foundation.js"></script>
-<script>
-      $(document).foundation();
-
-      var doc = document.documentElement;
-      doc.setAttribute('data-useragent', navigator.userAgent);
-    </script>
 </body>
 </html>
