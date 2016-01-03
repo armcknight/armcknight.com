@@ -1,3 +1,6 @@
+@import url(http://fonts.googleapis.com/css?family=Flamenco:400);
+
+
 span {
   line-height: 9px;
   vertical-align: 50%;
@@ -52,7 +55,7 @@ span {
 
 .close {
   background: #ff5c5c;
-  font-size: 9pt;
+  font-size: 10pt;
   width: 11px;
   height: 11px;
   border: 1px solid #e33e41;
@@ -72,19 +75,7 @@ span {
 .closebutton {
   color: #820005;
   visibility: hidden;
-  font-family:"Helvetica";
-  font-weight:100;
-}
-.closebutton:hover {
-  color: #000;
-  font-weight:100;
-}
-.closebutton:active {
-  color: #000;
-  font-weight:100;
-}
-.closebutton:visited {
-  color: #000;
+  font-family:Flamenco, Helvetica, Monaco, Courier, monospace;
   font-weight:100;
 }
 
@@ -113,6 +104,7 @@ span {
   color: #9a5518;
   visibility: hidden;
   cursor: default;
+  font-family:Helvetica;
 }
 
 .zoom {
@@ -140,6 +132,8 @@ span {
   color: #006519;
   visibility: hidden;
   cursor: default;
+  font-family: Helvetica;
+  font-weight: 100;
 }
 
 /* text editor styles */
