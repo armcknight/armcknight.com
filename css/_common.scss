@@ -1,0 +1,70 @@
+@import 'colors';
+
+@import 'https://fonts.googleapis.com/css?family=Josefin+Sans:100,300,400,700';
+@import 'https://fonts.googleapis.com/css?family=Lato:300';
+
+$fancy-font: 'Josefin Sans', sans-serif;
+$font: 'Lato', sans-serif;
+
+/* links */
+
+a {
+	color: $green;
+}
+
+a:visited {
+	color: $blue-light;
+}
+
+a:hover {
+	color: $green-light;
+}
+
+a:active {
+	color: $blue;
+}
+
+/* text types */
+
+.text {
+	color: $green-black; 
+	font: 14pt $font;
+}
+
+.caption {
+	color: $green-black; 
+	font: italic 10pt $font;
+}
+
+.footnote {
+	color: $green-black; 
+	font: 100 10pt $font;
+}
+
+/* placement within containers */
+
+.left {
+	text-align: left;
+}
+
+.center {
+	text-align: center;
+}
+
+.right {
+	text-align: right;
+}
+
+.top {
+	vertical-align: top;
+}
+
+/* element effects */
+
+.squircle {
+    border-radius: 25px;
+}
+
+.squircle-small {
+    border-radius: 10px;
+}
