@@ -1,0 +1,63 @@
+@import "https://fonts.googleapis.com/css?family=Josefin+Sans:100,300,400,700";
+@import "https://fonts.googleapis.com/css?family=Lato:300";
+/* links */
+a {
+  color: #2D8632; }
+
+a:visited {
+  color: #4358AD; }
+
+a:hover {
+  color: #3DC846; }
+
+a:active {
+  color: #303D74; }
+
+/* text types */
+.text {
+  color: #000100;
+  font: 14pt "Lato", sans-serif; }
+
+.caption {
+  color: #000100;
+  font: italic 10pt "Lato", sans-serif; }
+
+.footnote {
+  color: #000100;
+  font: 100 10pt "Lato", sans-serif; }
+
+/* placement within containers */
+.left {
+  text-align: left; }
+
+.center {
+  text-align: center; }
+
+.right {
+  text-align: right; }
+
+.top {
+  vertical-align: top; }
+
+/* element effects */
+.squircle {
+  border-radius: 25px; }
+
+.squircle-small {
+  border-radius: 10px; }
+
+.fancy-title {
+  font: 400 40pt "Josefin Sans", sans-serif;
+  background: url(../img/title-background-plants.png) no-repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; }
+
+a, a:hover, a:visited, a:active {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 24pt;
+  text-decoration: none; }
+
+body div {
+  width: 500px; }
+
+/*# sourceMappingURL=index.css.map */

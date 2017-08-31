@@ -1,0 +1,28 @@
+@import 'common';
+
+.breadcrumb {
+	font: 300 30pt $fancy-font;
+	color: $yellow;
+	text-decoration: none;
+}
+
+.breadcrumb:hover {
+	color: $green-light;
+	text-decoration: none;
+};
+
+.heading {
+	font: 300 40pt $fancy-font;
+	color: $green;
+}
+
+.subheading {
+	font: 300 22pt $fancy-font;
+}
+
+body {
+	@extend .text;
+	padding: 50px;
+	text-align: justify;
+	text-justify: inter-word;
+}

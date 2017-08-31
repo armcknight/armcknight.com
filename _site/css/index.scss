@@ -1,0 +1,18 @@
+@import 'common';
+
+.fancy-title {
+	font: 400 40pt $fancy-font;
+	background: url(../img/title-background-plants.png) no-repeat;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+a, a:hover, a:visited, a:active {
+	font-family: $fancy-font;
+	font-size: 24pt;
+	text-decoration: none;
+}
+
+body div {
+	width: 500px;
+}
