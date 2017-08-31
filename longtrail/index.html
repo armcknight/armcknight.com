@@ -15,18 +15,12 @@
 	</head>
 	
 	<body>
-		<div id="map" style="height: 400px; width: 100%;"></div>
+		<div id="map" style="height: 100%; width: 100%;"></div>
 		<script>
 			function initMap() {
-				var uluru = {lat: -25.363, lng: 131.044};
-				var map = new google.maps.Map(document.getElementById('map'), {
-					zoom: 4,
-					center: uluru
-				});
-				var marker = new google.maps.Marker({
-					position: uluru,
-					map: map
-				});
+				var vermont = {east: -71.297702, south: 42.684380, west: -73.492216, north: 45.188745};
+				var map = new google.maps.Map(document.getElementById('map'));
+				map.fitBounds(vermont);
 			}
 		</script>
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1ejZMCzslw2AzW86m9cBdrYFh_GiyZxk&callback=initMap">
