@@ -1,2 +1,2 @@
 url: http://armcknight.com
-exclude: [ Rakefile, README.md ]
+exclude: [ Rakefile, README.md, .gitignore ]
