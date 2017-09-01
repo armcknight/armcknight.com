@@ -22,6 +22,11 @@
 			    center: new google.maps.LatLng(-72, 43.5),
 			    zoom: 5,
 				});
+
+				var ne = new google.maps.LatLng(-71.297702, 45.188745);
+				var sw = new google.maps.LatLng(-73.492216, 42.684380);
+				var bounds = new google.maps.LatLngBounds(sw, ne);
+				map.fitBounds(bounds);
 			}
 		</script>
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1ejZMCzslw2AzW86m9cBdrYFh_GiyZxk&callback=initMap">
