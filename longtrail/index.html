@@ -21,7 +21,10 @@
 				var ne = new google.maps.LatLng(-71.297702, 45.188745)
 				var sw = new google.maps.LatLng(-73.492216, 42.684380)
 				var bounds = new google.maps.LatLngBounds(sw, ne)
-				var map = new google.maps.Map(document.getElementById('map'));
+				var map = new google.maps.Map(document.getElementById('map'), {
+			    center:new google.maps.LatLng(-72, 43.5),
+			    zoom:5,
+				});
 				map.fitBounds(bounds);
 			}
 		</script>
