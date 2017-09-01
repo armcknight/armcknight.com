@@ -27,7 +27,13 @@
 				var sw = new google.maps.LatLng(42.684380, -73.492216);
 				var bounds = new google.maps.LatLngBounds(sw, ne);
 				map.fitBounds(bounds);
+				
+				google.maps.event.addDomListener(window, 'resize', function() {
+					map.fitBounds(bounds);
+				});
 			}
+			
+			
 		</script>
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1ejZMCzslw2AzW86m9cBdrYFh_GiyZxk&callback=initMap">
 		</script>
