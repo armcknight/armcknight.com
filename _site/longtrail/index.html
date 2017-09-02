@@ -16,6 +16,8 @@
 	
 	<body>
 		<div id="map" style="height: 100vh; width: 100%;">&nbsp;</div>
+		<script src="../js/twitterFetcher.js">
+		</script>
 		<script>
 			function initMap() {
 				var center = new google.maps.LatLng(43.5, -72);
@@ -64,11 +66,41 @@
 				    }(document, "script", "twitter-widgets");
 				});
 				
-				// kml from https://catalog.data.gov/dataset/vt-green-mountain-national-forest-long-trail-and-appalachian-trail/resource/720794b6-87d4-43e0-a585-98719557e6b2
 				var georssLayer = new google.maps.KmlLayer({
 			    url: 'http://armcknight.com/longtrail/longtrail.kml',
 					map: map,
 			  });
+				
+				//
+				// tweets
+				//
+				
+				var config = {
+				  "profile": {"screenName": 'ndrewmcknight'},
+				  "domId": '',
+				  "maxTweets": 3,
+				  "enableLinks": true,
+				  "showUser": true,
+				  "showTime": true,
+				  "dateFunction": '',
+				  "showRetweet": false,
+				  "customCallback": handleTweets,
+				  "showInteraction": false
+				};
+
+				twitterFetcher.fetch(config);
+			}
+
+			function handleTweets(tweets) {
+			    var x = tweets.length;
+			    var n = 0;
+			    var html = '<ul>';
+			    while(n < x) {
+			      html += '<li>' + tweets[n] + '</li>';
+			      n++;
+			    }
+			    html += '</ul>';
+			    element.innerHTML = html;
 			}
 		</script>
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1ejZMCzslw2AzW86m9cBdrYFh_GiyZxk&callback=initMap">
