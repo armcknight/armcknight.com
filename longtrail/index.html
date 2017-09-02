@@ -18,9 +18,13 @@
 		<div id="map" style="height: 100vh; width: 100%;">&nbsp;</div>
 		<script>
 			function initMap() {
+				var center = new google.maps.LatLng(43.5, -72);
+				
 				var map = new google.maps.Map(document.getElementById('map'), {
-			    center: new google.maps.LatLng(43.5, -72),
+			    center: center,
 			    zoom: 5,
+					mapTypeControl: false,
+					mapTypeId: google.maps.MapTypeId.SATELLITE,
 				});
 
 				var ne = new google.maps.LatLng(45.201, -70.629);
@@ -31,9 +35,40 @@
 				google.maps.event.addDomListener(window, 'resize', function() {
 					map.fitBounds(bounds);
 				});
+
+		    var marker = new google.maps.Marker({
+		        position: center,
+		    });
+
+		    marker.setMap(map);
+
+		    var text = '<div class="infowindow-content"><blockquote class="twitter-tweet" lang="en"><p>twitter will be embeded here </p>&mdash; Λndrew McKnight (@ndrewmcknight) <a href="https://twitter.com/ndrewmcknight/status/901917507493261312">August 27, 2017</a></blockquote></div>';
+
+		    var infowindow = new google.maps.InfoWindow({
+		        content: text
+		    });
+				
+		    google.maps.event.addListener(marker, 'click', function () {
+		        infowindow.open(map, marker);
+		    });
+				
+				google.maps.event.addListener(infowindow, 'domready', function () {
+				    ! function (d, s, id) {
+				        var js, fjs = d.getElementsByTagName(s)[0];
+				        if (!d.getElementById(id)) {
+				            js = d.createElement(s);
+				            js.id = id;
+				            js.src = "//platform.twitter.com/widgets.js";
+				            fjs.parentNode.insertBefore(js, fjs);
+				        }
+				    }(document, "script", "twitter-widgets");
+				});
+				
+				var georssLayer = new google.maps.KmlLayer({
+			    url: 'http://armcknight.github.io/longtrail/longtrail.kmz',
+					map: map,
+			  });
 			}
-			
-			
 		</script>
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1ejZMCzslw2AzW86m9cBdrYFh_GiyZxk&callback=initMap">
 		</script>
