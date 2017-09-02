@@ -24,7 +24,7 @@
 			    center: center,
 			    zoom: 5,
 					mapTypeControl: false,
-					mapTypeId: google.maps.MapTypeId.SATELLITE,
+					mapTypeId: google.maps.MapTypeId.TERRAIN,
 				});
 
 				var ne = new google.maps.LatLng(45.201, -70.629);
@@ -65,7 +65,7 @@
 				});
 				
 				var georssLayer = new google.maps.KmlLayer({
-			    url: 'http://armcknight.github.io/longtrail/longtrail.kmz',
+			    url: 'http://geodata.vermont.gov/datasets/4c206846699947429df59c8cb552ab5c_11.kml',
 					map: map,
 			  });
 			}
