@@ -30,5 +30,5 @@ end
 
 task :publish do
   sh 'git push origin'
-  sh 'aws s3 sync _site/ s3://armcknight.com --exclude .git/ --profile default'
+  sh 'aws s3 sync _site/ s3://armcknight.com --exclude .git/ --profile default --acl public-read'
 end
