@@ -29,5 +29,6 @@ task :endserve do
 end
 
 task :publish do
-  sh 'aws s3 sync _site/ s3://armcknight.com --exclude .git/'
+  sh 'git push origin'
+  sh 'aws s3 sync _site/ s3://armcknight.com --exclude .git/ --profile default'
 end
