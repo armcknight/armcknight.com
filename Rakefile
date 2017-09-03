@@ -29,6 +29,5 @@ task :endserve do
 end
 
 task :publish do
-	sh 'git push origin'
-	sh 'git subtree push --prefix _site origin master'
+  sh 'aws s3 sync _site/ s3://armcknight.com --exclude .git/'
 end
