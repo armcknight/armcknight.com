@@ -30,9 +30,8 @@ when you're done!
 	
 # Publishing
 
-All development happens on the `develop` branch, and the final compiled site is pushed to remote `master` using `git subtree`.
+Sync the `_site/` directory to the armcknight.com bucket on AWS. Excludes .git/
 
 	rake publish 
 
-**Note**: `git subtree push` has no `--force` option, so commits already pushed cannot be amended!
 	
