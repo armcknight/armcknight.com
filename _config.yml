@@ -1,2 +1,5 @@
+collections: 
+  photos:
+  albums:
 url: http://armcknight.com
 exclude: [ Rakefile, README.md, .gitignore ]

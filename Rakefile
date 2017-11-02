@@ -22,11 +22,10 @@ task :prepare_photo_gallery,[:dir] do |t, args|
   require 'date'
   
   # get and check some required paths
-  dir = Dir.new(args[:dir])
-  raise "Directory does not exist (#{dir.path})." unless Dir.exist?(dir.path)
+  dir = Dir.new("#{args[:dir]}/img")
+  raise "Image directory does not exist (#{dir.path})." unless Dir.exist?(dir.path)
   
-  index_url = "#{dir.path}.html"
-  raise "Album index file does not exist (#{index_url})." unless File.exist?(index_url)
+  album = args[:dir].split('/').last
   
   # gather information about the images to display
   images = Hash.new
@@ -40,7 +39,7 @@ task :prepare_photo_gallery,[:dir] do |t, args|
     
     # generate the thumbnail image now
     thumbnail_url = url.gsub('.jpg', '') + '-thumbnail.jpg'
-    sh "magick #{url} -resize x100 #{thumbnail_url}"
+    #sh "magick #{url} -resize x100 #{thumbnail_url}"
     
     images[date] = { 
       'description' => description.strip, 
@@ -49,21 +48,60 @@ task :prepare_photo_gallery,[:dir] do |t, args|
     }
   end
   
-  # generate the HTML to put into the photo gallery index
-  html = "<div>\n"
+  # generate the yaml front matter for the album
+  File.open("#{args[:dir]}/../../_albums/#{album}.html", 'w', File::CREAT) do |file|
+    file << <<~FRONTMATTER
+              ---
+              name: NAME
+              description: DESCRIPTION
+              cover_image_url: COVER_IMAGE_URL
+              ---
+              FRONTMATTER
+    file.chmod(0644)
+  end
+  
+  
+  # generate the yaml front matter for each picture
+  image_idx = 0
   images.keys.sort.each do |sortedKey|
     image = images[sortedKey]
     url = image['url']
     description = image['description']
     thumbnail_url = image['thumbnail_url']
+
+    File.open("#{args[:dir]}/../../_photos/#{album}-#{image_idx}.html", 'w', File::CREAT) do |file|
+      file << <<~FRONTMATTER
+                ---
+                url: #{url}
+                description: #{description}
+                thumbnail_url: #{thumbnail_url}
+                date: #{sortedKey.strftime("%B %e, %Y")}
+                album: #{album}
+                ---
+                FRONTMATTER
+      file.chmod(0644)
+    end
     
-    html << "\t<a href=\"#{url}\"><img src=\"#{thumbnail_url}\" alt=\"#{description}\" /></a>\n"
+    image_idx += 1
   end
-  html << '</div>'
   
-  # append the generated HTML into the index html file for the album
-  File.open(index_url, 'a') do |file|
-    file << html
+  # create a new gallery index.html
+  gallery_index_url = "#{args[:dir]}/index.html"
+  File.open(gallery_index_url, 'w', File::CREAT) do |file|
+    file << <<~FRONTMATTER
+                ---
+                
+                ---
+                {% assign photos = site.photos | where:'album', '#{album}' %}
+                <ul>
+                {% for photo in photos %}
+                  <li>
+                    {{ photo.description }}
+                  </li>
+                {% endfor %}
+                </ul>
+                FRONTMATTER
+    file.chmod(0644)
   end
 end
 
