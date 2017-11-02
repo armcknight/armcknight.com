@@ -22,34 +22,13 @@ task :prepare_photo_gallery,[:dir] do |t, args|
   require 'date'
   
   # get and check some required paths
-  dir = Dir.new("#{args[:dir]}/img")
-  raise "Image directory does not exist (#{dir.path})." unless Dir.exist?(dir.path)
-  
-  album = args[:dir].split('/').last
-  
-  # gather information about the images to display
-  images = Hash.new
-  dir.each do |image|
-    next if image == '.' || image == '..' || image == '.DS_Store'
-    url = "#{dir.path}/#{image}"
-    description = `exiftool -p '$description' #{url}`
-    timestamp = `exiftool -p '$modifydate' #{url}`
-    date = DateTime.strptime(timestamp, '%Y:%m:%d %H:%M:%S')
-    puts "overwriting image" if images[date] != nil
-    
-    # generate the thumbnail image now
-    thumbnail_url = url.gsub('.jpg', '') + '-thumbnail.jpg'
-    sh "magick #{url} -resize x100 #{thumbnail_url}"
-    
-    images[date] = { 
-      'description' => description.strip, 
-      'url' => image, 
-      'thumbnail_url' => thumbnail_url.split('/').last
-    }
-  end
+  input_dir = "#{args[:dir]}"
+  raise "Image directory does not exist (#{input_dir})." unless Dir.exist?(input_dir)
   
   # generate the yaml front matter for the album
-  File.open("#{args[:dir]}/../../_albums/#{album}.html", 'w', File::CREAT) do |file|
+  album = input_dir.split('/').last
+  album_yaml_url = "#{input_dir}/../../_albums/#{album}.html"
+  File.open(album_yaml_url, 'w', File::CREAT) do |file|
     file << <<~FRONTMATTER
               ---
               name: NAME
@@ -58,8 +37,52 @@ task :prepare_photo_gallery,[:dir] do |t, args|
               ---
               FRONTMATTER
     file.chmod(0644)
+  end unless File.exist?(album_yaml_url)
+  
+  # create gallery index.html
+  File.open("#{input_dir}/index.html", 'w', File::CREAT) do |file|
+    file << <<~FRONTMATTER
+                ---
+                
+                ---
+                {% assign photos = site.photos | where:'album', '#{album}' %}
+                {% for photo in photos %}
+                  <a href="img/{{ photo.image_url }}"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
+                {% endfor %}
+                FRONTMATTER
+    file.chmod(0644)
   end
   
+  # move images to img/ subdirectory
+  image_subdirectory = "#{input_dir}/img"
+  if Dir.exist?(image_subdirectory) then
+    puts "img/ subdirectory already exists, working with whatever images are in there."
+  else
+    sh "mkdir #{image_subdirectory}"
+    sh "mv #{input_dir}/*.jpg #{image_subdirectory}"
+  end
+  
+  # gather information about the images to display
+  images = Hash.new
+  Dir.new(image_subdirectory).each do |image|
+    next if image == '.' || image == '..' || image == '.DS_Store' || image.include?('thumbnail')
+    url = "#{image_subdirectory}/#{image}"
+    description = `exiftool -p '$description' #{url}`
+    timestamp = `exiftool -p '$modifydate' #{url}`
+    date = DateTime.strptime(timestamp, '%Y:%m:%d %H:%M:%S')
+    puts "overwriting image" if images[date] != nil
+    
+    # generate the thumbnail image now
+    thumbnail_url = url.gsub('.jpg', '') + '-thumbnail.jpg'
+    puts("no file at #{thumbnail_url}") unless File.exist?(thumbnail_url)
+    sh "magick #{url} -resize x100 #{thumbnail_url}" unless File.exist?(thumbnail_url)
+    
+    images[date] = { 
+      'description' => description.strip, 
+      'url' => image, 
+      'thumbnail_url' => thumbnail_url.split('/').last
+    }
+  end
   
   # generate the yaml front matter for each picture
   image_idx = 0
@@ -69,10 +92,10 @@ task :prepare_photo_gallery,[:dir] do |t, args|
     description = image['description']
     thumbnail_url = image['thumbnail_url']
 
-    File.open("#{args[:dir]}/../../_photos/#{album}-#{image_idx}.html", 'w', File::CREAT) do |file|
+    File.open("#{input_dir}/../../_photos/#{album}-#{image_idx}.html", 'w', File::CREAT) do |file|
       file << <<~FRONTMATTER
                 ---
-                url: #{url}
+                image_url: #{url}
                 description: #{description}
                 thumbnail_url: #{thumbnail_url}
                 date: #{sortedKey.strftime("%B %e, %Y")}
@@ -83,26 +106,10 @@ task :prepare_photo_gallery,[:dir] do |t, args|
     end
     
     image_idx += 1
-  end
+  end 
   
-  # create a new gallery index.html
-  gallery_index_url = "#{args[:dir]}/index.html"
-  File.open(gallery_index_url, 'w', File::CREAT) do |file|
-    file << <<~FRONTMATTER
-                ---
-                
-                ---
-                {% assign photos = site.photos | where:'album', '#{album}' %}
-                <ul>
-                {% for photo in photos %}
-                  <li>
-                    {{ photo.description }}
-                  </li>
-                {% endfor %}
-                </ul>
-                FRONTMATTER
-    file.chmod(0644)
-  end
+  # run jekyll build
+  
 end
 
 task :serve do
