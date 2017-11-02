@@ -1,0 +1,7 @@
+---
+
+---
+{% assign photos = site.photos | where:'album', '2017-10-24-big-bend-national-park' %}
+{% for photo in photos %}
+  <a href="img/{{ photo.image_url }}"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
+{% endfor %}
