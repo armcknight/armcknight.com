@@ -1,5 +1,5 @@
 task :init do
-  sh 'brew install exiftool'
+  sh 'brew install exiftool imagemagick'
 end
 
 task :watch do
@@ -39,7 +39,7 @@ task :prepare_photo_gallery,[:dir] do |t, args|
     
     # generate the thumbnail image now
     thumbnail_url = url.gsub('.jpg', '') + '-thumbnail.jpg'
-    #sh "magick #{url} -resize x100 #{thumbnail_url}"
+    sh "magick #{url} -resize x100 #{thumbnail_url}"
     
     images[date] = { 
       'description' => description.strip, 
