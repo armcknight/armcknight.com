@@ -1,0 +1,9 @@
+@import 'subpage';
+
+.thumbnail {
+	padding: 20px;
+}
+
+.description {
+	@extend .text;
+}

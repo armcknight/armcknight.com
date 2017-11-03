@@ -1,7 +1,18 @@
 ---
 
 ---
+{% include subindex-html-start.html name="Big Bend National Park" css_file="photos.css" description="On our way across Texas, we took a short (for Texas; it was still 6 hours off-route!) detour to camp and hike at Big Bend, right where the U.S. meets Mexico at the Santa Elena canyon." %}
 {% assign photos = site.photos | where:'album', '2017-10-24-big-bend-national-park' %}
 {% for photo in photos %}
-  <a href="img/{{ photo.image_url }}"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
+  <table >
+    <tr>
+      <td class="thumbnail">
+        <a href="img/{{ photo.image_url }}"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
+      </td>
+      <td class="description">
+        {{ photo.description }}
+      </td>
+    </tr>
+  </table>
 {% endfor %}
+{% include subindex-html-end.html %}
