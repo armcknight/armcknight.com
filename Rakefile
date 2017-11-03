@@ -44,13 +44,12 @@ def _prepare_photo_gallery input_dir
   # generate the yaml front matter for the album
   album = input_dir.split('/').last
   album_yaml_url = "#{input_dir}/../../_albums/#{album}.html"
-
   if File.exist?(album_yaml_url) then
     album_front_matter = IO.readlines(album_yaml_url)
     album_name = album_front_matter[1].gsub('name: ', '').chomp
     description = album_front_matter[2].gsub('description: ', '').chomp
     cover_image_url = album_front_matter[3].gsub('cover_image_url: ', '').chomp
-    puts "Album front matter exists...\nread album name: \"#{album_name}\"\ndescription: \"#{description}\"\ncover image url: \"#{cover_image_url}\""
+    puts "Album front matter exists...\nread album name: \"#{album_name}\"\ndescription: \"#{description}\"\ncover image thumbnail url: \"#{cover_image_url}\""
   else
     puts "Enter album name: "
     album_name = STDIN.gets.chomp
