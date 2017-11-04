@@ -1,18 +1,44 @@
 ---
 
 ---
-{% include subindex-html-start.html name="Big Bend National Park" css_file="photos.css" description="On our way across Texas, we took a short (for Texas; it was still 6 hours off-route!) detour to camp and hike at Big Bend, right where the U.S. meets Mexico at the Santa Elena canyon." %}
+{% include subindex-html-start.html name="Big Bend National Park" css_file="photo_gallery.css" description="On our way across Texas, we took a short (for Texas; it was still 6 hours off-route!) detour to camp and hike at Big Bend, right where the U.S. meets Mexico at the Santa Elena canyon." %}
+                
 {% assign photos = site.photos | where:'album', '2017-10-24-big-bend-national-park' %}
+
+<!-- cover image -->
+{% assign cover_photo = site.photos | where: 'album', '2017-10-24-big-bend-national-park' | where:'image_url', 'IMG_0052.jpg' %}
+
+<center>
+    <table>
+      <tr>
+        <td class="thumbnail">
+          <a href="img/{{ cover_photo[0].image_url }}"><img src="img/{{ cover_photo[0].thumbnail_url }}" height="100px" alt="{{ cover_photo[0].description }}" /></a>
+        </td>
+      </tr>
+      <tr>
+        <td class="description">
+          {{ cover_photo[0].description }}
+        </td>
+      </tr>
+    </table>
+</center>
+
+<!-- album images -->
 {% for photo in photos %}
-  <table >
-    <tr>
-      <td class="thumbnail">
-        <a href="img/{{ photo.image_url }}"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
-      </td>
-      <td class="description">
-        {{ photo.description }}
-      </td>
-    </tr>
-  </table>
+  {% if photo.image_url != 'IMG_0052.jpg' %}
+    <table class="gallery-item" width="{{ photo.thumbnail_width }}">
+      <tr>
+        <td class="thumbnail">
+          <a href="img/{{ photo.image_url }}"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
+        </td>
+      </tr>
+      <tr>
+        <td class="description">
+          {{ photo.description }}
+        </td>
+      </tr>
+    </table>
+  {% endif %}
 {% endfor %}
+              
 {% include subindex-html-end.html %}

@@ -42,19 +42,19 @@ def _prepare_photo_gallery input_dir
   raise "Image directory does not exist (#{input_dir})." unless Dir.exist?(input_dir)
 
   # generate the yaml front matter for the album
-  album = input_dir.split('/').last
-  album_yaml_url = "#{input_dir}/../../_albums/#{album}.html"
+  album_id = input_dir.split('/').last
+  album_yaml_url = "#{input_dir}/../../_albums/#{album_id}.html"
   if File.exist?(album_yaml_url) then
     album_front_matter = IO.readlines(album_yaml_url)
     album_name = album_front_matter[1].gsub('name: ', '').chomp
-    description = album_front_matter[2].gsub('description: ', '').chomp
+    album_description = album_front_matter[2].gsub('description: ', '').chomp
     cover_image_url = album_front_matter[3].gsub('cover_image_url: ', '').chomp
-    puts "Album front matter exists...\nread album name: \"#{album_name}\"\ndescription: \"#{description}\"\ncover image thumbnail url: \"#{cover_image_url}\""
+    puts "Album front matter exists...\nread album name: \"#{album_name}\"\ndescription: \"#{album_description}\"\ncover image thumbnail url: \"#{cover_image_url}\""
   else
     puts "Enter album name: "
     album_name = STDIN.gets.chomp
     puts "Enter album description: "
-    description = STDIN.gets.chomp
+    album_description = STDIN.gets.chomp
     puts "Enter album cover image thumbnail url: "
     cover_image_url = STDIN.gets.chomp
   
@@ -62,7 +62,7 @@ def _prepare_photo_gallery input_dir
       file << <<~FRONTMATTER
                 ---
                 name: #{album_name}
-                description: #{description}
+                description: #{album_description}
                 cover_image_url: #{cover_image_url}
                 ---
                 FRONTMATTER
@@ -76,20 +76,46 @@ def _prepare_photo_gallery input_dir
                 ---
               
                 ---
-                {% include subindex-html-start.html name="#{album_name}" css_file="photos.css" description="#{description}" %}
-                {% assign photos = site.photos | where:'album', '#{album}' %}
+                {% include subindex-html-start.html name="#{album_name}" css_file="photo_gallery.css" description="#{album_description}" %}
+                                
+                {% assign photos = site.photos | where:'album', '#{album_id}' %}
+
+                <!-- cover image -->
+                {% assign cover_photo = site.photos | where: 'album', '#{album_id}' | where:'image_url', '#{cover_image_url}' %}
+
+                <center>
+                    <table>
+                      <tr>
+                        <td class="thumbnail">
+                          <a href="img/{{ cover_photo[0].image_url }}"><img src="img/{{ cover_photo[0].thumbnail_url }}" height="100px" alt="{{ cover_photo[0].description }}" /></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="description">
+                          {{ cover_photo[0].description }}
+                        </td>
+                      </tr>
+                    </table>
+                </center>
+              
+                <!-- album images -->
                 {% for photo in photos %}
-                  <table >
-                    <tr>
-                      <td class="thumbnail">
-                        <a href="img/{{ photo.image_url }}"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
-                      </td>
-                      <td class="description">
-                        {{ photo.description }}
-                      </td>
-                    </tr>
-                  </table>
+                  {% if photo.image_url != '#{cover_image_url}' %}
+                    <table class="gallery-item" width="{{ photo.thumbnail_width }}">
+                      <tr>
+                        <td class="thumbnail">
+                          <a href="img/{{ photo.image_url }}"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="description">
+                          {{ photo.description }}
+                        </td>
+                      </tr>
+                    </table>
+                  {% endif %}
                 {% endfor %}
+                              
                 {% include subindex-html-end.html %}
                 FRONTMATTER
     file.chmod(0644)
@@ -109,7 +135,7 @@ def _prepare_photo_gallery input_dir
   Dir.new(image_subdirectory).each do |image|
     next if image == '.' || image == '..' || image == '.DS_Store' || image.include?('thumbnail')
     url = "#{image_subdirectory}/#{image}"
-    description = `exiftool -p '$description' #{url}`
+    image_description = `exiftool -p '$description' #{url}`
     timestamp = `exiftool -p '$modifydate' #{url}`
     date = DateTime.strptime(timestamp, '%Y:%m:%d %H:%M:%S')
     puts "overwriting image" if images[date] != nil
@@ -122,11 +148,14 @@ def _prepare_photo_gallery input_dir
     else
       sh "magick #{url} -resize x100 #{thumbnail_url}" unless File.exist?(thumbnail_url)
     end
+    thumbnail_width = `exiftool -p '$imageWidth' #{thumbnail_url}`
+    thumbnail_width = 150 if thumbnail_width.to_i < 150
   
     images[date] = { 
-      'description' => description.strip, 
+      'description' => image_description.strip, 
       'url' => image, 
-      'thumbnail_url' => thumbnail_url.split('/').last
+      'thumbnail_url' => thumbnail_url.split('/').last,
+      'thumbnail_width' => thumbnail_width
     }
   end
 
@@ -135,17 +164,19 @@ def _prepare_photo_gallery input_dir
   images.keys.sort.each do |sortedKey|
     image = images[sortedKey]
     url = image['url']
-    description = image['description']
+    image_description = image['description']
     thumbnail_url = image['thumbnail_url']
+    thumbnail_width = image['thumbnail_width']
 
-    File.open("#{input_dir}/../../_photos/#{album}-#{image_idx}.html", 'w', File::CREAT) do |file|
+    File.open("#{input_dir}/../../_photos/#{album_id}-#{image_idx}.html", 'w', File::CREAT) do |file|
       file << <<~FRONTMATTER
                 ---
                 image_url: #{url}
-                description: #{description}
+                description: #{image_description}
                 thumbnail_url: #{thumbnail_url}
+                thumbnail_width: #{thumbnail_width}
                 date: #{sortedKey.strftime("%B %e, %Y")}
-                album: #{album}
+                album: #{album_id}
                 ---
                 FRONTMATTER
       file.chmod(0644)
