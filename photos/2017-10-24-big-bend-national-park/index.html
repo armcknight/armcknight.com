@@ -35,7 +35,6 @@
           {% else %}
             <a href="slideshow/{{ photo_index }}"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
           {% endif %}
-          {% assign photo_index = photo_index | plus: 1 %}
         </td>
       </tr>
       <tr>
@@ -45,6 +44,7 @@
       </tr>
     </table>
   {% endif %}
+  {% assign photo_index = photo_index | plus: 1 %}
 {% endfor %}
               
 {% include subindex-html-end.html %}

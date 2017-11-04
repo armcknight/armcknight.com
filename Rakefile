@@ -111,7 +111,6 @@ def _prepare_photo_gallery input_dir
                           {% else %}
                             <a href="slideshow/{{ photo_index }}"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
                           {% endif %}
-                          {% assign photo_index = photo_index | plus: 1 %}
                         </td>
                       </tr>
                       <tr>
@@ -121,6 +120,7 @@ def _prepare_photo_gallery input_dir
                       </tr>
                     </table>
                   {% endif %}
+                  {% assign photo_index = photo_index | plus: 1 %}
                 {% endfor %}
                               
                 {% include subindex-html-end.html %}
@@ -130,35 +130,26 @@ def _prepare_photo_gallery input_dir
 
   # create the slideshow
   slideshow_dir = "#{input_dir}/slideshow"
-  if Dir.exist?(slideshow_dir) then
-    
-  else
-    sh "mkdir #{slideshow_dir}"
-  end
+  sh "mkdir #{slideshow_dir}" unless Dir.exist?(slideshow_dir)
   slideshow_template = "#{slideshow_dir}/index.html"
   File.open(slideshow_template, 'w', File::CREAT) do |file|
     file << <<~FRONTMATTER
                 ---
                 paginate:
                   collection: photos
+                  category: #{album_id}
                   per_page: 1
                   limit: false
                   permalink: /:num/
                 ---
                 {% include subindex-html-start.html name="#{album_name}" css_file="slideshow_slide.css" description="#{album_description}" %}
                 
-                {% assign photos = paginator.photos | where:'album', '#{album_id}' %}
-                {% for photo in photos %}
+                {% for photo in paginator.photos %}
                   <center>
                     <table>
                       <tr>
                         <td class="image">
-                          {% if photo.image_width > photo.image_height %}
-                            {% assign constraint = "max-width: 60%;" %}
-                          {% else %}
-                            {% assign constraint = "max-height: 50%;" %}
-                          {% endif %}
-                          <a href="/photos/#{album_id}/img/{{ photo.image_url }}"><img src="/photos/#{album_id}/img/{{ photo.image_url }}" style="{{ constraint }}" /></a>
+                          <a href="/photos/#{album_id}/img/{{ photo.image_url }}"><img src="/photos/#{album_id}/img/{{ photo.image_url }}" style="max-height: 80%; max-width: 80%;" /></a>
                         </td>
                       </tr>
                       <tr>
@@ -216,7 +207,6 @@ def _prepare_photo_gallery input_dir
   
     # generate the thumbnail image now
     thumbnail_url = url.gsub('.jpg', '') + '-thumbnail.jpg'
-    puts("no file at #{thumbnail_url}") unless File.exist?(thumbnail_url)
     if File.exist?(thumbnail_url) then
       puts "Thumbnail already exists for #{image}." 
     else
@@ -233,8 +223,6 @@ def _prepare_photo_gallery input_dir
       'url' => image, 
       'thumbnail_url' => thumbnail_url.split('/').last,
       'thumbnail_width' => thumbnail_width,
-      'image_height' => image_height,
-      'image_width' => image_width
     }
   end
 
@@ -256,10 +244,9 @@ def _prepare_photo_gallery input_dir
                 description: #{image_description}
                 thumbnail_url: #{thumbnail_url}
                 thumbnail_width: #{thumbnail_width}
-                image_width: #{image_width}
-                image_height: #{image_height}
                 date: #{sortedKey.strftime("%B %e, %Y")}
                 album: #{album_id}
+                category: #{album_id}
                 ---
                 FRONTMATTER
       file.chmod(0644)
@@ -267,9 +254,6 @@ def _prepare_photo_gallery input_dir
   
     image_idx += 1
   end 
-
-  # build everything
-  _build
 end 
 
 def _build
