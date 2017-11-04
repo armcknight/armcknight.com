@@ -1,0 +1,53 @@
+---
+paginate:
+  collection: photos
+  per_page: 1
+  limit: false
+  permalink: /:num/
+---
+{% include subindex-html-start.html name="Big Bend National Park" css_file="slideshow_slide.css" description="On our way across Texas, we took a short (for Texas; it was still 6 hours off-route!) detour to camp and hike at Big Bend, right where the U.S. meets Mexico at the Santa Elena canyon." %}
+
+{% assign photos = paginator.photos | where:'album', '2017-10-24-big-bend-national-park' %}
+{% for photo in photos %}
+  <center>
+    <table>
+      <tr>
+        <td class="image">
+          {% if photo.image_width > photo.image_height %}
+            {% assign constraint = "max-width: 60%;" %}
+          {% else %}
+            {% assign constraint = "max-height: 50%;" %}
+          {% endif %}
+          <a href="/photos/2017-10-24-big-bend-national-park/img/{{ photo.image_url }}"><img src="/photos/2017-10-24-big-bend-national-park/img/{{ photo.image_url }}" style="{{ constraint }}" /></a>
+        </td>
+      </tr>
+      <tr>
+        <td class="description">
+          ({{ paginator.page }}/{{ paginator.total_photos }}): {{ photo.description }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <center>
+            {% if paginator.previous_page != nil %}
+              {% if paginator.previous_page == 1 %}
+                <a href="../">Previous</a>
+              {% else %}
+                <a href="../{{ paginator.previous_page }}">Previous</a>
+              {% endif %}
+            {% endif %}
+            {% if paginator.next_page != nil %}
+              {% if paginator.next_page == 2 %}
+                <a href="{{ paginator.next_page }}">Next</a>
+              {% else %}
+                <a href="../{{ paginator.next_page }}">Next</a>
+              {% endif %}
+            {% endif %}
+          </center>
+        </td>
+      </tr>
+    </table>
+  </center>
+{% endfor %}
+              
+{% include subindex-html-end.html %}

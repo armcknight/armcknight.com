@@ -3,3 +3,5 @@ collections:
   albums:
 url: http://armcknight.com
 exclude: [ Rakefile, README.md, .gitignore ]
+gems:
+  - octopress-paginate

@@ -1,6 +1,7 @@
 desc 'Install dev dependencies.'
 task :init do
   sh 'brew install exiftool imagemagick'
+  sh 'gem install octopress-paginate'
 end
 
 desc 'Build all SASS and Jekyll sources.'
@@ -99,12 +100,18 @@ def _prepare_photo_gallery input_dir
                 </center>
               
                 <!-- album images -->
+                {% assign photo_index = 1 %}
                 {% for photo in photos %}
                   {% if photo.image_url != '#{cover_image_url}' %}
                     <table class="gallery-item" width="{{ photo.thumbnail_width }}">
                       <tr>
                         <td class="thumbnail">
-                          <a href="img/{{ photo.image_url }}"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
+                          {% if photo_index == 1 %}
+                            <a href="slideshow/"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
+                          {% else %}
+                            <a href="slideshow/{{ photo_index }}"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
+                          {% endif %}
+                          {% assign photo_index = photo_index | plus: 1 %}
                         </td>
                       </tr>
                       <tr>
@@ -114,6 +121,73 @@ def _prepare_photo_gallery input_dir
                       </tr>
                     </table>
                   {% endif %}
+                {% endfor %}
+                              
+                {% include subindex-html-end.html %}
+                FRONTMATTER
+    file.chmod(0644)
+  end
+
+  # create the slideshow
+  slideshow_dir = "#{input_dir}/slideshow"
+  if Dir.exist?(slideshow_dir) then
+    
+  else
+    sh "mkdir #{slideshow_dir}"
+  end
+  slideshow_template = "#{slideshow_dir}/index.html"
+  File.open(slideshow_template, 'w', File::CREAT) do |file|
+    file << <<~FRONTMATTER
+                ---
+                paginate:
+                  collection: photos
+                  per_page: 1
+                  limit: false
+                  permalink: /:num/
+                ---
+                {% include subindex-html-start.html name="#{album_name}" css_file="slideshow_slide.css" description="#{album_description}" %}
+                
+                {% assign photos = paginator.photos | where:'album', '#{album_id}' %}
+                {% for photo in photos %}
+                  <center>
+                    <table>
+                      <tr>
+                        <td class="image">
+                          {% if photo.image_width > photo.image_height %}
+                            {% assign constraint = "max-width: 60%;" %}
+                          {% else %}
+                            {% assign constraint = "max-height: 50%;" %}
+                          {% endif %}
+                          <a href="/photos/#{album_id}/img/{{ photo.image_url }}"><img src="/photos/#{album_id}/img/{{ photo.image_url }}" style="{{ constraint }}" /></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="description">
+                          ({{ paginator.page }}/{{ paginator.total_photos }}): {{ photo.description }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <center>
+                            {% if paginator.previous_page != nil %}
+                              {% if paginator.previous_page == 1 %}
+                                <a href="../">Previous</a>
+                              {% else %}
+                                <a href="../{{ paginator.previous_page }}">Previous</a>
+                              {% endif %}
+                            {% endif %}
+                            {% if paginator.next_page != nil %}
+                              {% if paginator.next_page == 2 %}
+                                <a href="{{ paginator.next_page }}">Next</a>
+                              {% else %}
+                                <a href="../{{ paginator.next_page }}">Next</a>
+                              {% endif %}
+                            {% endif %}
+                          </center>
+                        </td>
+                      </tr>
+                    </table>
+                  </center>
                 {% endfor %}
                               
                 {% include subindex-html-end.html %}
@@ -150,12 +224,17 @@ def _prepare_photo_gallery input_dir
     end
     thumbnail_width = `exiftool -p '$imageWidth' #{thumbnail_url}`
     thumbnail_width = 150 if thumbnail_width.to_i < 150
+    
+    image_width = `exiftool -p '$imageWidth' #{url}`
+    image_height = `exiftool -p '$imageHeight' #{url}`
   
     images[date] = { 
       'description' => image_description.strip, 
       'url' => image, 
       'thumbnail_url' => thumbnail_url.split('/').last,
-      'thumbnail_width' => thumbnail_width
+      'thumbnail_width' => thumbnail_width,
+      'image_height' => image_height,
+      'image_width' => image_width
     }
   end
 
@@ -164,6 +243,8 @@ def _prepare_photo_gallery input_dir
   images.keys.sort.each do |sortedKey|
     image = images[sortedKey]
     url = image['url']
+    image_width = image['image_width']
+    image_height = image['image_height']
     image_description = image['description']
     thumbnail_url = image['thumbnail_url']
     thumbnail_width = image['thumbnail_width']
@@ -175,6 +256,8 @@ def _prepare_photo_gallery input_dir
                 description: #{image_description}
                 thumbnail_url: #{thumbnail_url}
                 thumbnail_width: #{thumbnail_width}
+                image_width: #{image_width}
+                image_height: #{image_height}
                 date: #{sortedKey.strftime("%B %e, %Y")}
                 album: #{album_id}
                 ---

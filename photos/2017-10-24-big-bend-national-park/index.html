@@ -24,12 +24,18 @@
 </center>
 
 <!-- album images -->
+{% assign photo_index = 1 %}
 {% for photo in photos %}
   {% if photo.image_url != 'IMG_0052.jpg' %}
     <table class="gallery-item" width="{{ photo.thumbnail_width }}">
       <tr>
         <td class="thumbnail">
-          <a href="img/{{ photo.image_url }}"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
+          {% if photo_index == 1 %}
+            <a href="slideshow/"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
+          {% else %}
+            <a href="slideshow/{{ photo_index }}"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
+          {% endif %}
+          {% assign photo_index = photo_index | plus: 1 %}
         </td>
       </tr>
       <tr>
