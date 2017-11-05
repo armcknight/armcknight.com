@@ -142,7 +142,11 @@ def _prepare_photo_gallery input_dir
                   limit: false
                   permalink: /:num/
                 ---
-                {% include subindex-html-start.html name="#{album_name}" css_file="slideshow_slide.css" description="#{album_description}" %}
+                {% if paginator.page == 1 %}
+                  {% include subindex-html-start.html name="#{album_name}" css_file="slideshow_slide.css" description="#{album_description}" %}
+                {% else %}
+                  {% include subindex-html-start.html name="#{album_name}" css_file="slideshow_slide.css" description="#{album_description}" back_url="../.." %}
+                {% endif %}
                 
                 {% for photo in paginator.photos %}
                   <center>

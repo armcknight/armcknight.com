@@ -6,14 +6,18 @@ paginate:
   limit: false
   permalink: /:num/
 ---
-{% include subindex-html-start.html name="Great Sand Dunes National Park" css_file="slideshow_slide.css" description="On our way to visit Crestone, we stopped over at the sand dunes to sleep and enjoy the sunrise." %}
+{% if paginator.page == 1 %}
+  {% include subindex-html-start.html name="Great Sand Dunes National Park" css_file="slideshow_slide.css" description="On our way to visit Crestone, we stopped over at the sand dunes to sleep and enjoy the sunrise." %}
+{% else %}
+  {% include subindex-html-start.html name="Great Sand Dunes National Park" css_file="slideshow_slide.css" description="On our way to visit Crestone, we stopped over at the sand dunes to sleep and enjoy the sunrise." back_url="../.." %}
+{% endif %}
 
 {% for photo in paginator.photos %}
   <center>
     <table>
       <tr>
         <td class="image">
-          <a href="/photos/2017-11-2-great-sand-dunes-national-park/img/{{ photo.image_url }}"><img src="/photos/2017-11-2-great-sand-dunes-national-park/img/{{ photo.image_url }}" style="max-height: 80%; max-width: 80%;"/></a>
+          <a href="/photos/2017-11-2-great-sand-dunes-national-park/img/{{ photo.image_url }}"><img src="/photos/2017-11-2-great-sand-dunes-national-park/img/{{ photo.image_url }}" style="max-height: 80%; max-width: 80%;" /></a>
         </td>
       </tr>
       <tr>

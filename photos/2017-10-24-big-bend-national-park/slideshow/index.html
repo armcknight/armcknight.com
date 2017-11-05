@@ -6,7 +6,11 @@ paginate:
   limit: false
   permalink: /:num/
 ---
-{% include subindex-html-start.html name="Big Bend National Park" css_file="slideshow_slide.css" description="On our way across Texas, we took a short (for Texas; it was still 6 hours off-route!) detour to camp and hike at Big Bend, right where the U.S. meets Mexico at the Santa Elena canyon." %}
+{% if paginator.page == 1 %}
+  {% include subindex-html-start.html name="Big Bend National Park" css_file="slideshow_slide.css" description="On our way across Texas, we took a short (for Texas; it was still 6 hours off-route!) detour to camp and hike at Big Bend, right where the U.S. meets Mexico at the Santa Elena canyon." %}
+{% else %}
+  {% include subindex-html-start.html name="Big Bend National Park" css_file="slideshow_slide.css" description="On our way across Texas, we took a short (for Texas; it was still 6 hours off-route!) detour to camp and hike at Big Bend, right where the U.S. meets Mexico at the Santa Elena canyon." back_url="../.." %}
+{% endif %}
 
 {% for photo in paginator.photos %}
   <center>
