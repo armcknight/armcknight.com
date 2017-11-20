@@ -14,6 +14,16 @@ task :prepare_photo_gallery,[:dir] do |t, args|
   _prepare_photo_gallery args[:dir]
 end
 
+desc 'Build all the photo galleries. Helpful to backfill changes to the build process.'
+task :prepare_all_galleries do
+  directory = "./photos/"
+  Dir.new(directory).entries.each do |gallery|
+    path = directory + gallery
+    next if gallery == '.' || gallery == '..' || !File.directory?(path)
+    _prepare_photo_gallery path
+  end
+end
+
 desc 'Start local webserver to test the static site. Opens a new browser window to the home index. Server continues running, so multiple builds can be done and just requires a reload in the browser.'
 task :serve do
 	require 'shell'
