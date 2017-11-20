@@ -10,6 +10,17 @@
 		<meta name="description" content="{{ include.description }}"/>
 		<meta name="author" content="Andrew McKnight"/>
 		<meta name="copyright" content="Andrew McKnight Copyright (c) 2017"/>
+		
+		<meta property="og:title" content="Andrew McKnight - {{ include.name }}" />
+		<meta property="og:description" content="{{ include.description }}" />
+		
+		<meta property="twitter:title" content="{{ include.name }}" />
+		<meta property="twitter:description" content="{{ include.description }}" />
+		
+		{% if page.thumbnail != undefined %}
+			<meta property="og:image" content="/blog/img/{{ include.thumbnail }}" />
+			<meta name="twitter:image" content="/blog/img/{{ include.thumbnail }}" />
+		{% endif %}
 
 		<link rel="stylesheet" href="/css/{{ include.css_file }}"/>
 	</head>
