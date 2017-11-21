@@ -81,63 +81,6 @@ def _prepare_photo_gallery input_dir
     end
   end
 
-  # create gallery index.html
-  File.open("#{input_dir}/index.html", 'w', File::CREAT) do |file|
-    file << <<~FRONTMATTER
-                ---
-              
-                ---
-                {% include subindex-html-start.html name="#{album_name}" css_file="photo_gallery.css" description="#{album_description}" %}
-                                
-                {% assign photos = site.photos | where:'album', '#{album_id}' %}
-
-                <!-- cover image -->
-                {% assign cover_photo = site.photos | where: 'album', '#{album_id}' | where:'image_url', '#{cover_image_url}' %}
-
-                <center>
-                    <table>
-                      <tr>
-                        <td class="thumbnail">
-                          <a href="img/{{ cover_photo[0].image_url }}"><img src="img/{{ cover_photo[0].thumbnail_url }}" height="100px" alt="{{ cover_photo[0].description }}" /></a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="description">
-                          {{ cover_photo[0].description }}
-                        </td>
-                      </tr>
-                    </table>
-                </center>
-              
-                <!-- album images -->
-                {% assign photo_index = 1 %}
-                {% for photo in photos %}
-                  {% if photo.image_url != '#{cover_image_url}' %}
-                    <table class="gallery-item" width="{{ photo.thumbnail_width }}">
-                      <tr>
-                        <td class="thumbnail">
-                          {% if photo_index == 1 %}
-                            <a href="slideshow/"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
-                          {% else %}
-                            <a href="slideshow/{{ photo_index }}"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
-                          {% endif %}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="description">
-                          {{ photo.description }}
-                        </td>
-                      </tr>
-                    </table>
-                  {% endif %}
-                  {% assign photo_index = photo_index | plus: 1 %}
-                {% endfor %}
-                              
-                {% include subindex-html-end.html %}
-                FRONTMATTER
-    file.chmod(0644)
-  end
-
   # create the slideshow
   slideshow_dir = "#{input_dir}/slideshow"
   sh "mkdir #{slideshow_dir}" unless Dir.exist?(slideshow_dir)
@@ -209,7 +152,7 @@ def _prepare_photo_gallery input_dir
     sh "mv #{input_dir}/*.jpg #{image_subdirectory}"
   end
 
-  # gather information about the images to display
+  # gather information about the images to display and generate thumbnails
   images = Hash.new
   Dir.new(image_subdirectory).each do |image|
     next if image == '.' || image == '..' || image == '.DS_Store' || image.include?('thumbnail')
@@ -220,7 +163,7 @@ def _prepare_photo_gallery input_dir
     puts "overwriting image" if images[date] != nil
   
     # generate the thumbnail image now
-    thumbnail_url = url.gsub('.jpg', '') + '-thumbnail.jpg'
+    thumbnail_url = url.gsub('.jpg', '-thumbnail.jpg')
     if File.exist?(thumbnail_url) then
       puts "Thumbnail already exists for #{image}." 
     else
@@ -268,6 +211,63 @@ def _prepare_photo_gallery input_dir
   
     image_idx += 1
   end 
+  
+  # create gallery index.html
+  File.open("#{input_dir}/index.html", 'w', File::CREAT) do |file|
+    file << <<~FRONTMATTER
+                ---
+              
+                ---
+                {% include subindex-html-start.html name="#{album_name}" css_file="photo_gallery.css" description="#{album_description}" thumbnail="#{cover_image_url.gsub('.jpg', '-thumbnail.jpg')}" %}
+                                
+                {% assign photos = site.photos | where:'album', '#{album_id}' %}
+
+                <!-- cover image -->
+                {% assign cover_photo = site.photos | where: 'album', '#{album_id}' | where:'image_url', '#{cover_image_url}' %}
+
+                <center>
+                    <table>
+                      <tr>
+                        <td class="thumbnail">
+                          <a href="img/{{ cover_photo[0].image_url }}"><img src="img/{{ cover_photo[0].thumbnail_url }}" height="100px" alt="{{ cover_photo[0].description }}" /></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="description">
+                          {{ cover_photo[0].description }}
+                        </td>
+                      </tr>
+                    </table>
+                </center>
+              
+                <!-- album images -->
+                {% assign photo_index = 1 %}
+                {% for photo in photos %}
+                  {% if photo.image_url != '#{cover_image_url}' %}
+                    <table class="gallery-item" width="{{ photo.thumbnail_width }}">
+                      <tr>
+                        <td class="thumbnail">
+                          {% if photo_index == 1 %}
+                            <a href="slideshow/"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
+                          {% else %}
+                            <a href="slideshow/{{ photo_index }}"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
+                          {% endif %}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="description">
+                          {{ photo.description }}
+                        </td>
+                      </tr>
+                    </table>
+                  {% endif %}
+                  {% assign photo_index = photo_index | plus: 1 %}
+                {% endfor %}
+                              
+                {% include subindex-html-end.html %}
+                FRONTMATTER
+    file.chmod(0644)
+  end
 end 
 
 def _build
