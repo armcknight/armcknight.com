@@ -16,7 +16,7 @@
 		<meta property="og:title" content="Andrew McKnight - {{ include.name }}" />
 		<meta property="og:description" content="{{ include.description }}" />
 		
-		{% if page.thumbnail != undefined %}
+		{% if include.thumbnail != undefined %}
 			<meta property="og:image" content="/blog/img/{{ include.thumbnail }}" />
 		{% endif %}
 

@@ -218,7 +218,7 @@ def _prepare_photo_gallery input_dir
                 ---
               
                 ---
-                {% include subindex-html-start.html name="#{album_name}" css_file="photo_gallery.css" description="#{album_description}" thumbnail="#{cover_image_url.gsub('.jpg', '-thumbnail.jpg')}" %}
+                {% include subindex-html-start.html name="#{album_name}" css_file="photo_gallery.css" description="#{album_description}" thumbnail="http://armcknight.com/photos/#{album_id}/img/#{cover_image_url.gsub('.jpg', '-thumbnail.jpg')}" %}
                                 
                 {% assign photos = site.photos | where:'album', '#{album_id}' %}
 
