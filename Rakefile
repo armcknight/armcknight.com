@@ -57,8 +57,8 @@ def _prepare_photo_gallery input_dir
   album_yaml_url = "#{input_dir}/../../_albums/#{album_id}.html"
   if File.exist?(album_yaml_url) then
     album_front_matter = IO.readlines(album_yaml_url)
-    album_name = album_front_matter[1].gsub('name: ', '').chomp
-    album_description = album_front_matter[2].gsub('description: ', '').chomp
+    album_name = album_front_matter[1].gsub('name: ', '').chomp[1..-2]
+    album_description = album_front_matter[2].gsub('description: ', '').chomp[1..-2]
     cover_image_url = album_front_matter[3].gsub('cover_image_url: ', '').chomp
     puts "Album front matter exists...\nread album name: \"#{album_name}\"\ndescription: \"#{album_description}\"\ncover image thumbnail url: \"#{cover_image_url}\""
   else
@@ -72,8 +72,8 @@ def _prepare_photo_gallery input_dir
     File.open(album_yaml_url, 'w', File::CREAT) do |file|
       file << <<~FRONTMATTER
                 ---
-                name: #{album_name}
-                description: #{album_description}
+                name: "#{album_name}"
+                description: "#{album_description}"
                 cover_image_url: #{cover_image_url}
                 ---
                 FRONTMATTER
@@ -160,7 +160,10 @@ def _prepare_photo_gallery input_dir
     image_description = `exiftool -p '$description' #{url}`
     timestamp = `exiftool -p '$modifydate' #{url}`
     date = DateTime.strptime(timestamp, '%Y:%m:%d %H:%M:%S')
-    puts "overwriting image" if images[date] != nil
+    if images[date] != nil then
+      puts "Duplicate images at #{date}: #{images[date]} and #{image}."
+      exit 1
+    end
   
     # generate the thumbnail image now
     thumbnail_url = url.gsub('.jpg', '-thumbnail.jpg')
@@ -169,12 +172,9 @@ def _prepare_photo_gallery input_dir
     else
       sh "magick #{url} -resize x100 #{thumbnail_url}" unless File.exist?(thumbnail_url)
     end
-    thumbnail_width = `exiftool -p '$imageWidth' #{thumbnail_url}`
+    thumbnail_width = `exiftool -p '$imageWidth' #{thumbnail_url}`.strip
     thumbnail_width = 150 if thumbnail_width.to_i < 150
-    
-    image_width = `exiftool -p '$imageWidth' #{url}`
-    image_height = `exiftool -p '$imageHeight' #{url}`
-  
+      
     images[date] = { 
       'description' => image_description.strip, 
       'url' => image, 
@@ -194,11 +194,12 @@ def _prepare_photo_gallery input_dir
     thumbnail_url = image['thumbnail_url']
     thumbnail_width = image['thumbnail_width']
 
-    File.open("#{input_dir}/../../_photos/#{album_id}-#{image_idx}.html", 'w', File::CREAT) do |file|
+    File.open("#{input_dir}/../../_photos/#{album_id}-#{image_idx < 10 ? '0' + image_idx.to_s : image_idx.to_s}.html", 'w', File::CREAT) do |file|
       file << <<~FRONTMATTER
                 ---
+                index: #{image_idx}
                 image_url: #{url}
-                description: #{image_description}
+                description: "#{image_description}"
                 thumbnail_url: #{thumbnail_url}
                 thumbnail_width: #{thumbnail_width}
                 date: #{sortedKey.strftime("%B %e, %Y")}
@@ -220,8 +221,6 @@ def _prepare_photo_gallery input_dir
                 ---
                 {% include subindex-html-start.html name="#{album_name}" css_file="photo_gallery.css" description="#{album_description}" thumbnail="http://armcknight.com/photos/#{album_id}/img/#{cover_image_url.gsub('.jpg', '-thumbnail.jpg')}" %}
                                 
-                {% assign photos = site.photos | where:'album', '#{album_id}' %}
-
                 <!-- cover image -->
                 {% assign cover_photo = site.photos | where: 'album', '#{album_id}' | where:'image_url', '#{cover_image_url}' %}
 
@@ -242,7 +241,8 @@ def _prepare_photo_gallery input_dir
               
                 <!-- album images -->
                 {% assign photo_index = 1 %}
-                {% for photo in photos %}
+                {% assign photos_to_iterate = site.photos | where: 'album', '#{album_id}' | sort: 'index' %}
+                {% for photo in photos_to_iterate %}
                   {% if photo.image_url != '#{cover_image_url}' %}
                     <table class="gallery-item" width="{{ photo.thumbnail_width }}">
                       <tr>

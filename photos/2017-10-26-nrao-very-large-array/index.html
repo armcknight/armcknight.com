@@ -3,8 +3,6 @@
 ---
 {% include subindex-html-start.html name="NRAO Very Large Array" css_file="photo_gallery.css" description="On our drive from El Paso to Colorado, we decided to take a detour to the west to check out the National Radio Astronomical Observatory's Very Large Array installation. It is a tri-radial span of huge satellite dishes that spans up to 13 miles across in the high desert valley, with a network of rails that reconfigure their spacing to change the telescope's resolution, or move dishes to the maintenance bay. It is also home to the Bracewell Radio Sundial, the first and only of it's kind. Overall a totally worthwhile extra couple hours of driving to see such impressive engineering feats, and be reminded of all those that came before it." thumbnail="http://armcknight.com/photos/2017-10-26-nrao-very-large-array/img/IMG_0107-thumbnail.jpg" %}
                 
-{% assign photos = site.photos | where:'album', '2017-10-26-nrao-very-large-array' %}
-
 <!-- cover image -->
 {% assign cover_photo = site.photos | where: 'album', '2017-10-26-nrao-very-large-array' | where:'image_url', 'IMG_0107.jpg' %}
 
@@ -25,7 +23,8 @@
 
 <!-- album images -->
 {% assign photo_index = 1 %}
-{% for photo in photos %}
+{% assign photos_to_iterate = site.photos | where: 'album', '2017-10-26-nrao-very-large-array' | sort: 'index' %}
+{% for photo in photos_to_iterate %}
   {% if photo.image_url != 'IMG_0107.jpg' %}
     <table class="gallery-item" width="{{ photo.thumbnail_width }}">
       <tr>

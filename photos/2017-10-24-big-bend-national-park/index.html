@@ -3,8 +3,6 @@
 ---
 {% include subindex-html-start.html name="Big Bend National Park" css_file="photo_gallery.css" description="On our way across Texas, we took a short (for Texas; it was still 6 hours off-route!) detour to camp and hike at Big Bend, right where the U.S. meets Mexico at the Santa Elena canyon." thumbnail="http://armcknight.com/photos/2017-10-24-big-bend-national-park/img/IMG_0052-thumbnail.jpg" %}
                 
-{% assign photos = site.photos | where:'album', '2017-10-24-big-bend-national-park' %}
-
 <!-- cover image -->
 {% assign cover_photo = site.photos | where: 'album', '2017-10-24-big-bend-national-park' | where:'image_url', 'IMG_0052.jpg' %}
 
@@ -25,7 +23,8 @@
 
 <!-- album images -->
 {% assign photo_index = 1 %}
-{% for photo in photos %}
+{% assign photos_to_iterate = site.photos | where: 'album', '2017-10-24-big-bend-national-park' | sort: 'index' %}
+{% for photo in photos_to_iterate %}
   {% if photo.image_url != 'IMG_0052.jpg' %}
     <table class="gallery-item" width="{{ photo.thumbnail_width }}">
       <tr>
