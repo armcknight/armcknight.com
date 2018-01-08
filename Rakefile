@@ -46,6 +46,17 @@ task :publish do
   sh 'aws s3 sync _site/ s3://armcknight.com --exclude .git/ --profile default --acl public-read'
 end
 
+def _inject_values_into_template template_filename, filename, mapping
+  File.open("_templates/#{template_filename}", 'r') do |template_file|
+    File.open(filename, 'w', File::CREAT) do |file|
+      file << mapping.inject(template_file.read) do |filled, (item, value)|
+        filled.gsub("{{#{item}}}", value.to_s)
+      end
+      file.chmod(0644)
+    end
+  end
+end
+
 def _prepare_photo_gallery input_dir
   require 'date'
 
@@ -69,79 +80,24 @@ def _prepare_photo_gallery input_dir
     puts "Enter album cover image thumbnail url: "
     cover_image_url = STDIN.gets.chomp
   
-    File.open(album_yaml_url, 'w', File::CREAT) do |file|
-      file << <<~FRONTMATTER
-                ---
-                name: "#{album_name}"
-                description: "#{album_description}"
-                cover_image_url: #{cover_image_url}
-                ---
-                FRONTMATTER
-      file.chmod(0644)
-    end
+    _inject_values_into_template 'album.rb', album_yaml_url, {
+      'album_name' => album_name,
+      'album_description' => album_description,
+      'cover_image_url' => cover_image_url,
+    }
   end
 
   # create the slideshow
   slideshow_dir = "#{input_dir}/slideshow"
   sh "mkdir #{slideshow_dir}" unless Dir.exist?(slideshow_dir)
   slideshow_template = "#{slideshow_dir}/index.html"
-  File.open(slideshow_template, 'w', File::CREAT) do |file|
-    file << <<~FRONTMATTER
-                ---
-                paginate:
-                  collection: photos
-                  category: #{album_id}
-                  per_page: 1
-                  limit: false
-                  permalink: /:num/
-                ---
-                {% if paginator.page == 1 %}
-                  {% include subindex-html-start.html name="#{album_name}" css_file="slideshow_slide.css" description="#{album_description}" %}
-                {% else %}
-                  {% include subindex-html-start.html name="#{album_name}" css_file="slideshow_slide.css" description="#{album_description}" back_url="../.." %}
-                {% endif %}
-                
-                {% for photo in paginator.photos %}
-                  <center>
-                    <table>
-                      <tr>
-                        <td class="image">
-                          <a href="/photos/#{album_id}/img/{{ photo.image_url }}"><img src="/photos/#{album_id}/img/{{ photo.image_url }}" style="max-height: 80%; max-width: 80%;" /></a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="description">
-                          ({{ paginator.page }}/{{ paginator.total_photos }}): {{ photo.description }}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <center>
-                            {% if paginator.previous_page != nil %}
-                              {% if paginator.previous_page == 1 %}
-                                <a href="../">Previous</a>
-                              {% else %}
-                                <a href="../{{ paginator.previous_page }}">Previous</a>
-                              {% endif %}
-                            {% endif %}
-                            {% if paginator.next_page != nil %}
-                              {% if paginator.next_page == 2 %}
-                                <a href="{{ paginator.next_page }}">Next</a>
-                              {% else %}
-                                <a href="../{{ paginator.next_page }}">Next</a>
-                              {% endif %}
-                            {% endif %}
-                          </center>
-                        </td>
-                      </tr>
-                    </table>
-                  </center>
-                {% endfor %}
-                              
-                {% include subindex-html-end.html %}
-                FRONTMATTER
-    file.chmod(0644)
-  end
+  hash = {
+    'album_id' => album_id,
+    'album_name' => album_name,
+    'album_description' => album_description,        
+  }
+  puts hash
+  _inject_values_into_template 'slideshow.rb', slideshow_template, hash
 
   # move images to img/ subdirectory
   image_subdirectory = "#{input_dir}/img"
@@ -166,9 +122,9 @@ def _prepare_photo_gallery input_dir
     end
   
     # generate the thumbnail image now
-    thumbnail_url = url.gsub('.jpg', '-thumbnail.jpg')
+    thumbnail_url = url.downcase.gsub('.jpg', '-thumbnail.jpg')
     if File.exist?(thumbnail_url) then
-      puts "Thumbnail already exists for #{image}." 
+      puts "Thumbnail already exists for #{image}: #{thumbnail_url}." 
     else
       sh "magick #{url} -resize x100 #{thumbnail_url}" unless File.exist?(thumbnail_url)
     end
@@ -194,80 +150,28 @@ def _prepare_photo_gallery input_dir
     thumbnail_url = image['thumbnail_url']
     thumbnail_width = image['thumbnail_width']
 
-    File.open("#{input_dir}/../../_photos/#{album_id}-#{image_idx < 10 ? '0' + image_idx.to_s : image_idx.to_s}.html", 'w', File::CREAT) do |file|
-      file << <<~FRONTMATTER
-                ---
-                index: #{image_idx}
-                image_url: #{url}
-                description: "#{image_description}"
-                thumbnail_url: #{thumbnail_url}
-                thumbnail_width: #{thumbnail_width}
-                date: #{sortedKey.strftime("%B %e, %Y")}
-                album: #{album_id}
-                category: #{album_id}
-                ---
-                FRONTMATTER
-      file.chmod(0644)
-    end
+    filename = "#{input_dir}/../../_photos/#{album_id}-#{image_idx < 10 ? '0' + image_idx.to_s : image_idx.to_s}.html"
+    _inject_values_into_template 'image.rb', filename, {
+      'image_idx' => image_idx,
+      'url' => url,
+      'image_description' => image_description,
+      'thumbnail_url' => thumbnail_url,
+      'thumbnail_width' => thumbnail_width,
+      'date' => sortedKey.strftime("%B %e, %Y"),
+      'album_id' => album_id,
+    }
   
     image_idx += 1
   end 
   
   # create gallery index.html
-  File.open("#{input_dir}/index.html", 'w', File::CREAT) do |file|
-    file << <<~FRONTMATTER
-                ---
-              
-                ---
-                {% include subindex-html-start.html name="#{album_name}" css_file="photo_gallery.css" description="#{album_description}" thumbnail="http://armcknight.com/photos/#{album_id}/img/#{cover_image_url.gsub('.jpg', '-thumbnail.jpg')}" %}
-                                
-                <!-- cover image -->
-                {% assign cover_photo = site.photos | where: 'album', '#{album_id}' | where:'image_url', '#{cover_image_url}' %}
-
-                <center>
-                    <table>
-                      <tr>
-                        <td class="thumbnail">
-                          <a href="img/{{ cover_photo[0].image_url }}"><img src="img/{{ cover_photo[0].thumbnail_url }}" height="100px" alt="{{ cover_photo[0].description }}" /></a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="description">
-                          {{ cover_photo[0].description }}
-                        </td>
-                      </tr>
-                    </table>
-                </center>
-              
-                <!-- album images -->
-                {% assign photo_index = 1 %}
-                {% assign photos_to_iterate = site.photos | where: 'album', '#{album_id}' | sort: 'index' %}
-                {% for photo in photos_to_iterate %}
-                  {% if photo.image_url != '#{cover_image_url}' %}
-                    <table class="gallery-item" width="{{ photo.thumbnail_width }}">
-                      <tr>
-                        <td class="thumbnail">
-                          {% if photo_index == 1 %}
-                            <a href="slideshow/"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
-                          {% else %}
-                            <a href="slideshow/{{ photo_index }}"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
-                          {% endif %}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="description">
-                          {{ photo.description }}
-                        </td>
-                      </tr>
-                    </table>
-                  {% endif %}
-                  {% assign photo_index = photo_index | plus: 1 %}
-                {% endfor %}
-                              
-                {% include subindex-html-end.html %}
-                FRONTMATTER
-    file.chmod(0644)
-  end
+  _inject_values_into_template 'gallery.rb', "#{input_dir}/index.html", {
+    'album_name' => album_name,
+    'album_description' => album_description,
+    'album_id' => album_id,
+    'cover_image_thumbnail_url' => cover_image_url.gsub('.jpg', '-thumbnail.jpg'),
+    'cover_image_url' => cover_image_url,
+  }
 end 
 
 def _build
