@@ -1,0 +1,9 @@
+@import 'subpage';
+
+.timestamp {
+	@extend .caption;
+}
+
+.content {
+	@extend .text;
+}

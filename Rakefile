@@ -46,11 +46,32 @@ task :publish do
   sh 'aws s3 sync _site/ s3://armcknight.com --exclude .git/ --profile default --acl public-read'
 end
 
+desc 'Create a new item for _ideas collection.'
+task :idea,[:content] do |t, args|
+  time = Time.now
+  localized_date = time.strftime('%B %-d, %Y')
+  localized_time = time.strftime('%l:%M %p %Z').strip
+  utc = time.utc
+  utc_date = utc.strftime('%F')
+  utc_time = utc.strftime('%T').gsub(':', '-')
+  filename = utc_date + '-' + utc_time + '.html'
+  ideas_dir = '_ideas'
+  if !Dir.exist?(ideas_dir) then
+    sh "mkdir #{ideas_dir}"
+  end
+  path = [ideas_dir, filename].join('/')
+  _inject_values_into_template 'idea', path, {
+    'idea_content' => args[:content].to_s,
+    'created_date' => localized_date,
+    'created_time' => localized_time
+  }
+end
+
 def _inject_values_into_template template_filename, filename, mapping
   File.open("_templates/#{template_filename}", 'r') do |template_file|
     File.open(filename, 'w', File::CREAT) do |file|
       file << mapping.inject(template_file.read) do |filled, (item, value)|
-        filled.gsub("{{#{item}}}", value.to_s)
+        filled.gsub("$$#{item}$$", value.to_s)
       end
       file.chmod(0644)
     end
@@ -80,7 +101,7 @@ def _prepare_photo_gallery input_dir
     puts "Enter album cover image thumbnail url: "
     cover_image_url = STDIN.gets.chomp
   
-    _inject_values_into_template 'album.rb', album_yaml_url, {
+    _inject_values_into_template 'album', album_yaml_url, {
       'album_name' => album_name,
       'album_description' => album_description,
       'cover_image_url' => cover_image_url,
@@ -97,7 +118,7 @@ def _prepare_photo_gallery input_dir
     'album_description' => album_description,        
   }
   puts hash
-  _inject_values_into_template 'slideshow.rb', slideshow_template, hash
+  _inject_values_into_template 'slideshow', slideshow_template, hash
 
   # move images to img/ subdirectory
   image_subdirectory = "#{input_dir}/img"
@@ -151,7 +172,7 @@ def _prepare_photo_gallery input_dir
     thumbnail_width = image['thumbnail_width']
 
     filename = "#{input_dir}/../../_photos/#{album_id}-#{image_idx < 10 ? '0' + image_idx.to_s : image_idx.to_s}.html"
-    _inject_values_into_template 'image.rb', filename, {
+    _inject_values_into_template 'image', filename, {
       'image_idx' => image_idx,
       'url' => url,
       'image_description' => image_description,
@@ -165,7 +186,7 @@ def _prepare_photo_gallery input_dir
   end 
   
   # create gallery index.html
-  _inject_values_into_template 'gallery.rb', "#{input_dir}/index.html", {
+  _inject_values_into_template 'gallery', "#{input_dir}/index.html", {
     'album_name' => album_name,
     'album_description' => album_description,
     'album_id' => album_id,

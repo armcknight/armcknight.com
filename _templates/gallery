@@ -1,10 +1,10 @@
 ---
 
 ---
-{% include subindex-html-start.html name="{{album_name}}" css_file="photo_gallery.css" description="{{album_description}}" thumbnail="http://armcknight.com/photos/{{album_id}}/img/{{cover_image_thumbnail_url}}" %}
+{% include subindex-html-start.html name="$$album_name$$" css_file="photo_gallery.css" description="$$album_description$$" thumbnail="http://armcknight.com/photos/$$album_id$$/img/$$cover_image_thumbnail_url$$" %}
                 
 <!-- cover image -->
-{% assign cover_photo = site.photos | where: 'album', '{{album_id}}' | where:'image_url', '{{cover_image_url}}' %}
+{% assign cover_photo = site.photos | where: 'album', '$$album_id$$' | where:'image_url', '$$cover_image_url$$' %}
 
 <center>
     <table>
@@ -23,9 +23,9 @@
 
 <!-- album images -->
 {% assign photo_index = 1 %}
-{% assign photos_to_iterate = site.photos | where: 'album', '{{album_id}}' | sort: 'index' %}
+{% assign photos_to_iterate = site.photos | where: 'album', '$$album_id$$' | sort: 'index' %}
 {% for photo in photos_to_iterate %}
-  {% if photo.image_url != '{{cover_image_url}}' %}
+  {% if photo.image_url != '$$cover_image_url$$' %}
     <table class="gallery-item" width="{{ photo.thumbnail_width }}">
       <tr>
         <td class="thumbnail">
