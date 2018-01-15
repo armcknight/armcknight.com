@@ -176,5 +176,5 @@ end
 
 def _build
 	sh 'sass --update css'
-	sh 'jekyll build'
+	sh 'jekyll build --incremental'
 end
