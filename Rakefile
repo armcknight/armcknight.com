@@ -134,6 +134,15 @@ def _prepare_photo_gallery input_dir
   Dir.new(image_subdirectory).each do |image|
     next if image == '.' || image == '..' || image == '.DS_Store' || image.include?('thumbnail')
     url = "#{image_subdirectory}/#{image}"
+    
+    # downcase extensions
+    if image.include?('.JPG') then
+      puts "Downcasing extension for #{image}"
+      new_url = url.gsub('.JPG', '.jpg')
+      File.rename(url, new_url)
+      url = new_url
+    end
+    
     image_description = `exiftool -p '$description' #{url}`
     timestamp = `exiftool -p '$modifydate' #{url}`
     date = DateTime.strptime(timestamp, '%Y:%m:%d %H:%M:%S')
@@ -143,7 +152,7 @@ def _prepare_photo_gallery input_dir
     end
   
     # generate the thumbnail image now
-    thumbnail_url = url.downcase.gsub('.jpg', '-thumbnail.jpg')
+    thumbnail_url = url.gsub('.jpg', '-thumbnail.jpg')
     if File.exist?(thumbnail_url) then
       puts "Thumbnail already exists for #{image}: #{thumbnail_url}." 
     else
