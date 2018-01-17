@@ -9,38 +9,33 @@ paginate:
 {% endif %}
 
 {% for idea in paginator.ideas %}
-  <center>
-    <table>
-      <tr>
-				<td class="timestamp">
-	        {{ idea.created_date }}, {{ idea.created_time }}
-        </td>
-				<td class="content">
-	        {{ idea.idea_content }}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <center>
-            {% if paginator.previous_page != nil %}
-              {% if paginator.previous_page == 1 %}
-                <a href="../">Previous</a>
-              {% else %}
-                <a href="../{{ paginator.previous_page }}">Previous</a>
-              {% endif %}
+<p>
+  <table>
+    <tr>
+			{% include idea-cells.html created_date=idea.created_date created_time=idea.created_time idea_content=idea.idea_content %}
+    </tr>
+    <tr>
+      <td>
+        <center>
+          {% if paginator.previous_page != nil %}
+            {% if paginator.previous_page == 1 %}
+              <a href="../">Previous</a>
+            {% else %}
+              <a href="../{{ paginator.previous_page }}">Previous</a>
             {% endif %}
-            {% if paginator.next_page != nil %}
-              {% if paginator.next_page == 2 %}
-                <a href="{{ paginator.next_page }}">Next</a>
-              {% else %}
-                <a href="../{{ paginator.next_page }}">Next</a>
-              {% endif %}
+          {% endif %}
+          {% if paginator.next_page != nil %}
+            {% if paginator.next_page == 2 %}
+              <a href="{{ paginator.next_page }}">Next</a>
+            {% else %}
+              <a href="../{{ paginator.next_page }}">Next</a>
             {% endif %}
-          </center>
-        </td>
-      </tr>
-    </table>
-  </center>
+          {% endif %}
+        </center>
+      </td>
+    </tr>
+  </table>
+</p>
 {% endfor %}
               
 {% include subindex-html-end.html %}

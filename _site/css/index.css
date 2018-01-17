@@ -50,14 +50,16 @@ a:active {
   font: 400 40pt "Josefin Sans", sans-serif;
   background: url(../img/title-background-plants.png) no-repeat;
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; }
+  -webkit-text-fill-color: transparent;
+  padding-bottom: 50px; }
 
-a, a:hover, a:visited, a:active {
+.index_header {
+  font: 300 24pt "Josefin Sans", sans-serif;
+  text-align: left; }
+
+.menu_item, .menu_item:hover, .menu_item:visited, .menu_item:active {
   font-family: "Josefin Sans", sans-serif;
-  font-size: 24pt;
+  font-size: 14pt;
   text-decoration: none; }
-
-body div {
-  width: 500px; }
 
 /*# sourceMappingURL=index.css.map */

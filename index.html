@@ -1,3 +1,6 @@
+---
+
+---
 <!doctype html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
 
@@ -12,27 +15,75 @@
 		<meta name="copyright" content="Andrew McKnight Copyright (c) 2016"/>
 
 		<link rel="stylesheet" href="css/index.css"/>
+		<link rel="stylesheet" href="css/ideas.css"/>
+		<link rel="stylesheet" href="css/photos.css"/>
 	</head>
 	
 	<body>
 		<center>
-			<div>
-				<span class="fancy-title">Andrew M<sup style="font-size: 38pt;">c</sup>Knight</span>
-			</div>
-
-			<div>
-				<img class="squircle" src="img/AndrewMcKnight.jpg" width="500"/>
-
+			<div style="width: 80%">
 				<table width="100%">
 					<tr>
-						<td class="center">
-							<a href="about-me/">About Me</a>
+						<td style="vertical-align: top;">
+							<table>
+								<tr>
+									<td>
+										<img class="squircle" src="img/AndrewMcKnight.jpg" width="150"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<a href="about-me/" class="menu_item">About Me</a>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<a href="ideas/" class="menu_item">Ideas</a>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<a href="photos/" class="menu_item">Photos</a>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<a href="portfolio/" class="menu_item">Portfolio</a>
+									</td>
+								</tr>
+							</table>
 						</td>
-						<td class="center">
-							<a href="photos/">Photos</a>
-						</td>
-						<td class="center">
-							<a href="portfolio/">Portfolio</a>
+						<td>
+							<table>				
+								<tr>
+									<td class="fancy-title">
+											Andrew M<sup style="font-size: 35pt;">c</sup>Knight
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-bottom: 50px;">
+										{% assign idea = site.ideas.last %}
+										<table>
+											<th class="index_header" colspan="2">Latest ideas:</th>
+											<tr>
+												{% include idea-cells.html created_date=idea.created_date created_time=idea.created_time idea_content=idea.idea_content %}
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										{% assign album = site.albums.last  %}
+										<table>
+											<th class="index_header" colspan="2">Latest photos:</th>
+											<tr>
+												{% assign album_name = 'photos/' | append: album.path | remove: '_albums/' | remove: '.html' %}
+												{% include photo_album_cells.html album_name=album_name cover_image_url=album.cover_image_url description=album.description name=album.name %}
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
 						</td>
 					</tr>
 				</table>
