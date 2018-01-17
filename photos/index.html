@@ -9,17 +9,7 @@
 			<div>
 				<table>
 					<tr>
-						<td>
-							<img src="{{ album_name }}/img/{{album.cover_image_url | remove: '.jpg' | append: '-thumbnail.jpg' }}" />
-						</td>
-						<td>
-							<p>
-								<a href="{{ album_name }}/">{{ album.name }}</a>
-							</p>
-							<p>
-								{{ album.description }}
-							</p>
-						</td>
+						{% include photo_album_cells.html album_name=album_name cover_image_url=album.cover_image_url description=album.description name=album.name %}
 					</tr>
 				</table>
 			</div>

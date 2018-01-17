@@ -1,0 +1,9 @@
+<td class="album_cover_thumbnail">
+	<img src="{{ include.album_name }}/img/{{include.cover_image_url | remove: '.jpg' | append: '-thumbnail.jpg' }}" />
+</td>
+<td class="album_details">
+	<a href="{{ include.album_name }}/">{{ include.name }}</a>
+	<p>
+		{{ include.description }}
+	</p>
+</td>

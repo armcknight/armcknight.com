@@ -67,4 +67,10 @@ body {
   text-align: justify;
   text-justify: inter-word; }
 
+.album_cover_thumbnail {
+  vertical-align: top; }
+
+.album_details {
+  vertical-align: top; }
+
 /*# sourceMappingURL=photos.css.map */
