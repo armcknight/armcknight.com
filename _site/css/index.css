@@ -50,8 +50,7 @@ a:active {
   font: 400 40pt "Josefin Sans", sans-serif;
   background: url(../img/title-background-plants.png) no-repeat;
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  padding-bottom: 50px; }
+  -webkit-text-fill-color: transparent; }
 
 .index_header {
   font: 300 24pt "Josefin Sans", sans-serif;
