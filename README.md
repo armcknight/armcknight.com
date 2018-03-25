@@ -6,7 +6,7 @@ source for armcknight.com
 
 The blog is built from markdown documents for individual posts into HTML using Jekyll. Then, posts are composed into `index.html`. 
 
-The entire site is run through Jekyll for simplicity, and the generated `_site` directory is pushed to the appropriate branch for GitHub pages to render.
+The entire site is run through Jekyll for simplicity, and the generated `_site` directory (`.gitignore`d) is pushed to the appropriate branch for GitHub pages to render.
 
 ### SASS
 
