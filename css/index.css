@@ -47,10 +47,7 @@ a:active {
   border-radius: 10px; }
 
 .fancy-title {
-  font: 400 40pt "Josefin Sans", sans-serif;
-  background: url(../img/title-background-plants.png) no-repeat;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; }
+  font: 400 40pt "Josefin Sans", sans-serif; }
 
 .index_header {
   font: 300 24pt "Josefin Sans", sans-serif;
