@@ -80,6 +80,7 @@ end
 
 def _prepare_photo_gallery input_dir
   require 'date'
+  require 'open3'
 
   # get and check some required paths
   raise "Image directory does not exist (#{input_dir})." unless Dir.exist?(input_dir)
@@ -119,6 +120,18 @@ def _prepare_photo_gallery input_dir
   }
   puts hash
   _inject_values_into_template 'slideshow', slideshow_template, hash
+  
+  # lowercase filename extensions
+  Dir.new(input_dir).each do |image|
+    # downcase extensions
+    if image.include?('.JPG') then
+      next if image == '.' || image == '..' || image == '.DS_Store' || image.include?('thumbnail')
+      puts "Downcasing extension for #{image}"
+      url = "#{input_dir}/#{image}"
+      new_url = url.gsub('.JPG', '.jpg')
+      File.rename(url, new_url)
+    end
+  end
 
   # move images to img/ subdirectory
   image_subdirectory = "#{input_dir}/img"
@@ -135,15 +148,18 @@ def _prepare_photo_gallery input_dir
     next if image == '.' || image == '..' || image == '.DS_Store' || image.include?('thumbnail')
     url = "#{image_subdirectory}/#{image}"
     
-    # downcase extensions
-    if image.include?('.JPG') then
-      puts "Downcasing extension for #{image}"
-      new_url = url.gsub('.JPG', '.jpg')
-      File.rename(url, new_url)
-      url = new_url
+    image_description = `exiftool -p '$description' #{url}`
+    if image_description == "" then
+      Open3.popen3("open #{url}") do |i,o,e,t|
+        puts "Enter description for #{url}:"
+        image_description = STDIN.gets.chomp
+        if image_description != "" then
+          sh "exiftool -description=\"#{image_description}\"  -overwrite_original #{url}"
+        end
+        exit_status = t.value
+      end
     end
     
-    image_description = `exiftool -p '$description' #{url}`
     timestamp = `exiftool -p '$modifydate' #{url}`
     date = DateTime.strptime(timestamp, '%Y:%m:%d %H:%M:%S')
     if images[date] != nil then
