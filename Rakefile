@@ -84,6 +84,18 @@ def _prepare_photo_gallery input_dir
 
   # get and check some required paths
   raise "Image directory does not exist (#{input_dir})." unless Dir.exist?(input_dir)
+  
+  # lowercase filename extensions
+  Dir.new(input_dir).each do |image|
+    # downcase extensions
+    if image.include?('.JPG') then
+      next if image == '.' || image == '..' || image == '.DS_Store'
+      puts "Downcasing extension for #{image}"
+      url = "#{input_dir}/#{image}"
+      new_url = url.gsub('.JPG', '.jpg')
+      File.rename(url, new_url)
+    end
+  end
 
   # generate the yaml front matter for the album
   album_id = input_dir.split('/').last
@@ -120,18 +132,6 @@ def _prepare_photo_gallery input_dir
   }
   puts hash
   _inject_values_into_template 'slideshow', slideshow_template, hash
-  
-  # lowercase filename extensions
-  Dir.new(input_dir).each do |image|
-    # downcase extensions
-    if image.include?('.JPG') then
-      next if image == '.' || image == '..' || image == '.DS_Store' || image.include?('thumbnail')
-      puts "Downcasing extension for #{image}"
-      url = "#{input_dir}/#{image}"
-      new_url = url.gsub('.JPG', '.jpg')
-      File.rename(url, new_url)
-    end
-  end
 
   # move images to img/ subdirectory
   image_subdirectory = "#{input_dir}/img"
