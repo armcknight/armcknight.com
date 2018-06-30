@@ -4,5 +4,5 @@ collections:
   ideas:
 url: http://armcknight.com
 exclude: [ Rakefile, README.md, .gitignore ]
-gems:
+plugins:
   - octopress-paginate
