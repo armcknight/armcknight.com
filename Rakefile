@@ -152,7 +152,7 @@ def _prepare_photo_gallery input_dir
     if image_description == "" then
       Open3.popen3("open #{url}") do |i,o,e,t|
         puts "Enter description for #{url}:"
-        image_description = STDIN.gets.chomp
+        image_description = STDIN.gets.chomp.gsub('"', '\'')
         if image_description != "" then
           sh "exiftool -description=\"#{image_description}\"  -overwrite_original #{url}"
         end
