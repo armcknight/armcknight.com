@@ -188,6 +188,10 @@ def _prepare_photo_gallery input_dir
       puts "Duplicate images at #{date}: #{images[date]} and #{image}."
       exit 1
     end
+    
+    # wipe exif orientation and thumbnail
+    `exiftool -Orientation="" -overwrite_original #{url}`
+    `exiftool '-ThumbnailImage<=' -overwrite_original #{url}`
   
     # generate the thumbnail image now
     thumbnail_url = url.gsub('.jpg', '-thumbnail.jpg')
