@@ -1,0 +1,49 @@
+---
+
+---
+{% include subindex-html-start.html name="Moab, Arches and Canyonlands National Parks and Antelope Canyon" css_file="photo_gallery.css" description="We took a week of vacation to drive to Utah and hike around Arches and Canyonlands National Parks, with a side road trip to Antelope Canyon in Arizona." thumbnail="http://armcknight.com/photos/2018-03-22-moab-arches-canyonlands-and-antelope-canyon/img/IMG_5942-thumbnail.jpg" %}
+                
+<!-- cover image -->
+{% assign cover_photo = site.photos | where: 'album', '2018-03-22-moab-arches-canyonlands-and-antelope-canyon' | where:'image_url', 'IMG_5942.jpg' %}
+
+<center>
+    <table>
+      <tr>
+        <td class="thumbnail">
+          <a href="img/{{ cover_photo[0].image_url }}"><img src="img/{{ cover_photo[0].thumbnail_url }}" height="100px" alt="{{ cover_photo[0].description }}" /></a>
+        </td>
+      </tr>
+      <tr>
+        <td class="description">
+          {{ cover_photo[0].description }}
+        </td>
+      </tr>
+    </table>
+</center>
+
+<!-- album images -->
+{% assign photo_index = 1 %}
+{% assign photos_to_iterate = site.photos | where: 'album', '2018-03-22-moab-arches-canyonlands-and-antelope-canyon' | sort: 'index' %}
+{% for photo in photos_to_iterate %}
+  {% if photo.image_url != 'IMG_5942.jpg' %}
+    <table class="gallery-item" width="{{ photo.thumbnail_width }}">
+      <tr>
+        <td class="thumbnail">
+          {% if photo_index == 1 %}
+            <a href="slideshow/"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
+          {% else %}
+            <a href="slideshow/{{ photo_index }}"><img src="img/{{ photo.thumbnail_url }}" height="100px" alt="{{ photo.description }}" /></a>
+          {% endif %}
+        </td>
+      </tr>
+      <tr>
+        <td class="description">
+          {{ photo.description }}
+        </td>
+      </tr>
+    </table>
+  {% endif %}
+  {% assign photo_index = photo_index | plus: 1 %}
+{% endfor %}
+              
+{% include subindex-html-end.html %}
