@@ -9,6 +9,11 @@ task :build do
 	_build
 end
 
+desc 'Edit the EXIF description for each image in a directory.'
+task :describe_photos,[:dir] do |t, args|
+  _describe_photos args[:dir]
+end
+
 desc 'Build everything necessary to render a photo gallery from a directory of images: build Jekyll YAML front matter for album and each photo, render thumbnails, and an index for the gallery. At the end, runs everything in `rake build`.'
 task :prepare_photo_gallery,[:dir] do |t, args|
   _prepare_photo_gallery args[:dir]
@@ -67,6 +72,34 @@ task :idea,[:content] do |t, args|
   }
 end
 
+def _describe_photos input_dir
+  require 'open3'
+
+  # get and check some required paths
+  raise "Image directory does not exist (#{input_dir})." unless Dir.exist?(input_dir)
+  
+  image_subdirectory = "#{input_dir}/img"
+  if !Dir.exist?(image_subdirectory) then
+    image_subdirectory = "#{input_dir}"
+  end
+  
+  Dir.new(image_subdirectory).each do |image|
+    next if image == '.' || image == '..' || image == '.DS_Store' || image.include?('thumbnail')
+    url = "#{image_subdirectory}/#{image}"
+  
+    if image_description == "" then
+      Open3.popen3("open #{url}") do |i,o,e,t|
+        puts "Enter description for #{url}:"
+        image_description = STDIN.gets.chomp.gsub('"', '\'')
+        if image_description != "" then
+          sh "exiftool -description=\"#{image_description}\" -overwrite_original #{url}"
+        end
+        exit_status = t.value
+      end
+    end
+  end
+end
+
 def _inject_values_into_template template_filename, filename, mapping
   File.open("_templates/#{template_filename}", 'r') do |template_file|
     File.open(filename, 'w', File::CREAT) do |file|
@@ -80,7 +113,6 @@ end
 
 def _prepare_photo_gallery input_dir
   require 'date'
-  require 'open3'
 
   # get and check some required paths
   raise "Image directory does not exist (#{input_dir})." unless Dir.exist?(input_dir)
@@ -149,16 +181,6 @@ def _prepare_photo_gallery input_dir
     url = "#{image_subdirectory}/#{image}"
     
     image_description = `exiftool -p '$description' #{url}`
-    if image_description == "" then
-      Open3.popen3("open #{url}") do |i,o,e,t|
-        puts "Enter description for #{url}:"
-        image_description = STDIN.gets.chomp.gsub('"', '\'')
-        if image_description != "" then
-          sh "exiftool -description=\"#{image_description}\"  -overwrite_original #{url}"
-        end
-        exit_status = t.value
-      end
-    end
     
     timestamp = `exiftool -p '$modifydate' #{url}`
     date = DateTime.strptime(timestamp, '%Y:%m:%d %H:%M:%S')
