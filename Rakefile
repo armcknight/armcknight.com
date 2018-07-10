@@ -111,27 +111,7 @@ def _inject_values_into_template template_filename, filename, mapping
   end
 end
 
-def _prepare_photo_gallery input_dir
-  require 'date'
-
-  # get and check some required paths
-  raise "Image directory does not exist (#{input_dir})." unless Dir.exist?(input_dir)
-  
-  # lowercase filename extensions
-  Dir.new(input_dir).each do |image|
-    # downcase extensions
-    if image.include?('.JPG') then
-      next if image == '.' || image == '..' || image == '.DS_Store'
-      puts "Downcasing extension for #{image}"
-      url = "#{input_dir}/#{image}"
-      new_url = url.gsub('.JPG', '.jpg')
-      File.rename(url, new_url)
-    end
-  end
-
-  # generate the yaml front matter for the album
-  album_id = input_dir.split('/').last
-  album_yaml_url = "#{input_dir}/../../_albums/#{album_id}.html"
+def _generate_album_front_matter album_yaml_url, input_dir
   if File.exist?(album_yaml_url) then
     album_front_matter = IO.readlines(album_yaml_url)
     album_name = album_front_matter[1].gsub('name: ', '').chomp[1..-2]
@@ -139,6 +119,7 @@ def _prepare_photo_gallery input_dir
     cover_image_url = album_front_matter[3].gsub('cover_image_url: ', '').chomp
     puts "Album front matter exists...\nread album name: \"#{album_name}\"\ndescription: \"#{album_description}\"\ncover image thumbnail url: \"#{cover_image_url}\""
   else
+    puts "Gathering album information for images in #{input_dir}:"
     puts "Enter album name: "
     album_name = STDIN.gets.chomp
     puts "Enter album description: "
@@ -146,17 +127,18 @@ def _prepare_photo_gallery input_dir
     puts "Enter album cover image thumbnail url: "
     cover_image_url = STDIN.gets.chomp
   
-    _inject_values_into_template 'album', album_yaml_url, {
+    front_matter = {
       'album_name' => album_name,
       'album_description' => album_description,
       'cover_image_url' => cover_image_url,
     }
+    _inject_values_into_template 'album', album_yaml_url, front_matter
   end
+  return album_name, album_description, cover_image_url
+end
 
-  # create the slideshow
-  slideshow_dir = "#{input_dir}/slideshow"
+def _generate_slideshow slideshow_dir, album_id, album_name, album_description, slideshow_template
   sh "mkdir #{slideshow_dir}" unless Dir.exist?(slideshow_dir)
-  slideshow_template = "#{slideshow_dir}/index.html"
   hash = {
     'album_id' => album_id,
     'album_name' => album_name,
@@ -164,54 +146,27 @@ def _prepare_photo_gallery input_dir
   }
   puts hash
   _inject_values_into_template 'slideshow', slideshow_template, hash
+end
 
-  # move images to img/ subdirectory
-  image_subdirectory = "#{input_dir}/img"
-  if Dir.exist?(image_subdirectory) then
-    puts "img/ subdirectory already exists, working with whatever images are in there."
+def _clean_exif image_url
+  # wipe exif orientation and thumbnail
+  `exiftool -Orientation="" -overwrite_original #{image_url}`
+  `exiftool '-ThumbnailImage<=' -overwrite_original #{image_url}`
+end
+
+def _generate_thumbnail image, thumbnail_url, url
+  if File.exist?(thumbnail_url) then
+    puts "Thumbnail already exists for #{image}: #{thumbnail_url}." 
   else
-    sh "mkdir #{image_subdirectory}"
-    sh "mv #{input_dir}/*.jpg #{image_subdirectory}"
+    sh "magick #{url} -resize x100 #{thumbnail_url}" unless File.exist?(thumbnail_url)
   end
-
-  # gather information about the images to display and generate thumbnails
-  images = Hash.new
-  Dir.new(image_subdirectory).each do |image|
-    next if image == '.' || image == '..' || image == '.DS_Store' || image.include?('thumbnail')
-    url = "#{image_subdirectory}/#{image}"
-    
-    image_description = `exiftool -p '$description' #{url}`
-    
-    timestamp = `exiftool -p '$modifydate' #{url}`
-    date = DateTime.strptime(timestamp, '%Y:%m:%d %H:%M:%S')
-    if images[date] != nil then
-      puts "Duplicate images at #{date}: #{images[date]} and #{image}."
-      exit 1
-    end
-    
-    # wipe exif orientation and thumbnail
-    `exiftool -Orientation="" -overwrite_original #{url}`
-    `exiftool '-ThumbnailImage<=' -overwrite_original #{url}`
   
-    # generate the thumbnail image now
-    thumbnail_url = url.gsub('.jpg', '-thumbnail.jpg')
-    if File.exist?(thumbnail_url) then
-      puts "Thumbnail already exists for #{image}: #{thumbnail_url}." 
-    else
-      sh "magick #{url} -resize x100 #{thumbnail_url}" unless File.exist?(thumbnail_url)
-    end
-    thumbnail_width = `exiftool -p '$imageWidth' #{thumbnail_url}`.strip
-    thumbnail_width = 150 if thumbnail_width.to_i < 150
-      
-    images[date] = { 
-      'description' => image_description.strip, 
-      'url' => image, 
-      'thumbnail_url' => thumbnail_url.split('/').last,
-      'thumbnail_width' => thumbnail_width,
-    }
-  end
+  thumbnail_width = `exiftool -p '$imageWidth' #{thumbnail_url}`.strip
+  thumbnail_width = 150 if thumbnail_width.to_i < 150
+  thumbnail_width
+end
 
-  # generate the yaml front matter for each picture
+def _generate_photo_front_matter images, input_dir, album_id
   image_idx = 0
   images.keys.sort.each do |sortedKey|
     image = images[sortedKey]
@@ -234,7 +189,76 @@ def _prepare_photo_gallery input_dir
     }
   
     image_idx += 1
-  end 
+  end
+end
+
+def _process_photos image_subdirectory, input_dir, album_id
+  images = Hash.new
+  Dir.new(image_subdirectory).each do |image|
+    next if image == '.' || image == '..' || image == '.DS_Store' || image.include?('thumbnail')
+    
+    url = "#{image_subdirectory}/#{image}"
+    image_description = `exiftool -p '$description' #{url}`
+    timestamp = `exiftool -p '$modifydate' #{url}`
+    date = DateTime.strptime(timestamp, '%Y:%m:%d %H:%M:%S')
+    thumbnail_url = url.gsub('.jpg', '-thumbnail.jpg')
+    
+    if images[date] != nil then
+      puts "Duplicate images at #{date}: #{images[date]} and #{image}."
+      exit 1
+    end
+    
+    _clean_exif url
+  
+    thumbnail_width = _generate_thumbnail image, thumbnail_url, url
+      
+    images[date] = { 
+      'description' => image_description.strip, 
+      'url' => image, 
+      'thumbnail_url' => thumbnail_url.split('/').last,
+      'thumbnail_width' => thumbnail_width,
+    }
+  end
+
+  _generate_photo_front_matter images, input_dir, album_id
+end
+
+def _prepare_photo_gallery input_dir
+  require 'date'
+
+  # get and check some required paths
+  raise "Image directory does not exist (#{input_dir})." unless Dir.exist?(input_dir)
+  
+  album_id = input_dir.split('/').last
+  album_yaml_url = "#{input_dir}/../../_albums/#{album_id}.html"
+  slideshow_dir = "#{input_dir}/slideshow"
+  slideshow_template = "#{slideshow_dir}/index.html"
+  image_subdirectory = "#{input_dir}/img"
+  
+  # lowercase filename extensions
+  Dir.new(input_dir).each do |image|
+    # downcase extensions
+    if image.include?('.JPG') then
+      next if image == '.' || image == '..' || image == '.DS_Store'
+      puts "Downcasing extension for #{image}"
+      url = "#{input_dir}/#{image}"
+      new_url = url.gsub('.JPG', '.jpg')
+      File.rename(url, new_url)
+    end
+  end
+
+  album_name, album_description, cover_image_url = _generate_album_front_matter album_yaml_url, input_dir
+  _generate_slideshow slideshow_dir, album_id, album_name, album_description, slideshow_template
+
+  # move images to img/ subdirectory
+  if Dir.exist?(image_subdirectory) then
+    puts "img/ subdirectory already exists, working with whatever images are in there."
+  else
+    sh "mkdir #{image_subdirectory}"
+    sh "mv #{input_dir}/*.jpg #{image_subdirectory}"
+  end
+
+  _process_photos image_subdirectory, input_dir, album_id
   
   # create gallery index.html
   _inject_values_into_template 'gallery', "#{input_dir}/index.html", {
