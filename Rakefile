@@ -48,7 +48,7 @@ namespace :photos do
   end
 
   desc 'Move photos to correct subdirectory (created if needed), extract necessary EXIF info for yaml front matter, and generate thumbnails.'
-  task :process_photos, [:dir] do
+  task :process_photos, [:dir] do |t, args|
     _process_photos args[:dir]
   end
 
@@ -73,15 +73,18 @@ namespace :photos do
     # get and check some required paths
     raise "Image directory does not exist (#{input_dir})." unless Dir.exist?(input_dir)
   
-    image_subdirectory = "#{input_dir}/img"
+    album_id, album_yaml_url, slideshow_dir, slideshow_template, image_subdirectory = _construct_paths input_dir
+
     if !Dir.exist?(image_subdirectory) then
       image_subdirectory = "#{input_dir}"
     end
   
     Dir.new(image_subdirectory).each do |image|
       next if image == '.' || image == '..' || image == '.DS_Store' || image.include?('thumbnail')
+
       url = "#{image_subdirectory}/#{image}"
-  
+      image_description = `exiftool -p '$description' #{url}`
+
       if image_description == "" then
         Open3.popen3("open #{url}") do |i,o,e,t|
           puts "Enter description for #{url}:"
@@ -155,6 +158,8 @@ namespace :photos do
   end
 
   def _process_photos input_dir
+    require 'date'
+
     album_id, album_yaml_url, slideshow_dir, slideshow_template, image_subdirectory = _construct_paths input_dir
   
     # lowercase filename extensions
@@ -251,8 +256,6 @@ namespace :photos do
   end
 
   def _prepare_photo_gallery input_dir
-    require 'date'
-
     album_id, album_yaml_url, slideshow_dir, slideshow_template, image_subdirectory = _construct_paths input_dir
   
     album_name, album_description, cover_image_url = _generate_album_front_matter album_yaml_url, input_dir
