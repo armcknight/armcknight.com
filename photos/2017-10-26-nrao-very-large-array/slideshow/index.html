@@ -16,16 +16,6 @@ paginate:
   <center>
     <table>
       <tr>
-        <td class="image">
-          <a href="/photos/2017-10-26-nrao-very-large-array/img/{{ photo.image_url }}"><img src="/photos/2017-10-26-nrao-very-large-array/img/{{ photo.image_url }}" style="max-height: 80%; max-width: 80%;" /></a>
-        </td>
-      </tr>
-      <tr>
-        <td class="description">
-          ({{ paginator.page }}/{{ paginator.total_photos }}): {{ photo.description }}
-        </td>
-      </tr>
-      <tr>
         <td>
           <center>
             {% if paginator.previous_page != nil %}
@@ -43,6 +33,16 @@ paginate:
               {% endif %}
             {% endif %}
           </center>
+        </td>
+      </tr>
+      <tr>
+        <td class="description">
+          ({{ paginator.page }}/{{ paginator.total_photos }}): {{ photo.description }}
+        </td>
+      </tr>
+      <tr>
+        <td class="image">
+          <a href="/photos/2017-10-26-nrao-very-large-array/img/{{ photo.image_url }}"><img src="/photos/2017-10-26-nrao-very-large-array/img/{{ photo.image_url }}" style="max-height: 80%; max-width: 80%;" /></a>
         </td>
       </tr>
     </table>
