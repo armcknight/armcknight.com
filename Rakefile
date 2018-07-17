@@ -30,7 +30,7 @@ namespace :dev do
   desc 'Push the git repo to remote and sync the compiled site to S3.'
   task :publish do
     sh 'git push origin'
-    sh 'aws s3 sync _site/ s3://armcknight.com --exclude .git/ --profile default --acl public-read'
+    sh 'aws s3 sync _site/ s3://armcknight.com --exclude .git/ --profile armcknight --acl public-read'
   end
 
   def _build
