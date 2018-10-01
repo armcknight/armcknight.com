@@ -1,5 +1,5 @@
 //
-//  Meal.swift
+//  Wit.swift
 //  App
 //
 //  Created by Andrew McKnight on 9/30/18.
@@ -9,7 +9,7 @@ import FluentPostgreSQL
 import Foundation
 import Vapor
 
-final class Meal: PostgreSQLModel {
+final class Wit: PostgreSQLModel {
     var id: Int?
     var description: String
     
@@ -18,6 +18,6 @@ final class Meal: PostgreSQLModel {
     }
 }
 
-extension Meal: Migration {}
-extension Meal: Content {}
-extension Meal: Parameter {}
+extension Wit: Migration {}
+extension Wit: Content {}
+extension Wit: Parameter {}

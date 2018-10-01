@@ -5,9 +5,9 @@ import Vapor
 ///
 /// [Learn More →](https://docs.vapor.codes/3.0/getting-started/structure/#routesswift)
 public func routes(_ router: Router) throws {
-    let mealController = MealController()
-    router.get("", use: mealController.index)
-    router.get("list", use: mealController.list)
-    router.get("meals", use: mealController.index)
-    router.post("meals", use: mealController.create)
+    let witController = WitController()
+    router.get("", use: witController.index)
+    router.get("wits.json", use: witController.list)
+    router.get("wits", use: witController.index)
+    router.post("wits", use: witController.create)
 }

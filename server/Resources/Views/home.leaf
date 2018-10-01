@@ -1,13 +1,13 @@
 <html>
 <body>
-<h3>Meals</h3>
+<h3>Wits</h3>
 
-#for(meal in meals) {
-<p>I ate #(meal.description).</p>
+#for(wit in wits) {
+<p>#(wit.description).</p>
 }
 
-<form method="post" action="/meals">
-<p><textarea name="description" rows="10" cols="40" placeholder="What did you eat today?"></textarea></p>
+<form method="post" action="/wits">
+<p><textarea name="description" rows="10" cols="40" placeholder="What did you think about today?"></textarea></p>
 <p><input type="submit" /></p>
 </form>
 </body>

@@ -36,6 +36,6 @@ public func configure(
     
     // Configure database migrations
     var migrations = MigrationConfig()
-    migrations.add(model: Meal.self, database: .psql)
+    migrations.add(model: Wit.self, database: .psql)
     services.register(migrations)
 }
