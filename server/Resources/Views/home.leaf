@@ -3,7 +3,7 @@
 <h3>Wits</h3>
 
 #for(wit in wits) {
-<p>#(wit.description).</p>
+<p>#date(wit.timestamp, "MMMM d, yyyy, h:mm a"): #(wit.description).</p>
 }
 
 <form method="post" action="/wits">

@@ -8100,7 +8100,7 @@
 			path = ".build/checkouts/multipart.git--6149465962419382882/Sources/Multipart";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -8111,7 +8111,6 @@
 				OBJ_23 /* Dependencies */,
 				OBJ_931 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_500 /* HTTP 3.1.4 */ = {
@@ -11118,7 +11117,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_931 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
