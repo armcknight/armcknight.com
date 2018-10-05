@@ -3,6 +3,6 @@ collections:
   albums:
   ideas:
 url: http://armcknight.com
-exclude: [ Rakefile, README.md, .gitignore ]
+exclude: [ Rakefile, README.md, .gitignore, vendor, server ]
 plugins:
   - octopress-paginate

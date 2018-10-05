@@ -1,8 +1,35 @@
 source for armcknight.com
 
+# Development
+
+First things first: 
+
+```sh
+# get necessary tools and set up environment
+make init
+
+# build the frontend and backend
+make build
+
+# start a tmux session with all required services running locally
+make mux
+```
+
+Detach from the `tmux` session with `Ctrl-b d` and you can kill all the processes and tmux session with `make stop`.
+
+# Publishing
+
+Sync the `_site/` directory to the armcknight.com bucket on AWS. Excludes .git/
+
+	rake publish 
+
 # Dependencies
 
-### Jekyll
+## Frontend
+
+### Development
+
+#### Jekyll
 
 The blog is built from markdown documents for individual posts into HTML using Jekyll. Then, posts are composed into `index.html`. 
 
@@ -10,28 +37,16 @@ The entire site is run through Jekyll for simplicity, and the generated `_site` 
 
 ### SASS
 
-Uses SASS for style sheets. 
-	
-# Building
+Uses SASS for style sheets.
 
-To build the entire site, including SASS stylesheets, run
+## Backend
 
-	rake build
-	
-To preview the site on a local machine (after building), 
+### PostgreSQL
 
-	rake serve
-	
-don't forget to 
+Database and its server.
 
-	rake endserve
-	
-when you're done!
-	
-# Publishing
+### Development
 
-Sync the `_site/` directory to the armcknight.com bucket on AWS. Excludes .git/
+#### Vapor
 
-	rake publish 
-
-	
+A framework and CLI for developing Swift server applications.

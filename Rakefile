@@ -1,32 +1,4 @@
 namespace :dev do
-
-  desc 'Install dev dependencies.'
-  task :init do
-    sh 'brew install exiftool imagemagick'
-    sh 'gem install octopress-paginate'
-  end
-
-  desc 'Build all SASS and Jekyll sources.'
-  task :build do
-  	_build
-  end
-
-  desc 'Start local webserver to test the static site. Opens a new browser window to the home index. Server continues running, so multiple builds can be done and just requires a reload in the browser.'
-  task :serve do
-  	require 'shell'
-  	shell = Shell.new
-  	shell.pushd '_site'
-  	shell.system('python -m SimpleHTTPServer 4000 --bind localhost &')
-  	puts 'Loading site...'
-  	sleep 3
-  	shell.system('open http://localhost:4000')
-  end
-
-  desc 'Stop the local webserver.'
-  task :endserve do
-  	sh 'killall Python'
-  end
-
   desc 'Push the git repo to remote and sync the compiled site to S3, with an optional subdirectory to only publish portions.'
   task :publish, [:subdir] do |t, args|
     sh 'git push origin'
@@ -38,11 +10,6 @@ namespace :dev do
       remote << subdir
     end
     sh "aws s3 sync #{local} #{remote} --exclude .git/ --profile armcknight --acl public-read"
-  end
-
-  def _build
-  	sh 'sass --update css'
-  	sh 'jekyll build --incremental'
   end
 
 end
@@ -72,6 +39,31 @@ namespace :photos do
       next if gallery == '.' || gallery == '..' || !File.directory?(path)
       _prepare_photo_gallery path
     end
+  end
+  
+  desc 'Rotate images with Orientation EXIF information other than Horizontal (upright).'
+  task :rotate_images, [:dir] do |t, args|
+    _rotate_images args[:dir]
+  end
+  
+  def _rotate_images input_dir
+    orientations = Hash.new
+    Dir.new(input_dir).each do |image|
+      next if image == '.' || image == '..' || image == '.DS_Store'
+      image_url = "#{input_dir}/#{image}"
+      orientation = `exiftool -Orientation #{image_url}`.split(':').last
+      case orientation
+        when "Horizontal (normal)"
+          
+        when "Rotate 180"
+          sh "convert #{image_url} -rotate 180 #{image_url}"
+        when "Rotate 90 CW", "Rotate 270 CCW"
+          sh "convert #{image_url} -rotate 90 #{image_url}"
+        when "Rotate 270 CW", "Rotate 90 CCW"
+          sh "convert #{image_url} -rotate 270 #{image_url}"
+      end
+    end
+    puts orientations.keys
   end
 
   def _describe_photos input_dir
@@ -205,8 +197,8 @@ namespace :photos do
       end
 
       # wipe exif orientation and thumbnail
-      `exiftool -Orientation="" -overwrite_original #{url}`
-      `exiftool '-ThumbnailImage<=' -overwrite_original #{url}`
+      # `exiftool -Orientation="" -overwrite_original #{url}`
+      # `exiftool '-ThumbnailImage<=' -overwrite_original #{url}`
   
       # generate our thumbnail
       if File.exist?(thumbnail_url) then
@@ -214,7 +206,12 @@ namespace :photos do
       else
         sh "magick #{url} -resize x100 #{thumbnail_url}" unless File.exist?(thumbnail_url)
       end
+      
+      # optimize image and thumbnail
+      sh "imageoptim #{url}"
+      sh "imageoptim #{thumbnail_url}"
   
+      # get thumbnail width to assist CSS/HTML display
       thumbnail_width = `exiftool -p '$imageWidth' #{thumbnail_url}`.strip
       thumbnail_width = 150 if thumbnail_width.to_i < 150      
     

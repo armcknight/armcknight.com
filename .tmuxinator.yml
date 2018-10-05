@@ -1,0 +1,22 @@
+# /Users/andrew/.config/tmuxinator/test.yml
+
+name: test
+root: .
+
+windows:
+  - editor:
+      layout: main-horizontal
+      panes:
+        - terminal:
+          - 
+        - database-server:
+          - postgres -D /usr/local/var/postgres/
+        - database-admin:
+          - sleep 3 # wait for the postgres server to finish booting
+          - psql -d vapor_pg_test
+        - backend-server:
+          - cd server
+          - env DEBUG=1 vapor run
+        - http-server:
+          - cd _site
+          - python -m SimpleHTTPServer 4000 --bind localhost
