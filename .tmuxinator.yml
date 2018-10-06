@@ -19,5 +19,5 @@ windows:
           - cd server
           - env DEBUG=1 vapor run
         - http-server:
-          - cd _site
+          - cd web/_site/dev
           - python -m SimpleHTTPServer 4000 --bind localhost
