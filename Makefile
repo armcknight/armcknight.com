@@ -3,11 +3,17 @@ init:
 	rbenv exec gem install bundler
 	rbenv exec bundle package
 
-build:
+build-logs:
 	mkdir logs ||:
+
+build-server: build-logs
 	pushd server; vapor build --verbose 2>&1 | tee ../logs/vapor_build.log; popd
+
+build-web: build-logs
 	rbenv exec bundle exec sass --update css 2>&1 | tee logs/sass_build.log
 	rbenv exec bundle exec jekyll build --incremental 2>&1 | tee logs/jekyll_build.log
+
+build: build-logs build-server build-web
 
 mux: 
 	rbenv exec bundle exec tmuxinator start
