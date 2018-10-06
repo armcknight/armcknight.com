@@ -2,8 +2,6 @@ source for armcknight.com
 
 # Development
 
-First things first: 
-
 ```sh
 # get necessary tools and set up environment
 make init
@@ -11,42 +9,45 @@ make init
 # build the frontend and backend
 make build
 
+# if it's your first time testing locally,
+make provision-local
+
 # start a tmux session with all required services running locally
 make mux
 ```
 
 Detach from the `tmux` session with `Ctrl-b d` and you can kill all the processes and tmux session with `make stop`.
 
-# Publishing
-
-Sync the `_site/` directory to the armcknight.com bucket on AWS. Excludes .git/
-
-	rake publish 
-
-# Dependencies
-
 ## Frontend
 
-### Development
+A website with AJAX calls to supply dynamic content. Hosts and endpoints are defined in `js/endpoints.js`; which host is used depends on whether Jekyll builds for dev (`make build`) or prod (`make publish`).
 
-#### Jekyll
 
-The blog is built from markdown documents for individual posts into HTML using Jekyll. Then, posts are composed into `index.html`. 
-
-The entire site is run through Jekyll for simplicity, and the generated `_site` directory (`.gitignore`d) is pushed to the appropriate branch for GitHub pages to render.
-
-### SASS
-
-Uses SASS for style sheets.
+Sass compiles everything in `web/css` and then Jekyll compiles everything in `web`. For development (`make build`), output is written to `web/_site/dev`, for production (`make publish`) it is written to `web/_site/prod`.
 
 ## Backend
 
-### PostgreSQL
+A Vapor Swift server that interacts with a PostgreSQL instance.
 
-Database and its server.
+# Deploying
 
-### Development
+## Frontend
 
-#### Vapor
+```sh
+# Build the site with `JEKYLL_ENV=production`
+make package-web
 
-A framework and CLI for developing Swift server applications.
+# sync `web/_site/prod` directory to the armcknight.com bucket on AWS.
+make deploy-web
+```
+
+## Backend
+
+```sh
+make package-server
+
+# if there is no cloud box yet,
+make provision-server
+
+make deploy-server
+```
