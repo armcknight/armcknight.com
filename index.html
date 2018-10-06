@@ -57,14 +57,39 @@
 								</tr>
 								<tr>
 									<td style="padding-bottom: 30px;">
-										{% assign idea = site.ideas.last %}
 										<table>
-											<th class="index_header" colspan="2">Latest ideas:</th>
+											<th class="index_header" colspan="2">Latest wit:</th>
 											<tr>
-												{% include idea-cells.html created_date=idea.created_date created_time=idea.created_time idea_content=idea.idea_content %}
+												<td class="timestamp" id="timestamp"></td>
+												<td class="content" id="content"></td>
 											</tr>
 										</table>
 									</td>
+									<script>
+										function reqListener () {
+											var options = {
+												weekday: 'long',
+												year: 'numeric',
+												month: 'short',
+												day: 'numeric',
+												hour: 'numeric',
+												minute: 'numeric',
+												second: 'numeric'
+											};
+											let wits = JSON.parse(this.responseText).sort( function(a, b) {
+												return new Date(a.date) - new Date(b.date);
+											});
+                      let latestWit = wits[wits.length - 1];
+											
+											document.getElementById('timestamp').innerHTML = new Date(latestWit.timestamp).toLocaleDateString('en-US', options)
+											document.getElementById('content').innerHTML = latestWit.description
+										}
+
+										var oReq = new XMLHttpRequest();
+										oReq.addEventListener("load", reqListener);
+										oReq.open("GET", "http://localhost:8080/wits.json");
+										oReq.send();
+									</script>
 								</tr>
 								<tr>
 									<td>
