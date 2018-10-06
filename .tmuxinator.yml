@@ -8,12 +8,12 @@ windows:
       layout: main-horizontal
       panes:
         - terminal:
-          - sleep 3 # wait for everything to spin up
+          - sleep 1 # wait for everything to spin up
           - open http://localhost:4000
         - database-server:
           - postgres -D /usr/local/var/postgres/
         - database-admin:
-          - sleep 3 # wait for the postgres server to finish booting
+          - sleep 1 # wait for the postgres server to finish booting
           - psql -d vapor_pg_test
         - backend-server:
           - cd server
