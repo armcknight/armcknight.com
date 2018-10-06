@@ -1,6 +1,6 @@
-*.sass-cache*
-_site
-.jekyll-metadata
-photos/**/*.jpg
+web/.sass-cache*
+web/_site
+web/.jekyll-metadata
+web/photos/**/*.jpg
 vendor/bundle/**/*
 logs
