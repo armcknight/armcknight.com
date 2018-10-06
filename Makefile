@@ -4,11 +4,10 @@ init:
 	rbenv exec bundle package
 
 build:
-	pushd server
-	vapor build --verbose > vapor_build.log 2>&1
-	popd
-	rbenv exec bundle exec sass --update css > sass_build.log 2>&1
-	rbenv exec bundle exec jekyll build --incremental > jekyll_build.log 2>&1
+	mkdir logs ||:
+	pushd server; vapor build --verbose 2>&1 | tee ../logs/vapor_build.log; popd
+	rbenv exec bundle exec sass --update css 2>&1 | tee logs/sass_build.log
+	rbenv exec bundle exec jekyll build --incremental 2>&1 | tee logs/jekyll_build.log
 
 mux: 
 	rbenv exec bundle exec tmuxinator start

@@ -8,7 +8,8 @@ windows:
       layout: main-horizontal
       panes:
         - terminal:
-          - 
+          - sleep 3 # wait for everything to spin up
+          - open http://localhost:4000
         - database-server:
           - postgres -D /usr/local/var/postgres/
         - database-admin:
