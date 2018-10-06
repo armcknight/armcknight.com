@@ -65,6 +65,7 @@
 											</tr>
 										</table>
 									</td>
+									<script src="js/endopints.js" type="text/javascript"></script>
 									<script>
 										function reqListener () {
 											var options = {
@@ -79,15 +80,20 @@
 											let wits = JSON.parse(this.responseText).sort( function(a, b) {
 												return new Date(a.date) - new Date(b.date);
 											});
-                      let latestWit = wits[wits.length - 1];
-											
-											document.getElementById('timestamp').innerHTML = new Date(latestWit.timestamp).toLocaleDateString('en-US', options)
-											document.getElementById('content').innerHTML = latestWit.description
+											let latestWit = wits[wits.length - 1];
+											let formattedDate = new Date(latestWit.timestamp).toLocaleDateString('en-US', options);
+											document.getElementById('timestamp').innerHTML = formattedDate;
+											document.getElementById('content').innerHTML = latestWit.description;
 										}
 
 										var oReq = new XMLHttpRequest();
 										oReq.addEventListener("load", reqListener);
-										oReq.open("GET", "http://localhost:8080/wits.json");
+										{% if jekyll.environment == "production" %}
+										let host = hosts.prod;
+										{% else %}
+										let host = hosts.dev;
+										{% endif %}
+										oReq.open("GET", host + '/' + latest_wit);
 										oReq.send();
 									</script>
 								</tr>
