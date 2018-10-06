@@ -1,19 +1,3 @@
-namespace :dev do
-  desc 'Push the git repo to remote and sync the compiled site to S3, with an optional subdirectory to only publish portions.'
-  task :publish, [:subdir] do |t, args|
-    sh 'git push origin'
-    subdir = args[:subdir]
-    local = '_site/'
-    remote = 's3://armcknight.com/'
-    if subdir != nil then
-      local << subdir
-      remote << subdir
-    end
-    sh "aws s3 sync #{local} #{remote} --exclude .git/ --profile armcknight --acl public-read"
-  end
-
-end
-
 namespace :photos do
 
   desc 'Interactively edit the EXIF description for each image in a directory.'
