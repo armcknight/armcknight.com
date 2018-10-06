@@ -10,24 +10,31 @@ public func configure(
     _ env: inout Environment,
     _ services: inout Services
 ) throws {
-    // Register providers
+    try configureProviders(config: &config, services: &services)
+    try configureRoutes(services: &services)
+    configureDatabase(services: &services)
+    configureMiddleware(services: &services)
+}
+
+func configureProviders(config: inout Config, services: inout Services) throws {
     try services.register(FluentPostgreSQLProvider())
-    try services.register(LeafProvider())
-    config.prefer(LeafRenderer.self, for: ViewRenderer.self)
-    
-    // Register routes to the router
+}
+
+func configureRoutes(services: inout Services) throws {
     let router = EngineRouter.default()
     try routes(router)
     services.register(router, as: Router.self)
+}
 
+func configureDatabase(services: inout Services) {
     // Configure database service
     let pgConfig: PostgreSQLDatabaseConfig
     if let configuredDatabaseURL = ProcessInfo.processInfo.environment["DATABASE_URL"] {
         pgConfig = PostgreSQLDatabaseConfig(url: configuredDatabaseURL, transport: .cleartext)!
-        print("using environment variable")
+        print("configuring database for production")
     } else {
         pgConfig = PostgreSQLDatabaseConfig(hostname: "localhost", port: 5432, username: "andrew", database: "vapor_pg_test", password: nil, transport: .cleartext)
-        print("using debug")
+        print("configuring database for local development")
     }
     let postgres = PostgreSQLDatabase(config: pgConfig)
     var databases = DatabasesConfig()
@@ -38,4 +45,26 @@ public func configure(
     var migrations = MigrationConfig()
     migrations.add(model: Wit.self, database: .psql)
     services.register(migrations)
+}
+
+func configureMiddleware(services: inout Services) {
+    var middlewares = MiddlewareConfig()
+    
+    let corsConfiguration: CORSMiddleware.Configuration
+    if let debugging = ProcessInfo.processInfo.environment["DEBUG"]?.bool, debugging {
+        print("configuring CORS for local debugging")
+        corsConfiguration = CORSMiddleware.Configuration(
+            allowedOrigin: .all,
+            allowedMethods: [.GET],
+            allowedHeaders: [.accept, .authorization, .contentType, .origin, .xRequestedWith, .userAgent, .accessControlAllowOrigin]
+        )
+    } else {
+        print("configuring CORS for production")
+        corsConfiguration = .default()
+    }
+    
+    let corsMiddleware = CORSMiddleware(configuration: corsConfiguration)
+    middlewares.use(corsMiddleware)
+    middlewares.use(ErrorMiddleware.self)
+    services.register(middlewares)
 }
