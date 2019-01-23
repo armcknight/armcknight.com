@@ -1,5 +1,4 @@
 import FluentPostgreSQL
-import Leaf
 import Vapor
 
 /// Called before your application initializes.
