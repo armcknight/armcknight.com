@@ -1,8 +1,5 @@
-# /Users/andrew/.config/tmuxinator/test.yml
-
 name: test
 root: .
-
 windows:
   - editor:
       layout: main-horizontal

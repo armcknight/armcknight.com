@@ -1,0 +1,16 @@
+@import 'common';
+
+.fancy-title {
+	font: 400 40pt $fancy-font;
+}
+
+.index_header {
+	font: 300 24pt $fancy-font;
+	text-align: left;
+}
+
+.menu_item, .menu_item:hover, .menu_item:visited, .menu_item:active {
+	font-family: $fancy-font;
+	font-size: 14pt;
+	text-decoration: none;
+}

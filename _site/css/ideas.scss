@@ -1,0 +1,19 @@
+@import 'subpage';
+
+.cell {
+	vertical-align: bottom;
+	padding: 0px 20px 0px 20px;
+	white-space: nowrap;
+	text-align: left;
+}
+
+.timestamp {
+	@extend .caption;
+	@extend .cell;
+	width: 20%;
+}
+
+.content {
+	@extend .text;
+	@extend .cell;
+}

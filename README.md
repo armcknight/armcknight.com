@@ -22,7 +22,6 @@ Detach from the `tmux` session with `Ctrl-b d` and you can kill all the processe
 
 A website with AJAX calls to supply dynamic content. Hosts and endpoints are defined in `js/endpoints.js`; which host is used depends on whether Jekyll builds for dev (`make build`) or prod (`make publish`).
 
-
 Sass compiles everything in `web/css` and then Jekyll compiles everything in `web`. For development (`make build`), output is written to `web/_site/dev`, for production (`make publish`) it is written to `web/_site/prod`.
 
 ## Backend
