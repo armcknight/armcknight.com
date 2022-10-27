@@ -1,8 +1,2 @@
-collections: 
-  photos:
-  albums:
-  ideas:
 url: http://armcknight.com
-exclude: [ Rakefile, README.md, .gitignore ]
-plugins:
-  - octopress-paginate
+exclude: [ Makefile, README.md, .gitignore ]
