@@ -1,0 +1,110 @@
+$green: #2D8632;
+$green-black: #000100;
+$green-dark: #18431B;
+$green-light: #3DC846;
+$green-bright: #46FE52;
+
+$blue: #303D74;
+$blue-black: #000001;
+$blue-dark: #1A203A;
+$blue-light: #4358AD;
+$blue-bright: #5C7CFE;
+
+$yellow: #AAA739;
+$yellow-black: #010100;
+$yellow-dark: #56541F;
+$yellow-light: #FEFA4E;
+$yellow-bright: #FFFA47;
+
+$fancy-font: sans-serif;
+$font: sans-serif;
+
+/* links */
+
+a {
+	color: $green;
+}
+
+a:visited {
+	color: $blue-light;
+}
+
+a:hover {
+	color: $green-light;
+}
+
+a:active {
+	color: $blue;
+}
+
+/* text types */
+
+.text {
+	color: $green-black;
+	font: 14pt $font;
+}
+
+.caption {
+	color: $green-black;
+	font: italic 10pt $font;
+}
+
+.footnote {
+	color: $green-black;
+	font: 100 10pt $font;
+}
+
+/* placement within containers */
+
+.left {
+	text-align: left;
+}
+
+.center {
+	text-align: center;
+}
+
+.right {
+	text-align: right;
+}
+
+.top {
+	vertical-align: top;
+}
+
+/* element effects */
+
+.squircle {
+    border-radius: 25px;
+}
+
+.squircle-small {
+    border-radius: 10px;
+}
+
+.breadcrumb {
+	font: 300 30pt $fancy-font;
+	color: $yellow;
+	text-decoration: none;
+}
+
+.breadcrumb:hover {
+	color: $green-light;
+	text-decoration: none;
+};
+
+.heading {
+	font: 300 40pt $fancy-font;
+	color: $green;
+}
+
+.subheading {
+	font: 300 22pt $fancy-font;
+}
+
+body {
+	@extend .text;
+	padding: 50px;
+	text-align: justify;
+	text-justify: inter-word;
+}

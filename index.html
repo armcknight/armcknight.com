@@ -6,83 +6,42 @@
 
 <html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
 	<head>
-		<title>Andrew McKnight</title>
+		<title>Andrew McKnight's Home Page</title>
 
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<meta name="description" content="Aaaaaaall about Andrew McKnight."/>
+		<meta name="description" content="Andrew McKnight's home page."/>
 		<meta name="author" content="Andrew McKnight"/>
-		<meta name="copyright" content="Andrew McKnight Copyright (c) 2016"/>
+		<meta name="copyright" content="Andrew McKnight Copyright (c) 2016-2022"/>
 
 		<link rel="stylesheet" href="css/index.css"/>
-		<link rel="stylesheet" href="css/ideas.css"/>
-		<link rel="stylesheet" href="css/photos.css"/>
 	</head>
-	
+
 	<body>
 		<center>
-			<div style="width: 80%">
-				<table width="100%">
-					<tr>
-						<td style="vertical-align: top;">
-							<table>
-								<tr>
-									<td>
-										<img class="squircle" src="https://www.gravatar.com/avatar/68f9c2600d8547ac6a2d9c10ec9a9335?s=150" width="150"/>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<a href="about-me/" class="menu_item">About Me</a>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<a href="ideas/" class="menu_item">Ideas</a>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<a href="photos/" class="menu_item">Photos</a>
-									</td>
-								</tr>
-							</table>
-						</td>
-						<td>
-							<table>				
-								<tr>
-									<td class="fancy-title">
-											Andrew M<sup style="font-size: 35pt;">c</sup>Knight
-									</td>
-								</tr>
-								<tr>
-									<td style="padding-bottom: 30px;">
-										{% assign idea = site.ideas.last %}
-										<table>
-											<th class="index_header" colspan="2">Latest ideas:</th>
-											<tr>
-												{% include idea-cells.html created_date=idea.created_date created_time=idea.created_time idea_content=idea.idea_content %}
-											</tr>
-										</table>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										{% assign album = site.albums.last  %}
-										<table>
-											<th class="index_header" colspan="2">Latest photos:</th>
-											<tr>
-												{% assign album_name = 'photos/' | append: album.path | remove: '_albums/' | remove: '.html' %}
-												{% include photo_album_cells.html album_name=album_name cover_image_url=album.cover_image_url description=album.description name=album.name %}
-											</tr>
-										</table>
-									</td>
-								</tr>
-							</table>
-						</td>
-					</tr>
-				</table>
-			</div>
+            <table width="100%">
+                <tr>
+                  <td colspan=2>
+                    <!-- top header -->
+                    <img class="squircle" src="https://www.gravatar.com/avatar/68f9c2600d8547ac6a2d9c10ec9a9335?s=150" width="150"/> Andrew M<sup style="font-size: 35pt;">c</sup>Knight
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <!-- left navigation -->
+                    <ul class="leftnav">
+                      <li><a href="/">Home</a></li>
+                      <li><a href="/cv">CV</a></li>
+                      <li><a href="/projects">Projects</a></li>
+                      <li><a href="/blog">Blog</a></li>
+                      <li><a href="/links">Links</a></li>
+                    </ul>
+                  </td>
+                  <td>
+                    <!-- main area -->
+                  </td>
+                </tr>
+            </table>
 		</center>
 	</body>
 </html>
