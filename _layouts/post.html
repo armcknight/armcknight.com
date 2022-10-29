@@ -1,21 +1,33 @@
 ---
 
 ---
+{% include html-opening-tags.html %}
+  <head>
+    <title>Andrew McKnight's Blog</title>
+    {% include meta-tags-blog-post.html title=page_title description="Andrew McKnight's blog." %}
+    <link rel="alternate" type="application/rss+xml" title="Andrew McKnight's RSS" href="/feed.xml">
+    <link rel="stylesheet" href="../../../css/styles.css"/>
+  </head>
 
-{% include blog-post-header.html %}
-<div id="post-content">
-	{{ content }}
-</div>
-<p>
-	<hr />
-</p>
-<p>
-	🙏🏻 Enjoy the post? Please help support more like it by <a href="https://www.paypal.me/armcknight">buying me a cup
-		of coffee</a>!.
-</p>
-<p>
-	💡 Suggestions, questions, comments? <a
-		href="https://github.com/TwoRingSoft/tworingsoft.com/edit/master/blog/_posts/{{page.date | date: "
-		%Y-%m-%d"}}-{{ page.slug }}.md">Please submit a PR!</a>.
-</p>
-{% include closing-tags.html %}
+  <body>
+    <table class="content-column">
+    {% include header.html %}
+      <tr>
+        <td>
+          <div id="post-content">
+            {{ content }}
+          </div>
+          <p>
+            <hr />
+          </p>
+          <p>
+            🙏🏻 Enjoy the post? Please help support more like it by <a href="https://www.paypal.me/armcknight">buying me a cup of coffee</a>!.
+          </p>
+          <p>
+            💡 Suggestions, questions, comments? <a href="https://github.com/armcknight/armcknight.com/edit/master/blog/_posts/{{page.date | date: "%Y-%m-%d"}}-{{ page.slug }}.md">Please submit a PR!</a>.
+          </p>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
