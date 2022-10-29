@@ -59,3 +59,4 @@ flycheck_*.el
 
 
 # End of https://www.toptal.com/developers/gitignore/api/emacs
+/.bundle/
