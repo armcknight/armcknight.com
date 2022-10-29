@@ -9,27 +9,7 @@
 	{% assign twitter_image_tag = "twitter:image::/img/logo-small.jpg" %}
 {% endif %}
 
-{% assign meta_tags = og_image_tag | append: ';' | append: twitter_image_tag | append: ';' | append: 'og:type::article' %}
-{% for tag in page.tags %}
-	{% assign meta_tag = 'article:tag::' | append: tag %}
-	{% assign meta_tags = meta_tags | append: ';' | append: meta_tag %}
-{% endfor %}
-{% assign publish_date = page.date | date_to_xmlschema %}
-{% assign updat4e_date = page.last-modified-date | date_to_xmlschema %}
-{% assign meta_tags = meta_tags | append: ';og:published_time::' | append: publish_date | append: ';og:modified_time::' | append: update_date %}
-{% assign all_tags = page.tags | join: ', ' %}
-{% assign meta_tags = meta_tags | append: ';twitter:label1::By:;twitter:data1:Andrew McKnight;twitter:label2::Tags:;twitter:data2::' | append: all_tags %}
+ <div class="title">{{ page.title }}</div>
+ <div class="byline">{{ page.author }} – {{ page.date | date: '%-d %B %Y'}}</div>
 
-{% include opening-tags.html title=postTitle description=page.abstract stylesheet = "/css/blog-post.css" other_meta_tags=meta_tags %}
-
-		<h2>
-			<a href="/" style="text-decoration: none;">
-				<img src="/img/logo-small.png" height="25em" />
-			</a>
-			<a href="/blog/" style="text-decoration: none;">Blog</a>
-		</h2>
-
-		<div class="title">{{ page.title }}</div>
-		<div class="byline">{{ page.author }} – {{ page.date | date: '%-d %B %Y'}}</div>
-
-		<hr />
+ <hr />
