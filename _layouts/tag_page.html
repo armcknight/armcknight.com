@@ -1,0 +1,24 @@
+---
+layout: default
+---
+{% assign page_title = "Andrew McKnight's blog: " | append: page.tag %}
+{% include html-opening-tags.html %}
+  <head>
+    {% include meta-tags-blog-post.html title=page_title description="Andrew McKnight's blog." %}
+    <link rel="stylesheet" href="../../css/styles.css"/>
+  </head>
+  <body>
+    <table class="content-column">
+      {% include header.html %}
+      <tr>
+        <td>
+          {% assign page_name = "Blog: " | append: page.tag %}
+          {% capture rss_link %}http://tworingsoft.com/blog/tag/{{ page.tag }}.xml{% endcapture %}
+          {% capture rss_link_alt %}Two Ring Software's {{ page.tag }} RSS Feed{% endcapture %}
+          {% include subpage-header.html page_name=page_name link="/blog/" rss_link=rss_link rss_link_alt=rss_link_alt %}
+          {% include blog-post-listing.html posts=page.posts %}
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

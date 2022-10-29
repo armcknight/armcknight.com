@@ -1,0 +1,273 @@
+/* faces */
+/* mobile text sizes */
+/* desktop text sizes */
+/****************
+* text elements *
+****************/
+.hero, .latest-title {
+  color: #000;
+  font: 200 30pt "Palatino", "Garamond", serif;
+}
+
+h1 {
+  color: #000;
+  font: 200 27pt "Palatino", "Garamond", serif;
+}
+
+h2 {
+  color: #000;
+  font: 200 24pt "Palatino", "Garamond", serif;
+}
+
+h3, previous a {
+  color: #000;
+  font: 100 21pt "Palatino", "Garamond", serif;
+}
+
+h4 {
+  color: #000;
+  font: 100 18pt "Palatino", "Garamond", serif;
+  font-style: italic;
+}
+
+h5 {
+  color: #000;
+  font: 100 15pt "Palatino", "Garamond", serif;
+  font-style: italic;
+}
+
+.text, .previous-abstract, .latest-readtime, .latest-abstract, tags a, body, ul {
+  color: #000;
+  font: lighter 13pt "Verdana", "Helvetica", "Arial", sans-serif;
+}
+
+@media only screen and (min-width: 500px) {
+  .hero, .latest-title {
+    font-size: 40pt;
+  }
+  h1 {
+    font: 200 34pt "Palatino", "Garamond", serif;
+  }
+  h2 {
+    font: 200 28pt "Palatino", "Garamond", serif;
+  }
+  h3, previous a {
+    font-size: 23pt;
+  }
+  h4 {
+    font-size: 20pt;
+  }
+  h5 {
+    font-size: 17pt;
+  }
+  .text, .previous-abstract, .latest-readtime, .latest-abstract, tags a, body, ul {
+    font: lighter 13pt "Verdana", "Helvetica", "Arial", sans-serif;
+  }
+}
+/* links */
+a {
+  color: #2D8632;
+}
+
+a:visited {
+  color: #4358AD;
+}
+
+a:hover {
+  color: #3DC846;
+}
+
+a:active {
+  color: #303D74;
+}
+
+/* text types */
+.text, .previous-abstract, .latest-readtime, .latest-abstract, tags a, body {
+  color: #000100;
+  font: 14pt "Verdana", "Helvetica", "Arial", sans-serif;
+}
+
+.caption {
+  color: #000100;
+  font: italic 10pt "Verdana", "Helvetica", "Arial", sans-serif;
+}
+
+.footnote {
+  color: #000100;
+  font: 100 10pt "Verdana", "Helvetica", "Arial", sans-serif;
+}
+
+/* placement within containers */
+.left {
+  text-align: left;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+.top {
+  vertical-align: top;
+}
+
+/* layout */
+.content-column {
+  width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hanging-indent, tags {
+  /* vvv hanging indentation css thanks to https://www.thesitewizard.com/css/hanging-indents.shtml */
+  padding-left: 20px;
+  text-indent: -20px;
+  /* ^^^ thanks to https://www.thesitewizard.com/css/hanging-indents.shtml */
+}
+
+/* element effects */
+.squircle {
+  border-radius: 25px;
+}
+
+.squircle-small {
+  border-radius: 10px;
+}
+
+.breadcrumb {
+  font: 300 30pt "Palatino", "Garamond", serif;
+  color: #AAA739;
+  text-decoration: none;
+}
+
+.breadcrumb:hover {
+  color: #3DC846;
+  text-decoration: none;
+}
+
+.heading {
+  font: 300 40pt "Palatino", "Garamond", serif;
+  color: #2D8632;
+}
+
+.subheading {
+  font: 300 22pt "Palatino", "Garamond", serif;
+}
+
+/* elememt overrides */
+body {
+  padding: 50px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+ul.navmenu, li.navmenuitem {
+  display: inline;
+}
+
+/* blog styles */
+.section-heading {
+  font: 200 34pt "Palatino", "Garamond", serif;
+}
+
+/* vvv thanks to https://www.w3schools.com/html/tryit.asp?filename=tryhtml_layout_flexbox */
+/**********************************************
+* responsive layout for tags and latest post	*
+**********************************************/
+* {
+  box-sizing: border-box;
+}
+
+/* Container for flexboxes */
+header {
+  display: -webkit-flex;
+  display: flex;
+  vertical-align: top;
+}
+
+tags {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  vertical-align: top;
+}
+
+latest {
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+}
+
+/* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
+@media only screen and (max-width: 500px) {
+  header {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+  }
+  tags {
+    margin-top: 20px;
+  }
+}
+/* ^^^ thanks to https://www.w3schools.com/html/tryit.asp?filename=tryhtml_layout_flexbox */
+/**************
+* latest post *
+**************/
+.latest-post {
+  float: left;
+  width: 70%;
+}
+
+.latest-post:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media only screen and (max-width: 500px) {
+  .latest-post {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .latest-title {
+    font: 200 27pt "Palatino", "Garamond", serif;
+  }
+}
+.latest-abstract {
+  margin: 20px 20px 0px 20px;
+}
+
+.latest-readtime {
+  font-style: italic;
+}
+
+/*****************
+* previous posts *
+*****************/
+.previous-section {
+  margin-top: 20px;
+}
+
+previous {
+  width: 200px;
+  display: inline-block;
+  margin: 20px 20px 0px 20px;
+  vertical-align: top;
+}
+
+@media only screen and (max-width: 500px) {
+  previous {
+    text-indent: 0px;
+    width: 100%;
+    margin: 20px 0px 0px 0px;
+  }
+  .previous-abstract {
+    margin: 0px 20px 0px 20px;
+    font: lighter 13pt "Verdana", "Helvetica", "Arial", sans-serif;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

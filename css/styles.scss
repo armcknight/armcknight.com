@@ -4,6 +4,8 @@ $green-dark: #18431B;
 $green-light: #3DC846;
 $green-bright: #46FE52;
 
+$black: #000;
+
 $blue: #303D74;
 $blue-black: #000001;
 $blue-dark: #1A203A;
@@ -16,8 +18,89 @@ $yellow-dark: #56541F;
 $yellow-light: #FEFA4E;
 $yellow-bright: #FFFA47;
 
-$fancy-font: sans-serif;
-$font: sans-serif;
+/* faces */
+
+$fancy-font: 'Palatino', 'Garamond', serif;
+$font: 'Verdana', 'Helvetica', 'Arial', sans-serif;
+$monospace-font: 'Courier New', monospace;
+
+/* mobile text sizes */
+
+$hero-mobile: 30pt;
+$h1-mobile: 27pt;
+$h2-mobile: 24pt;
+$h3-mobile: 21pt;
+$h4-mobile: 18pt;
+$h5-mobile: 15pt;
+$text-mobile: 13pt;
+$note-mobile: 11pt;
+$note-font-mobile: 200 $note-mobile $font;
+
+/* desktop text sizes */
+
+$hero-desktop: 40pt;
+$h1-desktop: 34pt;
+$h2-desktop: 28pt;
+$h3-desktop: 23pt;
+$h4-desktop: 20pt;
+$h5-desktop: 17pt;
+$text-desktop: 13pt;
+$note-desktop: 11pt;
+$note-font-desktop: 200 $note-desktop $font;
+
+/****************
+* text elements *
+****************/
+
+.hero {
+	color: $black;
+	font: 200 $hero-mobile $fancy-font;
+}
+
+$h1-font-desktop: 200 $h1-desktop $fancy-font;
+$h1-font-mobile: 200 $h1-mobile $fancy-font;
+h1 {
+	color: $black;
+	font: $h1-font-mobile;
+}
+
+$h2-font-desktop: 200 $h2-desktop $fancy-font;
+$h2-font-mobile: 200 $h2-mobile $fancy-font;
+h2 {
+	color: $black;
+	font: $h2-font-mobile;
+}
+h3 {
+	color: $black;
+	font: 100 $h3-mobile $fancy-font;
+}
+h4 {
+	color: $black;
+	font: 100 $h4-mobile $fancy-font;
+	font-style: italic;
+}
+h5 {
+	color: $black;
+	font: 100 $h5-mobile $fancy-font;
+	font-style: italic;
+}
+$text-font-mobile: lighter $text-mobile $font;
+$text-font-desktop: lighter $text-desktop $font;
+.text, ul {
+	color: $black;
+	font: $text-font-mobile;
+}
+
+@media only screen and (min-width: 500px) {
+	.hero { font-size: $hero-desktop; }
+	h1 { font: $h1-font-desktop; }
+	h2 { font: $h2-font-desktop; }
+	h3 { font-size: $h3-desktop; }
+	h4 { font-size: $h4-desktop; }
+	h5 { font-size: $h5-desktop; }
+	.text, ul { font: $text-font-desktop; }
+}
+
 
 /* links */
 
@@ -72,6 +155,21 @@ a:active {
 	vertical-align: top;
 }
 
+/* layout */
+
+.content-column {
+    width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hanging-indent {
+	/* vvv hanging indentation css thanks to https://www.thesitewizard.com/css/hanging-indents.shtml */
+	padding-left: 20px;
+	text-indent: -20px;
+	/* ^^^ thanks to https://www.thesitewizard.com/css/hanging-indents.shtml */
+}
+
 /* element effects */
 
 .squircle {
@@ -102,9 +200,140 @@ a:active {
 	font: 300 22pt $fancy-font;
 }
 
+/* elememt overrides */
+
 body {
 	@extend .text;
 	padding: 50px;
 	text-align: justify;
 	text-justify: inter-word;
+}
+
+ul.navmenu, li.navmenuitem {
+    display: inline;
+}
+
+/* blog styles */
+
+.section-heading {
+	font: $h1-font-desktop;
+}
+
+/* vvv thanks to https://www.w3schools.com/html/tryit.asp?filename=tryhtml_layout_flexbox */
+
+/**********************************************
+* responsive layout for tags and latest post	*
+**********************************************/
+
+* {
+	box-sizing: border-box;
+}
+
+/* Container for flexboxes */
+header {
+	display: -webkit-flex;
+	display: flex;
+	vertical-align: top;
+}
+
+tags {
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+	vertical-align: top;
+  @extend .hanging-indent;
+}
+
+tags a {
+	@extend .text;
+}
+
+latest {
+	-webkit-flex: 3;
+	-ms-flex: 3;
+	flex: 3;
+}
+
+/* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
+@media only screen and (max-width: 500px) {
+	header {
+		-webkit-flex-direction: column;
+		flex-direction: column;
+	}
+  tags {
+  	margin-top: 20px;
+  }
+}
+
+/* ^^^ thanks to https://www.w3schools.com/html/tryit.asp?filename=tryhtml_layout_flexbox */
+
+/**************
+* latest post *
+**************/
+
+.latest-post {
+	float: left;
+	width: 70%;
+}
+.latest-post:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+@media only screen and (max-width: 500px) {
+	.latest-post {
+		width: 100%;
+	}
+}
+
+.latest-title {
+	@extend .hero;
+}
+@media only screen and (max-width: 500px) {
+	.latest-title {
+  	font: $h1-font-mobile;
+	}
+}
+
+.latest-abstract {
+	@extend .text;
+	margin: 20px 20px 0px 20px;
+}
+
+.latest-readtime {
+	@extend .text;
+	font-style: italic;
+}
+
+/*****************
+* previous posts *
+*****************/
+
+.previous-section {
+  margin-top: 20px;
+}
+
+.previous-abstract {
+	@extend .text;
+}
+
+previous {
+  width: 200px;
+  display: inline-block;
+  margin: 20px 20px 0px 20px;
+  vertical-align: top;
+}
+previous a {
+	@extend h3;
+}
+@media only screen and (max-width: 500px) {
+	previous {
+    text-indent: 0px;
+		width: 100%;
+  	margin: 20px 0px 0px 0px;
+	}
+  .previous-abstract {
+    margin: 0px 20px 0px 20px;
+    font: $text-font-mobile;
+  }
 }

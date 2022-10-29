@@ -1,0 +1,8 @@
+---
+layout: nil
+---
+
+{% capture title %}Andrew McKnight's blog: % {{ page.tag }}{% endcapture %}
+{% capture description %}Andrew McKnight's blog  RSS Feed for updates on {{ page.tag }}.{% endcapture %}
+{% capture link %}http://armcknight.com/blog/tag/{{ page.tag }}.html{% endcapture %}
+{% include rss-feed.xml posts=page.posts title=title description=description link=link %}

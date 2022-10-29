@@ -1,2 +1,6 @@
 url: http://armcknight.com
 exclude: [ Makefile, README.md, .gitignore ]
+tag_page_layout: tag_page
+tag_page_dir: blog/tag
+tag_feed_layout: tag_feed
+tag_feed_dir: blog/tag
