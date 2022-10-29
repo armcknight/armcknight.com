@@ -14,7 +14,9 @@
     {% include header.html %}
       <tr>
         <td>
-          {% include blog-post-header.html %}
+          <div class="title">{{ page.title }}</div>
+          <div class="byline">{{ page.author }} – {{ page.date | date: '%-d %B %Y'}}</div>
+          <hr />
           <div id="post-content">
             {{ content }}
           </div>

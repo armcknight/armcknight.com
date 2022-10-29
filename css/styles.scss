@@ -337,3 +337,67 @@ previous a {
     font: $text-font-mobile;
   }
 }
+
+
+.title {
+	@extend .hero;
+}
+
+.byline {
+	@extend h5;
+}
+
+.entry {
+	@extend .text;
+}
+
+p {
+	@extend .text;
+}
+
+/* ⬇️ thanks to https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/ */
+#post-content {
+	/* These are technically the same, but use both */
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+
+	-ms-word-break: break-all;
+	/* This is the dangerous one in WebKit, as it breaks things wherever */
+	word-break: break-all;
+	/* Instead use this non-standard one: */
+	word-break: break-word;
+
+	/* Adds a hyphen where the word breaks, if supported (No Blink) */
+	/*
+	-ms-hyphens: auto;
+	-moz-hyphens: auto;
+	-webkit-hyphens: auto;
+	hyphens: auto;
+	*/
+}
+/* ⬆️ thanks to https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/ */
+
+#post-content::first-letter {
+	font-size: 300%;
+	float: left;
+	line-height: 1;
+	display: inline-block;
+	margin-right: 0.15em;
+	margin-bottom: -0.30em;
+	font-family: $fancy-font;
+}
+
+blockquote p {
+	font: $note-font-desktop;
+	font-style: italic;
+	padding: 10px 20px 10px 20px;
+	border-left: 5px grey solid;
+  background-color: #EEE;
+}
+@media only screen and (max-width: 500px) {
+	blockquote p {
+		font: $note-font-mobile;
+		font-style: italic;
+		margin: 0px 10px 0px 10px;
+	}
+}
