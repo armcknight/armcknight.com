@@ -49,6 +49,10 @@
             }
           }
         }
+      },
+      "sass/sass/sass": {
+        "version": "1.55.0",
+        "bottle": false
       }
     }
   },
@@ -57,7 +61,7 @@
       "monterey": {
         "HOMEBREW_VERSION": "3.6.7",
         "HOMEBREW_PREFIX": "/opt/homebrew",
-        "Homebrew/homebrew-core": "86754e6d11ccdd0dff1dc514c76d29f97bbb5a23",
+        "Homebrew/homebrew-core": "9b0cea9ba94d2017015e97c9377ddb88933e0bd6",
         "CLT": "14.0.0.0.1.1661618636",
         "Xcode": "14.0",
         "macOS": "12.6"

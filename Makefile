@@ -1,28 +1,25 @@
 init:
 	which brew || /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-	brew bundle
+	brew bundle ||:
 	rbenv install --skip-existing
 	rbenv exec gem update bundler
 	rbenv exec bundle update
 
-logs-dir:
-	mkdir logs ||:
+_logs-dir:
+	mkdir -p logs
 
-compile-css:
-	rbenv exec bundle exec sass --update web/css 2>&1 | tee logs/sass_compile.log
+_compile-css: _logs-dir
+	sass --update css 2>&1 | tee logs/sass_build.log
 
-build-web: logs-dir compile-css
+build: _logs-dir _compile-css
 	rbenv exec bundle exec jekyll build --incremental --destination web/_site/dev 2>&1 | tee logs/jekyll_build.log
 
-package-web: logs-dir compile-css
-	env JEKYLL_ENV=production rbenv exec bundle exec jekyll build --destination web/_site/prod 2>&1 | tee logs/jekyll_package.log
-
-deploy-web: logs-dir
+deploy: _logs-dir
 	aws s3 sync _site/ s3://armcknight.com/ --exclude .git/ --profile armcknight --acl public-read | tee logs/web_deploy.log
 
-serve-local:
+serve: build
 	pushd _site && python -m SimpleHTTPServer 4000 --bind localhost &
 	open http://localhost:4000
 
-endserve-local:
+endserve::
 	killall Python
