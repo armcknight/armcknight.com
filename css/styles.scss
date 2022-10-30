@@ -1,71 +1,19 @@
-$green: #2D8632;
-$green-black: #000100;
-$green-dark: #18431B;
-$green-light: #3DC846;
-$green-bright: #46FE52;
-
-$black: #000;
-
-$blue: #303D74;
-$blue-black: #000001;
-$blue-dark: #1A203A;
-$blue-light: #4358AD;
-$blue-bright: #5C7CFE;
-
-$yellow: #AAA739;
-$yellow-black: #010100;
-$yellow-dark: #56541F;
-$yellow-light: #FEFA4E;
-$yellow-bright: #FFFA47;
-
-/* faces */
-
-$fancy-font: 'Palatino', 'Garamond', serif;
-$font: 'Verdana', 'Helvetica', 'Arial', sans-serif;
-$monospace-font: 'Courier New', monospace;
-
-/* mobile text sizes */
-
-$hero-mobile: 30pt;
-$h1-mobile: 27pt;
-$h2-mobile: 24pt;
-$h3-mobile: 21pt;
-$h4-mobile: 18pt;
-$h5-mobile: 15pt;
-$text-mobile: 13pt;
-$note-mobile: 11pt;
-$note-font-mobile: 200 $note-mobile $font;
-
-/* desktop text sizes */
-
-$hero-desktop: 40pt;
-$h1-desktop: 34pt;
-$h2-desktop: 28pt;
-$h3-desktop: 23pt;
-$h4-desktop: 20pt;
-$h5-desktop: 17pt;
-$text-desktop: 13pt;
-$note-desktop: 11pt;
-$note-font-desktop: 200 $note-desktop $font;
+@import '_definitions';
 
 /****************
 * text elements *
 ****************/
 
-.hero {
+hero {
 	color: $black;
-	font: 200 $hero-mobile $fancy-font;
+	font: $hero-font-mobile;
 }
 
-$h1-font-desktop: 200 $h1-desktop $fancy-font;
-$h1-font-mobile: 200 $h1-mobile $fancy-font;
 h1 {
 	color: $black;
 	font: $h1-font-mobile;
 }
 
-$h2-font-desktop: 200 $h2-desktop $fancy-font;
-$h2-font-mobile: 200 $h2-mobile $fancy-font;
 h2 {
 	color: $black;
 	font: $h2-font-mobile;
@@ -84,15 +32,13 @@ h5 {
 	font: 100 $h5-mobile $fancy-font;
 	font-style: italic;
 }
-$text-font-mobile: lighter $text-mobile $font;
-$text-font-desktop: lighter $text-desktop $font;
 .text, ul {
 	color: $black;
 	font: $text-font-mobile;
 }
 
 @media only screen and (min-width: 500px) {
-	.hero { font-size: $hero-desktop; }
+	hero { font: $hero-font-desktop }
 	h1 { font: $h1-font-desktop; }
 	h2 { font: $h2-font-desktop; }
 	h3 { font-size: $h3-desktop; }
@@ -170,7 +116,7 @@ a:active {
 	/* ^^^ thanks to https://www.thesitewizard.com/css/hanging-indents.shtml */
 }
 
-/* element effects */
+/* custom classes */
 
 .squircle {
     border-radius: 25px;
@@ -200,6 +146,17 @@ a:active {
 	font: 300 22pt $fancy-font;
 }
 
+.main-content {
+    padding-top: 15px;
+}
+
+.header-nav {
+    text-align: center;
+    border-bottom: 1px solid gray;
+    border-top: 1px solid gray;
+    padding: 15px 0px 15px 0px;
+}
+
 /* elememt overrides */
 
 body {
@@ -211,6 +168,8 @@ body {
 
 ul.navmenu, li.navmenuitem {
     display: inline;
+    margin: 20px;
+    font: $nav-desktop;
 }
 
 /* blog styles */
@@ -286,12 +245,21 @@ latest {
 	}
 }
 
+.title {
+    font: $h2-font-desktop;
+}
+@media only screen and (max-width: 500px) {
+    .title {
+        font: $h2-font-mobile;
+    }
+}
+
 .latest-title {
-	@extend .hero;
+	font: $h1-font-desktop;
 }
 @media only screen and (max-width: 500px) {
 	.latest-title {
-  	font: $h1-font-mobile;
+  	    font: $h1-font-mobile;
 	}
 }
 
@@ -336,11 +304,6 @@ previous a {
     margin: 0px 20px 0px 20px;
     font: $text-font-mobile;
   }
-}
-
-
-.title {
-	@extend .hero;
 }
 
 .byline {

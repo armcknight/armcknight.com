@@ -1,18 +1,11 @@
-		<center>
-			<a href="/" style="text-decoration: none">
-				<img src="/img/logo-small.png" height="38em" />
-			</a>
-			{% if include.link == undefined %}
-			<span class="page-name">{{ include.page_name }}</span>
-			{% else %}
-			<a href="{{ include.link }}" class="page-name" style="text-decoration: none">{{ include.page_name }}</a>
-			{% endif %}
-			{% if include.rss_link != undefined %}
-			<a href="{{ include.rss_link }}" style="text-decoration:none;">
-				<img srcset="
-					../../img/RSS.png 1x,
-					../../img/RSS@2x.png 2x
-				" alt="{{ include.rss_link_alt }}" width="25px" />
-			</a>
-			{% endif %}
-		</center>
+<center>
+  <div class="title">
+    {{ include.page_name }}
+    <a href="{{ include.rss_link }}" style="text-decoration:none;">
+        <img srcset="
+            ../../img/RSS.png 1x,
+            ../../img/RSS@2x.png 2x
+        " alt="{{ include.rss_link_alt }}" width="25px" />
+    </a>
+  </div>
+</center>

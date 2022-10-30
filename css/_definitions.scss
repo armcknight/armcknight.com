@@ -1,0 +1,57 @@
+$green: #2D8632;
+$green-black: #000100;
+$green-dark: #18431B;
+$green-light: #3DC846;
+$green-bright: #46FE52;
+
+$black: #000;
+
+$blue: #303D74;
+$blue-black: #000001;
+$blue-dark: #1A203A;
+$blue-light: #4358AD;
+$blue-bright: #5C7CFE;
+
+$yellow: #AAA739;
+$yellow-black: #010100;
+$yellow-dark: #56541F;
+$yellow-light: #FEFA4E;
+$yellow-bright: #FFFA47;
+
+/* faces */
+
+$fancy-font: 'Palatino', 'Garamond', serif;
+$font: 'Verdana', 'Helvetica', 'Arial', sans-serif;
+$monospace-font: 'Courier New', monospace;
+
+/* mobile text sizes */
+
+$hero-font-mobile: 200 30pt $fancy-font;
+$nav-mobile: 200 18pt $fancy-font;
+$h1-mobile: 27pt;
+$h2-mobile: 24pt;
+$h3-mobile: 21pt;
+$h4-mobile: 18pt;
+$h5-mobile: 15pt;
+$text-mobile: 13pt;
+$note-mobile: 11pt;
+$note-font-mobile: 200 $note-mobile $font;
+$h1-font-mobile: 200 $h1-mobile $fancy-font;
+$h2-font-mobile: 200 $h2-mobile $fancy-font;
+$text-font-mobile: lighter $text-mobile $font;
+
+/* desktop text sizes */
+
+$hero-font-desktop: 200 50pt $fancy-font;
+$nav-desktop: 200 25pt $fancy-font;
+$h1-desktop: 34pt;
+$h2-desktop: 28pt;
+$h3-desktop: 23pt;
+$h4-desktop: 20pt;
+$h5-desktop: 17pt;
+$text-desktop: 13pt;
+$note-desktop: 11pt;
+$note-font-desktop: 200 $note-desktop $font;
+$h1-font-desktop: 200 $h1-desktop $fancy-font;
+$h2-font-desktop: 200 $h2-desktop $fancy-font;
+$text-font-desktop: lighter $text-desktop $font;

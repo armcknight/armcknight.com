@@ -5,7 +5,7 @@
 /****************
 * text elements *
 ****************/
-.hero, .title, .latest-title {
+hero {
   color: #000;
   font: 200 30pt "Palatino", "Garamond", serif;
 }
@@ -43,8 +43,8 @@ h5, .byline {
 }
 
 @media only screen and (min-width: 500px) {
-  .hero, .title, .latest-title {
-    font-size: 40pt;
+  hero {
+    font: 200 50pt "Palatino", "Garamond", serif;
   }
   h1 {
     font: 200 34pt "Palatino", "Garamond", serif;
@@ -129,7 +129,7 @@ a:active {
   /* ^^^ thanks to https://www.thesitewizard.com/css/hanging-indents.shtml */
 }
 
-/* element effects */
+/* custom classes */
 .squircle {
   border-radius: 25px;
 }
@@ -158,6 +158,17 @@ a:active {
   font: 300 22pt "Palatino", "Garamond", serif;
 }
 
+.main-content {
+  padding-top: 15px;
+}
+
+.header-nav {
+  text-align: center;
+  border-bottom: 1px solid gray;
+  border-top: 1px solid gray;
+  padding: 15px 0px 15px 0px;
+}
+
 /* elememt overrides */
 body {
   padding: 50px;
@@ -167,6 +178,8 @@ body {
 
 ul.navmenu, li.navmenuitem {
   display: inline;
+  margin: 20px;
+  font: 200 25pt "Palatino", "Garamond", serif;
 }
 
 /* blog styles */
@@ -232,6 +245,19 @@ latest {
     width: 100%;
   }
 }
+.title {
+  font: 200 28pt "Palatino", "Garamond", serif;
+}
+
+@media only screen and (max-width: 500px) {
+  .title {
+    font: 200 24pt "Palatino", "Garamond", serif;
+  }
+}
+.latest-title {
+  font: 200 34pt "Palatino", "Garamond", serif;
+}
+
 @media only screen and (max-width: 500px) {
   .latest-title {
     font: 200 27pt "Palatino", "Garamond", serif;

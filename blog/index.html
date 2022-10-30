@@ -1,22 +1,8 @@
 ---
-
+layout: page
+title: "Andrew McKnight's BBlog"
+stylesheet: "../css/styles.css"
+feedName: "Andrew McKnight's Blog"
+feedURL: "/feed.xml"
 ---
-{% include html-opening-tags.html %}
-  <head>
-    <title>Andrew McKnight's Blog</title>
-    {% include meta-tags-blog-post.html title=page_title description="Andrew McKnight's blog." %}
-    <link rel="alternate" type="application/rss+xml" title="Andrew McKnight's RSS" href="/feed.xml">
-    <link rel="stylesheet" href="../css/styles.css"/>
-  </head>
-
-  <body>
-    <table class="content-column">
-    {% include header.html %}
-      <tr>
-        <td>
-          {% include blog-post-listing.html posts=site.posts%}
-        </td>
-      </tr>
-    </table>
-  </body>
-</html>
+{% include blog-post-listing.html posts=site.posts%}
