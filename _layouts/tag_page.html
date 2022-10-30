@@ -8,6 +8,20 @@
 {% assign page_name = "Tag: " | append: page.tag %}
 {% capture rss_link %}http://armcknight.com/blog/tag/{{ page.tag }}.xml{% endcapture %}
 {% capture rss_link_alt %}Andrew McKnight's {{ page.tag }} RSS Feed{% endcapture %}
+
 {% include subpage-header.html page_name=page_name rss_link=rss_link rss_link_alt=rss_link_alt %}
+
+<center>
+  <div class="title">
+    {{ page_name }}
+    <a href="{{ rss_link }}" style="text-decoration:none;">
+        <img srcset="
+            ../../img/RSS.png 1x,
+            ../../img/RSS@2x.png 2x
+        " alt="{{ rss_link_alt }}" width="25px" />
+    </a>
+  </div>
+</center>
+
 {% include blog-post-listing.html posts=page.posts %}
 {% include body-closing-tags.html %}
