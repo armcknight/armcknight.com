@@ -20,7 +20,7 @@ h2 {
   font: 200 24pt "Palatino", "Garamond", serif;
 }
 
-h3, previous a {
+h3 {
   color: #000;
   font: 100 21pt "Palatino", "Garamond", serif;
 }
@@ -52,7 +52,7 @@ h5, .byline {
   h2 {
     font: 200 28pt "Palatino", "Garamond", serif;
   }
-  h3, previous a {
+  h3 {
     font-size: 23pt;
   }
   h4 {
@@ -184,7 +184,7 @@ ul.navmenu, li.navmenuitem {
 
 /* blog styles */
 .section-heading {
-  font: 200 34pt "Palatino", "Garamond", serif;
+  font: 200 23pt "Palatino", "Garamond", serif;
 }
 
 /* vvv thanks to https://www.w3schools.com/html/tryit.asp?filename=tryhtml_layout_flexbox */
@@ -207,12 +207,14 @@ tags {
   -ms-flex: 1;
   flex: 1;
   vertical-align: top;
+  padding-left: 20px;
 }
 
 latest {
   -webkit-flex: 3;
   -ms-flex: 3;
   flex: 3;
+  padding-right: 20px;
 }
 
 /* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
@@ -255,12 +257,12 @@ latest {
   }
 }
 .latest-title {
-  font: 200 34pt "Palatino", "Garamond", serif;
+  font: 200 23pt "Palatino", "Garamond", serif;
 }
 
 @media only screen and (max-width: 500px) {
   .latest-title {
-    font: 200 27pt "Palatino", "Garamond", serif;
+    font: 200 21pt "Palatino", "Garamond", serif;
   }
 }
 .latest-abstract {
@@ -285,15 +287,40 @@ previous {
   vertical-align: top;
 }
 
+previous a {
+  font: 200 20pt "Palatino", "Garamond", serif;
+}
+
 @media only screen and (max-width: 500px) {
   previous {
     text-indent: 0px;
     width: 100%;
     margin: 20px 0px 0px 0px;
   }
+  previous a {
+    font: 200 18pt "Palatino", "Garamond", serif;
+  }
   .previous-abstract {
     margin: 0px 20px 0px 20px;
     font: lighter 13pt "Verdana", "Helvetica", "Arial", sans-serif;
+  }
+}
+/********
+* posts *
+********/
+/*
+* monospace and code snippets
+*/
+.highlighter-rouge {
+  color: #a52727;
+  font: 13pt "Courier New", monospace;
+  background-color: #eee;
+  padding: 0px 3px 0px 3px;
+}
+
+@media only screen and (min-width: 500px) {
+  .highlighter-rouge {
+    font: 13pt "Courier New", monospace;
   }
 }
 /* ⬇️ thanks to https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/ */
