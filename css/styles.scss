@@ -175,7 +175,7 @@ ul.navmenu, li.navmenuitem {
 /* blog styles */
 
 .section-heading {
-	font: $h1-font-desktop;
+	font: $h3-font-desktop;
 }
 
 /* vvv thanks to https://www.w3schools.com/html/tryit.asp?filename=tryhtml_layout_flexbox */
@@ -200,7 +200,8 @@ tags {
 	-ms-flex: 1;
 	flex: 1;
 	vertical-align: top;
-  @extend .hanging-indent;
+    @extend .hanging-indent;
+    padding-left: 20px;
 }
 
 tags a {
@@ -211,6 +212,7 @@ latest {
 	-webkit-flex: 3;
 	-ms-flex: 3;
 	flex: 3;
+    padding-right: 20px;
 }
 
 /* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
@@ -219,9 +221,9 @@ latest {
 		-webkit-flex-direction: column;
 		flex-direction: column;
 	}
-  tags {
-  	margin-top: 20px;
-  }
+    tags {
+  	    margin-top: 20px;
+    }
 }
 
 /* ^^^ thanks to https://www.w3schools.com/html/tryit.asp?filename=tryhtml_layout_flexbox */
@@ -255,11 +257,11 @@ latest {
 }
 
 .latest-title {
-	font: $h1-font-desktop;
+	font: $h3-font-desktop;
 }
 @media only screen and (max-width: 500px) {
 	.latest-title {
-  	    font: $h1-font-mobile;
+  	    font: $h3-font-mobile;
 	}
 }
 
@@ -292,19 +294,26 @@ previous {
   vertical-align: top;
 }
 previous a {
-	@extend h3;
+	font: $h4-font-desktop;
 }
 @media only screen and (max-width: 500px) {
 	previous {
-    text-indent: 0px;
+        text-indent: 0px;
 		width: 100%;
-  	margin: 20px 0px 0px 0px;
+  	    margin: 20px 0px 0px 0px;
 	}
-  .previous-abstract {
-    margin: 0px 20px 0px 20px;
-    font: $text-font-mobile;
-  }
+    previous a {
+        font: $h4-font-mobile;
+    }
+    .previous-abstract {
+        margin: 0px 20px 0px 20px;
+        font: $text-font-mobile;
+    }
 }
+
+/********
+* posts *
+********/
 
 .byline {
 	@extend h5;
@@ -316,6 +325,22 @@ previous a {
 
 p {
 	@extend .text;
+}
+
+/*
+* monospace and code snippets
+*/
+.highlighter-rouge {
+    color: $red-code;
+    font: $text-font-monospace-mobile;
+    background-color: #eee;
+    padding: 0px 3px 0px 3px;
+}
+
+@media only screen and (min-width: 500px) {
+    .highlighter-rouge {
+        font: $text-font-monospace-desktop
+    }
 }
 
 /* ⬇️ thanks to https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/ */

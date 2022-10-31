@@ -18,6 +18,8 @@ $yellow-dark: #56541F;
 $yellow-light: #FEFA4E;
 $yellow-bright: #FFFA47;
 
+$red-code: #a52727;
+
 /* faces */
 
 $fancy-font: 'Palatino', 'Garamond', serif;
@@ -38,7 +40,10 @@ $note-mobile: 11pt;
 $note-font-mobile: 200 $note-mobile $font;
 $h1-font-mobile: 200 $h1-mobile $fancy-font;
 $h2-font-mobile: 200 $h2-mobile $fancy-font;
+$h3-font-mobile: 200 $h3-mobile $fancy-font;
+$h4-font-mobile: 200 $h4-mobile $fancy-font;
 $text-font-mobile: lighter $text-mobile $font;
+$text-font-monospace-mobile: $text-mobile $monospace-font;
 
 /* desktop text sizes */
 
@@ -54,4 +59,7 @@ $note-desktop: 11pt;
 $note-font-desktop: 200 $note-desktop $font;
 $h1-font-desktop: 200 $h1-desktop $fancy-font;
 $h2-font-desktop: 200 $h2-desktop $fancy-font;
+$h3-font-desktop: 200 $h3-desktop $fancy-font;
+$h4-font-desktop: 200 $h4-desktop $fancy-font;
 $text-font-desktop: lighter $text-desktop $font;
+$text-font-monospace-desktop: $text-desktop $monospace-font;
