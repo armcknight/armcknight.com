@@ -2,7 +2,8 @@
 
 ---
 {% include html-opening-tags.html %}
-{% include head-tags.html title=page.title stylesheet="../../../../css/styles.css" %}
+{% assign page_title = "Andrew McKnight's Blog: " | append: page.title %}
+{% include head-tags.html title=page_title stylesheet="../../../../css/styles.css" %}
 {% include body-opening-tags.html %}
 <div class="title">{{ page.title }}</div>
 <div class="byline">{{ page.author }} – {{ page.date | date: '%-d %B %Y'}}</div>
@@ -14,10 +15,10 @@
   <hr />
 </p>
 <p>
-  🙏🏻 Enjoy the post? Please help support more like it by <a href="https://www.paypal.me/armcknight">buying me a cup of coffee</a>!.
+  🙏🏻 Enjoy the post? Please help support more like it by <a href="https://www.paypal.me/armcknight">buying me a cup of coffee</a>!
 </p>
 <p>
-  💡 Suggestions, questions, comments? <a href="https://github.com/armcknight/armcknight.com/edit/master/blog/_posts/{{page.date | date: "%Y-%m-%d"}}-{{ page.slug }}.md">Please submit a PR!</a>.
+  💡 Suggestions, questions, comments? <a href="https://github.com/armcknight/armcknight.com/edit/master/blog/_posts/{{page.date | date: "%Y-%m-%d"}}-{{ page.slug }}.md">Please submit a PR</a>!
 </p>
 
 {% include body-closing-tags.html %}
