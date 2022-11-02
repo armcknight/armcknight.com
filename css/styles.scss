@@ -172,6 +172,17 @@ ul.navmenu, li.navmenuitem {
     font: $nav-desktop;
 }
 
+li.linklistitem {
+    font: $text-font-desktop;
+}
+
+links {
+  width: 200px;
+  display: inline-block;
+  margin: 20px 20px 0px 20px;
+  vertical-align: top;
+}
+
 /* blog styles */
 
 .section-heading {

@@ -1,17 +1,80 @@
-- https://larrycarlson.com
-- https://slatestarcodex.com
-- https://astralcodexten.substack.com
-- https://dataswamp.org/~john
-- https://edwardthompson.com/software
-- https://www.joelonsoftware.com
-- https://nshipster.com
-- https://www.merowing.info
-- https://blog.codinghorror.com
-- https://www.mikeash.com
-- https://www.alexgrey.com
-- http://www.complexification.net/gallery/
-- https://www.objc.io/issues/
-- https://www.objc.io/blog/archive/
-- https://www.cocoawithlove.com
-- https://useyourloaf.com
-- https://www.cocoanetics.com
+https://larrycarlson.com:
+  - tags:
+    - art
+https://slatestarcodex.com:
+  - tags:
+    - philosophy
+https://astralcodexten.substack.com:
+  - tags:
+    - philosophy
+https://dataswamp.org/~john:
+  - tags:
+    - tech
+https://edwardthompson.com/software:
+  - tags:
+    - software
+https://www.joelonsoftware.com:
+  - tags:
+    - software
+https://nshipster.com:
+  - tags:
+    - software
+    - apple
+https://www.merowing.info:
+  - tags:
+    - software
+    - apple
+https://blog.codinghorror.com:
+  - tags:
+    - software
+https://www.mikeash.com:
+  - tags:
+    - software
+    - apple
+https://www.alexgrey.com:
+  - tags:
+    - art
+http://www.complexification.net/gallery/:
+  - tags:
+    - software
+    - art
+https://www.objc.io/issues/:
+  - tags:
+    - software
+    - apple
+https://www.objc.io/blog/archive/:
+  - tags:
+    - software
+    - apple
+https://www.cocoawithlove.com:
+  - tags:
+    - software
+    - apple
+https://useyourloaf.com:
+  - tags:
+    - software
+    - apple
+https://www.cocoanetics.com:
+  - tags:
+    - software
+    - apple
+httsp://lowtechmagazine.com:
+  - tags:
+    - tech
+    - diy
+https://solar.lowtechmagazine.com:
+  - tags:
+    - tech
+    - diy
+https://adventofcode.com:
+  - tags:
+    - software
+    - competition
+http://www.underhanded-c.org:
+  - tags:
+    - software
+    - competition
+https://projecteuler.net:
+  - tags:
+    - software
+    - competition
