@@ -3,8 +3,53 @@ layout: page
 title: "Andrew McKnight's Link Collection"
 stylesheet: "../css/styles.css"
 ---
-<ul class="linklist">
-  {% for link in site.data.links %}
-  <li><a href="{{ link }}">{{ link }}</a></li>
+{% comment %}
+get set of all tags
+{% endcomment %}
+{% assign all_tags = "" %}
+{% for link in site.data.links %}
+  {% for tags_hash in link[1] %}
+    {% for tag_array in tags_hash %}
+      {% for tag in tag_array[1] %}
+        {% assign all_tags = all_tags | append: tag | append : "|" %}
+      {% endfor %}
+    {% endfor %}
   {% endfor %}
-</ul>
+{% endfor %}
+
+{% assign uniq_tags = all_tags | split: "|" | uniq %}
+
+{% comment %}
+generate tag cloud
+{% endcomment %}
+<h1>Tags:</h1>
+{% for tag in uniq_tags %}
+<a href="#{{ tag }}">{{ tag }}</a>&nbsp;
+{% endfor %}
+
+{% comment %}
+for every tag, create a box of links that have that tag
+{% endcomment %}
+{% for tag in uniq_tags %}
+  <links>
+    <h2 id="{{ tag }}">{{ tag }}:</h2>
+    <div>
+      <ul class="linklist">
+        {% for link in site.data.links %}
+          {% for tags_hash in link[1] %}
+            {% for tag_array in tags_hash %}
+              {% assign link_tags = "" %}
+              {% for link_tag in tag_array[1] %}
+                {% assign link_tags = link_tags | append: link_tag | append: "|" %}
+              {% endfor %}
+              {% assign link_tag_array = link_tags | split: "|" %}
+              {% if link_tag_array contains tag %}
+                <li class="linklistitem"><a href="{{ link[0] }}">{{ link[0] }}</a></li>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        {% endfor %}
+      </ul>
+    </div>
+  </links>
+{% endfor %}
