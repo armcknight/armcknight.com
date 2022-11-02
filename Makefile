@@ -26,3 +26,6 @@ endserve:
 
 bust-cache:
 	aws --profile armcknight cloudfront create-invalidation --distribution-id E6BG42FYZHWB0 --paths "$(PATHS)"
+
+check-cache-invalidation-status:
+	aws --profile armcknight cloudfront list-invalidations --distribution-id E6BG42FYZHWB0
