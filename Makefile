@@ -15,7 +15,7 @@ build: _logs-dir _compile-css
 	rbenv exec bundle exec jekyll build --incremental --destination _site 2>&1 | tee logs/jekyll_build.log
 
 deploy: _logs-dir
-	aws s3 sync _site/ s3://armcknight.com/ --exclude .git/ --exclude logs/ --profile armcknight --acl public-read | tee logs/web_deploy.log
+	aws s3 sync _site/ s3://armcknight.com/ --profile armcknight --acl public-read | tee logs/web_deploy.log
 
 serve: build
 	pushd _site && python3 -m http.server 4000 --bind localhost &

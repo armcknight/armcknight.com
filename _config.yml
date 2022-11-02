@@ -1,5 +1,12 @@
 url: http://armcknight.com
-exclude: [ Makefile, README.md, .gitignore ]
+exclude:
+  - Makefile
+  - README.md
+  - .gitignore
+  - Brewfile*
+  - Gemfile*
+  - logs/
+  - .git/
 tag_page_layout: tag_page
 tag_page_dir: blog/tag
 tag_feed_layout: tag_feed
