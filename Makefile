@@ -23,3 +23,6 @@ serve: build
 
 endserve:
 	killall Python
+
+bust-cache:
+	aws --profile armcknight cloudfront create-invalidation --distribution-id E6BG42FYZHWB0 --paths "$(PATHS)"
