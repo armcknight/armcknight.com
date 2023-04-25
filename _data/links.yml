@@ -105,3 +105,22 @@ https://pjreddie.com:
 https://blog.oimo.io:
   - tags:
     - software
+https://developer.nvidia.com/blog:
+  - tags:
+    - tech
+https://community.arm.com/arm-community-blogs/:
+  - tags:
+    - tech
+https://www.swift.org/blog/:
+  - tags:
+    - apple
+    - software
+https://gwern.net:
+  - tags:
+    - science
+    - computing
+    - software
+https://lemire.me/en/:
+  - tags:
+    - science
+    - computing
