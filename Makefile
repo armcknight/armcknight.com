@@ -12,7 +12,7 @@ _compile-css: _logs-dir
 	sass --update css 2>&1 | tee logs/sass_build.log
 
 build: _logs-dir _compile-css
-	rbenv exec bundle exec jekyll build --incremental --destination _site 2>&1 | tee logs/jekyll_build.log
+	rbenv exec bundle exec jekyll build --destination _site 2>&1 | tee logs/jekyll_build.log
 
 deploy: _logs-dir
 	aws s3 sync _site/ s3://armcknight.com/ --profile armcknight --acl public-read --delete | tee logs/web_deploy.log
