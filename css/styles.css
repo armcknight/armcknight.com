@@ -46,21 +46,27 @@ h5, .byline {
   hero {
     font: 200 50pt "Palatino", "Garamond", serif;
   }
+
   h1 {
     font: 200 34pt "Palatino", "Garamond", serif;
   }
+
   h2 {
     font: 200 28pt "Palatino", "Garamond", serif;
   }
+
   h3 {
     font-size: 23pt;
   }
+
   h4 {
     font-size: 20pt;
   }
+
   h5, .byline {
     font-size: 17pt;
   }
+
   .text, p, .entry, .previous-abstract, .latest-readtime, .latest-abstract, tags a, body, ul {
     font: lighter 13pt "Verdana", "Helvetica", "Arial", sans-serif;
   }
@@ -237,6 +243,7 @@ latest {
     -webkit-flex-direction: column;
     flex-direction: column;
   }
+
   tags {
     margin-top: 20px;
   }
@@ -311,9 +318,11 @@ previous a {
     width: 100%;
     margin: 20px 0px 0px 0px;
   }
+
   previous a {
     font: 200 18pt "Palatino", "Garamond", serif;
   }
+
   .previous-abstract {
     margin: 0px 20px 0px 20px;
     font: lighter 13pt "Verdana", "Helvetica", "Arial", sans-serif;
