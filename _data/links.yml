@@ -134,6 +134,9 @@ https://susam.net:
 https://pjreddie.com:
   - tags:
     - computing
+https://blog.oimo.io:
+  - tags:
+    - software
 https://developer.nvidia.com/blog:
   - tags:
     - tech
@@ -153,7 +156,18 @@ https://lemire.me/en/:
   - tags:
     - science
     - computing
-https://www.swiftjectivec.com:
+www.copetti.org
   - tags:
     - apple
     - software
+https://www.kalzumeus.com:
+  - tags:
+    - software
+https://ciechanow.ski:
+  - tags:
+    - science
+    - art
+https://www.copetti.org:
+  - tags:
+    - computing
+    - tech
