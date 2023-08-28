@@ -17,6 +17,6 @@ And you may find yourself unwinding a bowl full of spaghetti swizzling macros
 
 And you may find yourself debugging pthread_mutex_lock synchronization
 
-And you may ask yourself well, "How did I get here?" 🎶
+And you may ask yourself "Well, how did I get here?" 🎶
 
 _/David Byrne voice_
