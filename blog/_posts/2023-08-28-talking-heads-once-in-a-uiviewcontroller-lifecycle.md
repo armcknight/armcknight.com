@@ -7,10 +7,16 @@ author: Andrew McKnight
 tags: ios
 ---
 
-David Byrne voice
+​_David Byrne voice_
+
 🎵 And you may find yourself inconsistently tracking UIViewController lifecycle changes
+
 And you may find yourself making an innocuous change to some ObjC
+
 And you may find yourself unwinding a bowl full of spaghetti swizzling macros
+
 And you may find yourself debugging pthread_mutex_lock synchronization
+
 And you may ask yourself well, "How did I get here?" 🎶
-/David Byrne voice
+
+_/David Byrne voice_
