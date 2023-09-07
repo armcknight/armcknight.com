@@ -16,15 +16,15 @@ Uses SASS for style sheets.
 
 To build the entire site, including SASS stylesheets, run
 
-	rake build
+	make build
 
 To preview the site on a local machine (after building),
 
-	rake serve
+	make serve
 
 don't forget to
 
-	rake endserve
+	make endserve
 
 when you're done!
 
@@ -32,7 +32,11 @@ when you're done!
 
 Sync the `_site/` directory to the armcknight.com bucket on AWS. Excludes .git/
 
-	rake publish
+	make publish
+
+and might want to bust the cloudfront cache:
+
+    make bust-cache PATHS=/path
 
 # TODO
 
