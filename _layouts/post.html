@@ -6,7 +6,7 @@
 {% include head-tags.html title=page_title stylesheet="../../../../css/styles.css" %}
 {% include body-opening-tags.html %}
 <div class="title">{{ page.title }}</div>
-<div class="byline">{{ page.author }} – {{ page.date | date: '%-d %B %Y'}}</div>
+<div class="byline">{{ page.author }} – {{ page.date | date: '%-d %B %Y'}} – {{ page.tags | join: ", " }}</div>
 <hr />
 <div id="post-content">
   {{ content }}
