@@ -3,7 +3,7 @@
 ---
 {% include html-opening-tags.html %}
 {% assign page_title = "Andrew McKnight's Blog: " | append: page.title %}
-{% include head-tags.html title=page_title stylesheet="../../../../css/styles.css" %}
+{% include head-tags.html title=page_title abstract=page.abstract stylesheet="../../../../css/styles.css" %}
 {% include body-opening-tags.html %}
 <div class="title">{{ page.title }}</div>
 <div class="byline">{{ page.author }} – {{ page.date | date: '%-d %B %Y'}} – {{ page.tags | join: ", " }}</div>
