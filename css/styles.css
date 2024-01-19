@@ -181,7 +181,6 @@ a:active {
 
 /* elememt overrides */
 body {
-  padding: 0px;
   text-align: justify;
   text-justify: inter-word;
 }
