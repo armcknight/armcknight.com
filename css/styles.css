@@ -116,12 +116,16 @@ a:active {
 }
 
 /* layout */
-.content-column {
-  width: 750px;
-  margin-left: auto;
-  margin-right: auto;
+#page-content { /* div containing everything after the header */
+  margin: 0px 50px 0px 50px; /* put a 50 px margin on left and right edges, 0 on top/bottom */
 }
 
+/* 500 or below */
+@media only screen and (max-width: 500px) {
+  #page-content { /* div containing everything after the header */
+    margin: 0px; /* on small devices, remove all margins */
+  }
+}
 .hanging-indent, tags {
   /* vvv hanging indentation css thanks to https://www.thesitewizard.com/css/hanging-indents.shtml */
   padding-left: 20px;
@@ -171,7 +175,7 @@ a:active {
 
 /* elememt overrides */
 body {
-  padding: 50px;
+  padding: 0px;
   text-align: justify;
   text-justify: inter-word;
 }
