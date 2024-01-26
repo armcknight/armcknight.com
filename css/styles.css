@@ -2,6 +2,9 @@
 /* faces */
 /* mobile text sizes */
 /* desktop text sizes */
+/* faces */
+/* mobile text sizes */
+/* desktop text sizes */
 /****************
 * text elements *
 ****************/
@@ -104,50 +107,6 @@ a:active {
   font: 100 10pt "Verdana", "Helvetica", "Arial", sans-serif;
 }
 
-/* placement within containers */
-.left {
-  text-align: left;
-}
-
-.center {
-  text-align: center;
-}
-
-.right {
-  text-align: right;
-}
-
-.top {
-  vertical-align: top;
-}
-
-/* layout */
-#page-content { /* div containing everything after the header */
-  margin: 0px 50px 0px 50px; /* put a 50 px margin on left and right edges, 0 on top/bottom */
-}
-
-/* 500 or below */
-@media only screen and (max-width: 500px) {
-  #page-content { /* div containing everything after the header */
-    margin: 0px; /* on small devices, remove all margins */
-  }
-}
-.hanging-indent, tags {
-  /* vvv hanging indentation css thanks to https://www.thesitewizard.com/css/hanging-indents.shtml */
-  padding-left: 20px;
-  text-indent: -20px;
-  /* ^^^ thanks to https://www.thesitewizard.com/css/hanging-indents.shtml */
-}
-
-/* custom classes */
-.squircle {
-  border-radius: 25px;
-}
-
-.squircle-small {
-  border-radius: 10px;
-}
-
 .breadcrumb {
   font: 300 30pt "Palatino", "Garamond", serif;
   color: #AAA739;
@@ -166,6 +125,40 @@ a:active {
 
 .subheading {
   font: 300 22pt "Palatino", "Garamond", serif;
+}
+
+/* placement within containers */
+.left {
+  text-align: left;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+.top {
+  vertical-align: top;
+}
+
+.hanging-indent, tags {
+  /* vvv hanging indentation css thanks to https://www.thesitewizard.com/css/hanging-indents.shtml */
+  padding-left: 20px;
+  text-indent: -20px;
+  /* ^^^ thanks to https://www.thesitewizard.com/css/hanging-indents.shtml */
+}
+
+/*@import '_layout';*/
+/* custom classes */
+.squircle {
+  border-radius: 25px;
+}
+
+.squircle-small {
+  border-radius: 10px;
 }
 
 .main-content {

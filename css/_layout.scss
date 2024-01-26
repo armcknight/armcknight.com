@@ -1,0 +1,47 @@
+@import '_definitions'
+
+#page-content { /* div containing everything after the header */
+	margin: 0px 50px 0px 50px; /* put a 50 px margin on left and right edges, 0 on top/bottom */
+}
+
+/* 500 or below */
+@media only screen and (max-width: 500px) {
+	#page-content { /* div containing everything after the header */
+		margin: 0px; /* on small devices, remove all margins */
+	}
+}
+
+.main-content {
+    padding-top: 15px;
+}
+
+.header-nav {
+    text-align: center;
+    border-bottom: 1px solid gray;
+    border-top: 1px solid gray;
+    padding: 15px 0px 15px 0px;
+}
+
+/* elememt overrides */
+
+body {
+	@extend .text;
+	text-align: justify;
+	text-justify: inter-word;
+}
+
+ul.navmenu, li.navmenuitem {
+    display: inline;
+    margin: 20px;
+    font: $nav-desktop;
+}
+
+li.linklistitem {
+    font: $text-font-desktop;
+}
+
+links {
+  display: inline-block;
+  margin: 20px 20px 0px 20px;
+  vertical-align: top;
+}
