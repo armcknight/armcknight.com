@@ -33,14 +33,14 @@ And wow, that thing blew my hair back. After a short ramp up period with the new
 
 The portability and slickness of the device was unlike anything I'd ever experienced, and even in that smaller form factor it still felt faster than the VIAO in compute.
 
-Soon after I got into iOS development. Some time while still with the VIAO I had bought a Droid X2, but in the summer of 2012 I think it was, I bought my wife and I both an iPhone 4. Soon after I started contracting in my free time (hah!) from school to develop iOS apps.
+Soon after I got into iOS development. Some time while still with the VIAO I had bought a Droid X2, but in the summer of 2012 I think it was, I bought my wife and I both an iPhone 4. Soon after I started contracting in my free time (hah!) from school to develop iOS apps. The way devices and the software running on them worked together left my Windows and Android devices in the dust; I had spent endless hours fiddling to get things working, and the quality never compared. The amount of time I got back to actually do what I wanted to do was priceles, as I value time higher than anything else.
 
 # Where I am Today
 
-That was 12 years ago, and I've been developing for iOS and Mac ever since. I've consulted and contracted developing iOS apps and more, and for the last 6ish years, have worked on tools for other iOS developers. Working in the SDK world and on the low level domains I've been involved with, like crash reporting and performance profiling, have brought me deeper and deeper into wondrous realms of computing that I could only dream of.
+That was 12 years ago, and I've been developing for iOS and Mac ever since. I've consulted and contracted developing iOS apps and more, and for the last 6ish years, have worked on tools for other iOS developers. Working in the SDK world and on the low level domains I've been involved with, like crash reporting and performance profiling, have brought me deeper and deeper into wondrous realms of computing that I could only dream of creating on my own.
 
 The depth and richness of software development at Apple, aside from their stellar hardware production of both whole computers and more recently microprocessors and SoCs, is really something to behold. I've got copies of [Mac OS X Internals](https://www.amazon.com/Mac-OS-Internals-Approach-paperback/dp/0134426541), an absolute unit of a tome rivaling that old VIAO, which I assume will take the rest of my natural born life to get through, that shows just how deep the rabbit hole goes.
 
-It's been quite the journey, and there's so much more I'd love to do. The ecosystem including Apple TV and Watch, and now Vision Pro (despite my conservative outlook on it) bring a ton of interesting possibilities. It's fun work, and there's no doubt that it put me on a life track that was unimaginable back in 1st and 2nd grade, not to mention the turmoil of my early 20s.
+It's been quite the journey, and there's so much more I'd love to do. The ecosystem including Apple TV and Watch, and now Vision Pro (despite my conservative outlook on it) bring a ton of interesting possibilities. It's fun work, and there's no doubt that it put me on a life track unimaginable to me back in 1st and 2nd grade, not to mention the turmoil of my early 20s.
 
 Here's to the next 40!
