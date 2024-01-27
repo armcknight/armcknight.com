@@ -13,13 +13,13 @@ People are writing their memories about their formative memories with Apple's Ma
 
 It must have been 1st grade for me, so 1991-92, when I saw and used my first Macintosh. I honestly don't remember what we even did with it, but I remember the 5.25" floppy disks that the programs we used came on. I assume we were playing some kind of learning games.
 
-I also remember using MacPaint, but can't exactly remember which model this was on. I want to say I was in 2nd grade, so 1992-93.
+I also remember using MacPaint, but can't exactly remember which model, in 2nd grade, so 1992-93, if memory serves.
 
 In high school, I took a journalism class, and saw the iconic color iMacs they were outfitted with. But I never got to play with one.
 
-I think a cousin of mine also had one of those iMacs that I was able to briefly play with once. The mouse struck me as so alien.
+I think a cousin of mine also had one of those iMacs that I briefly played with once. The mouse struck me as so alien.
 
-Everything after that was Windows computers. I remember windows 3.2, 95, 98, ME, 2000, on various family computers. These were the machines on which I cut my coding teeth, learning my way through DOS in the command prompt (and some hobby hacking on a TI-83 calculator). Frontpage Express, Dreamweaver, Bloodshed Dev-C++. I bought my first computer for myself when I was 19, a Dell Latitude, running Windows XP.
+Everything after that happened on Windows computers. I remember windows 3.2, 95, 98, ME, 2000, on various family computers. These were the machines on which I cut my coding teeth, learning my way through DOS in the command prompt (and some hobby hacking on a TI-83 calculator). Frontpage Express, Dreamweaver, Bloodshed Dev-C++. I bought my first computer for myself at 19, a Dell Latitude, running Windows XP.
 
 Around the same time, a buddy enrolled in a school for sound engineers, and asked what kind of computer he should get. Based on what I knew at the time about creatives using Macs, that's what I recommended, and he got a Macbook. Some time later we'd become roommates, and I remember how strange it felt trying to navigate Finder with the trackpad that scrolled in the wrong direction! (And he had the same experience with my laptop.)
 
@@ -27,7 +27,7 @@ Around the same time, a buddy enrolled in a school for sound engineers, and aske
 
 Fast forward a few years, and I'm in university, with a more recently purchased [Sony VIAO 17"](https://www.cnet.com/reviews/sony-vaio-e-series-17-inch-review/), an absolute behemoth. It ran Windows Vista. I actually took it backpacking in Europe for 6 weeks, ow, my back. But it did get us out of a bind a few times. This was before we could afford smartphones, so that was our only connection to the internet.
 
-Two things happened one or two semesters in. One, I was finally fed up with the bulk of the hulk. And two, I wanted something closer to a Unix experience. (OK, and three, the VIAO was already starting to fall apart, and the Latitude before it had fried only maybe a year in, so I wanted to get in on this legendary longevity I'd heard so much about). So I bought a 13" Macbook Air in 2012.
+Two things happened one or two semesters in. One, I finally had enough of the bulk of the hulk. And two, I wanted something closer to a Unix experience. (OK, and three, the VIAO had already started falling apart, and coupled with my memory of the Latitude before it frying a motherboard only maybe a year in, I wanted to get in on this legendary longevity I'd heard so much about). So I bought a 13" Macbook Air in 2012.
 
 And wow, that thing blew my hair back. After a short ramp up period with the new UI paradigms, I felt way, way faster working in both GUIs and the terminal. I learned more and more keyboard shortcuts that seemed to make more sense to me (and I'm pleased to say I _still_ learn new shortcuts today-as a touch typist this really helps me work faster and faster).
 
