@@ -19,9 +19,9 @@ In high school, I took a journalism class, and saw the iconic color iMacs they w
 
 I think a cousin of mine also had one of those iMacs that I briefly played with once. The mouse struck me as so alien.
 
-Everything after that happened on Windows computers. I remember windows 3.2, 95, 98, ME, 2000, on various family computers. These were the machines on which I cut my coding teeth, learning my way through DOS in the command prompt (and some hobby hacking on a TI-83 calculator). Frontpage Express, Dreamweaver, Bloodshed Dev-C++. I bought my first computer for myself at 19, a Dell Latitude, running Windows XP.
+Everything after that happened on Windows computers. I remember windows 3.2, 95, 98, ME, 2000, on various family computers. These were the machines on which I cut my coding teeth, learning my way through DOS in the command prompt (aside from some hobby hacking on a TI-83 calculator). I bought my first computer for myself at 19, a Dell Latitude, running Windows XP.
 
-Around the same time, a buddy enrolled in a school for sound engineers, and asked what kind of computer he should get. Based on what I knew at the time about creatives using Macs, that's what I recommended, and he got a Macbook. Some time later we'd become roommates, and I remember how strange it felt trying to navigate Finder with the trackpad that scrolled in the wrong direction! (And he had the same experience with my laptop.)
+Around the same time, a buddy enrolled in a school for sound engineers, and asked what kind of computer he should get. Based on what I knew at the time about creatives using Macs and the longevity and how they retain resale value, that's what I recommended, and he got a Macbook. Some time later we'd become roommates, and I remember how strange it felt trying to navigate Finder with the trackpad that scrolled in the wrong direction! (And he had the same experience with my laptop.)
 
 # First Purchase
 
@@ -40,6 +40,8 @@ Soon after I got into iOS development. Some time while still with the VIAO I had
 That was 12 years ago, and I've been developing for iOS and Mac ever since. I've consulted and contracted developing iOS apps and more, and for the last 6ish years, have worked on tools for other iOS developers. Working in the SDK world and on the low level domains I've been involved with, like crash reporting and performance profiling, have brought me deeper and deeper into wondrous realms of computing that I could only dream of creating on my own.
 
 The depth and richness of software development at Apple, aside from their stellar hardware production of both whole computers and more recently microprocessors and SoCs, is really something to behold. I've got copies of [Mac OS X Internals](https://www.amazon.com/Mac-OS-Internals-Approach-paperback/dp/0134426541), an absolute unit of a tome rivaling that old VIAO, which I assume will take the rest of my natural born life to get through, that shows just how deep the rabbit hole goes.
+
+I still remember the magic of creating my first iOS UI in a XIB in Xcode, and dragging a connection from a button to code to create a method to run when it was clicked. Moments like that come few and far between in the day to day drudgery of software development. It felt similar to the first time I worked in Flash Studio, and before that, Microsoft Visual Studio with C# connected to a GUI builder, and before that, Dreamweaver and FrontPage Express. I've gone back and forth several times on WYSIWYG editing, but it's undeniably a springboard into getting things done. It's certainly sexier than reading manpages and building CLI pipelines, even though that's still where I prefer to live these days, with the power of scripting and ever more abstraction (and I still prefer to build GUIs all in code, too).
 
 It's been quite the journey, and there's so much more I'd love to do. The ecosystem including Apple TV and Watch, and now Vision Pro (despite my conservative outlook on it) bring a ton of interesting possibilities. It's fun work, and there's no doubt that it put me on a life track unimaginable to me back in 1st and 2nd grade, not to mention the turmoil of my early 20s.
 
