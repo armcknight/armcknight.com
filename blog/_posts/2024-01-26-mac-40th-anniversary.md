@@ -7,7 +7,7 @@ author: Andrew McKnight
 tags: apple
 ---
 
-People are writing their memories about their formative memories with Apple's Macintosh computers in celebration of 40 years of their development. These are my own.
+People are writing their memories about their formative memories with Apple's Macintosh computers in celebration of [40 years](https://mac40th.com) of their development. These are my own.
 
 # Earliest Memories
 
