@@ -19,19 +19,19 @@ In high school, I took a journalism class, and saw the iconic color iMacs they w
 
 I think a cousin of mine also had one of those iMacs that I was able to briefly play with once. The mouse struck me as so alien.
 
-Everything after that was Windows computers. I remember windows 3.2, 95, 98, ME, 2000, on various family computers. I bought my first computer for myself when I was 19, a Dell Latitude, running Windows XP.
+Everything after that was Windows computers. I remember windows 3.2, 95, 98, ME, 2000, on various family computers. These were the machines on which I cut my coding teeth, learning my way through DOS in the command prompt (and some hobby hacking on a TI-83 calculator). Frontpage Express, Dreamweaver, Bloodshed Dev-C++. I bought my first computer for myself when I was 19, a Dell Latitude, running Windows XP.
 
 Around the same time, a buddy enrolled in a school for sound engineers, and asked what kind of computer he should get. Based on what I knew at the time about creatives using Macs, that's what I recommended, and he got a Macbook. Some time later we'd become roommates, and I remember how strange it felt trying to navigate Finder with the trackpad that scrolled in the wrong direction! (And he had the same experience with my laptop.)
 
 # First Purchase
 
-Fast forward a few years, and I'm in university, with a more recently purchased [Sony VIAO 17"](https://www.cnet.com/reviews/sony-vaio-e-series-17-inch-review/), an absolute behemoth. It ran Windows Vista. I had actually taken it backpacking in Europe as well, ow, my back. But it did get us out of a bind a few times. This was before we could afford smartphones, so that was our only connection to the internet.
+Fast forward a few years, and I'm in university, with a more recently purchased [Sony VIAO 17"](https://www.cnet.com/reviews/sony-vaio-e-series-17-inch-review/), an absolute behemoth. It ran Windows Vista. I actually took it backpacking in Europe for 6 weeks, ow, my back. But it did get us out of a bind a few times. This was before we could afford smartphones, so that was our only connection to the internet.
 
-Two things happened one or two semesters in. One, I was finally fed up with the bulk of the hulk. And two, I wanted something closer to a Unix experience. So I bought a 13" Macbook Air in 2012.
+Two things happened one or two semesters in. One, I was finally fed up with the bulk of the hulk. And two, I wanted something closer to a Unix experience. (OK, and three, the VIAO was already starting to fall apart, and the Latitude before it had fried only maybe a year in, so I wanted to get in on this legendary longevity I'd heard so much about). So I bought a 13" Macbook Air in 2012.
 
 And wow, that thing blew my hair back. After a short ramp up period with the new UI paradigms, I felt way, way faster working in both GUIs and the terminal. I learned more and more keyboard shortcuts that seemed to make more sense to me (and I'm pleased to say I _still_ learn new shortcuts today-as a touch typist this really helps me work faster and faster).
 
-The portability and slickness of the device was unlike anything I'd ever experienced, and even in that smaller form factor it still blew the VIAO away.
+The portability and slickness of the device was unlike anything I'd ever experienced, and even in that smaller form factor it still felt faster than the VIAO in compute.
 
 Soon after I got into iOS development. Some time while still with the VIAO I had bought a Droid X2, but in the summer of 2012 I think it was, I bought my wife and I both an iPhone 4. Soon after I started contracting in my free time (hah!) from school to develop iOS apps.
 
