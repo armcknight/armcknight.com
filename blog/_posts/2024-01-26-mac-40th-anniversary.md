@@ -23,6 +23,8 @@ Everything after that happened on Windows computers. I remember windows 3.2, 95,
 
 Around the same time, a buddy enrolled in a school for sound engineers, and asked what kind of computer he should get. Based on what I knew at the time about creatives using Macs and the longevity and how they retain resale value, that's what I recommended, and he got a Macbook. Some time later we'd become roommates, and I remember how strange it felt trying to navigate Finder with the trackpad that scrolled in the wrong direction! (And he had the same experience with my laptop.)
 
+I also remember when the iPod first came out. I already had a NOMAD Jukebox Zen, with its springy little side wheel. But I wasn't able to get my hands on an iPod for quite some time. These were also the days when car head units were advancing, and I picked one up with a USB port and just stuck a flash drive full of MP3s on it. I finally was able to afford my own iPod when the 5th generation came out, but it was stolen from our car one night after accidentally leaving it when we parked. Finding a smashed window and missing items is a major bummer when you're heading to work, and this was the second time that'd happened... the first being a huge CD binder several years earlier.
+
 # First Purchase
 
 Fast forward a few years, and I'm in university, with a more recently purchased [Sony VIAO 17"](https://www.cnet.com/reviews/sony-vaio-e-series-17-inch-review/), an absolute behemoth. It ran Windows Vista. I actually took it backpacking in Europe for 6 weeks, ow, my back. But it did get us out of a bind a few times. This was before we could afford smartphones, so that was our only connection to the internet.
