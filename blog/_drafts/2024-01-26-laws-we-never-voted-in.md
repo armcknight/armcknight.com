@@ -56,6 +56,7 @@ I saw a reddit post the other day quoting Dietrich Bonhoeffer, which reminded me
 - Wirth’s Law†: software is getting slower more rapidly than hardware is becoming faster
 - Zawinski’s Law†: every program attempts to expand until it can read mail
   - Mallett's: Every program attempts to expand until it can render HTML. This usually results in it being able to read email.
+- Hyrum's rule: if you expose any API, someone will use it and any current behavior will become a contract, whether used by external consumers or internal maintainers
 - Reed’s (related: Sarnoff’s)
 - Schneier’s*
 - Segal’s* (tangential)
