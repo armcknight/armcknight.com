@@ -15,10 +15,15 @@
   <hr />
 </p>
 <p>
-  🙏🏻 Enjoy the post? Please help support more like it by <a href="https://www.paypal.me/armcknight">buying me a cup of coffee</a>!
+  {% if page.RFC-prompt == undefined %}
+{% assign rfc_prompt = "Suggestions, questions, comments?" %}
+  {% else %}
+{% assign rfc_prompt = page.RFC-prompt %}
+  {% endif %}
+  💡 {{ rfc_prompt }} <a href="https://github.com/armcknight/armcknight.com/edit/master/blog/_posts/{{page.date | date: "%Y-%m-%d"}}-{{ page.slug }}.md">Please submit a PR</a>!
 </p>
 <p>
-  💡 Suggestions, questions, comments? <a href="https://github.com/armcknight/armcknight.com/edit/master/blog/_posts/{{page.date | date: "%Y-%m-%d"}}-{{ page.slug }}.md">Please submit a PR</a>!
+  🙏🏻 Enjoy the post? Please help support more like it by <a href="https://www.paypal.me/armcknight">buying me a cup of coffee</a>!
 </p>
 
 {% include body-closing-tags.html %}
