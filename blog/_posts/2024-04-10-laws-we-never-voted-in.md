@@ -1,15 +1,13 @@
 ---
 title: "Laws We Never Voted In"
-date: 2024-01-26
+date: 2024-04-10
 layout: post
-abstract: "Axioms, maximx, truisms, heuristics, theorems, paradoxes, thought experiments, sayings, razors, and maybe some clichés."
+abstract: "Axioms, maxims, truisms, heuristics, theorems, paradoxes, thought experiments, sayings, razors, and maybe some clichés."
 author: Andrew McKnight
-tags: philosophy
+tags: philosophy statistics logic
 ---
 
-_Last updated April 10, 2024_
-
-I've kept a list of these in my notes app for the longest time, recording names I knew and more as I read about them, often as mentioned in comments on Hacker News, or on Wikipedia rabbit hole dives resulting from them. I can't remember where I heard about some of them anymore.
+I've kept a list of these in my notes app for the longest time, recording names I knew and more as I read about them, often as mentioned in comments on Hacker News, or on Wikipedia rabbit hole dives resulting from them. I can't remember where I heard about some of them anymore. I'll update this list as I discover more.
 
 I saw a reddit post the other day quoting Dietrich Bonhoeffer, which reminded me of Hanlon's razor, and finally decided that I needed to get this list tidied up a bit and shipped. Here's the full quote, expanded from what I saw on Reddit, from [GoodReads](https://www.goodreads.com/quotes/8616320-stupidity-is-a-more-dangerous-enemy-of-the-good-than):
 
@@ -24,7 +22,7 @@ I saw a reddit post the other day quoting Dietrich Bonhoeffer, which reminded me
 
 # Economic
 
-- Shirky Principle: institutions will try to preserve the problem to which they are the solution.
+- Shirky Principle: Institutions will try to preserve the problem to which they are the solution.
 - Yule’s Law of Complementarity: if the price of one complement is reduced, the demand for the other will increase (from [_4 New Laws of Computing_](https://spectrum.ieee.org/on-beyond-moores-law-4-new-laws-of-computing))
   - The [Gwern corollary](https://www.gwern.net/Complement): Smart companies try to commoditize their products’ complements
 - Jevon's paradox: increased efficiency in usage of a resource can lead to induced demand leading to an increased, instead of decreased, overall need for that resource
@@ -124,6 +122,5 @@ I saw a reddit post the other day quoting Dietrich Bonhoeffer, which reminded me
 - rule of 16: if the VIX is trading at 16, then the SPX is estimated to see average daily moves up or down of 1%
 
 \* a law I discovered while researching laws I already knew about on https://en.m.wikipedia.org/wiki/List_of_eponymous_laws, https://www.laws-of-software.com or another page if mentioned
-
 † a law I knew but didn't know the name for until I learned it from that wikipedia article or another page if mentioned
 ‡ a law I knew about previously but went to Wikipedia to get a good wording on the definition
