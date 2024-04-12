@@ -7,6 +7,8 @@ author: Andrew McKnight
 tags: philosophy statistics logic
 ---
 
+_Last updated April 12, 2024: how could I forget Chesterton's fence?_
+
 I've kept a list of these in my notes app for the longest time, recording names I knew and more as I read about them, often as mentioned in comments on Hacker News, or on Wikipedia rabbit hole dives resulting from them. I can't remember where I heard about some of them anymore. I'll update this list as I discover more.
 
 I saw a reddit post the other day quoting Dietrich Bonhoeffer, which reminded me of Hanlon's razor, and finally decided that I needed to get this list tidied up a bit and shipped. Here's the full quote, expanded from what I saw on Reddit, from [GoodReads](https://www.goodreads.com/quotes/8616320-stupidity-is-a-more-dangerous-enemy-of-the-good-than):
@@ -19,6 +21,7 @@ I saw a reddit post the other day quoting Dietrich Bonhoeffer, which reminded me
 - Hanlon's Razor: never attribute to malice that which can be adequately explained by ignorance
   - Bonhoeffer's corrolary: Stupidity is a more dangerous enemy of the good than malice
 - Sagan standard: extraordinary claims require extraordinary evidence
+- Chesterton's fence: reforms should not be made until the reasoning behind the existing state of affairs is understood
 
 # Economic
 
