@@ -12,16 +12,18 @@ slug=$(echo $title | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]
 today=$(date +%F)
 
 # heredoc of blog post template
-template="---
-title: \"<title>\"
+template=$(cat << EOF
+---
+title: "$title"
 date: $today
 layout: post
-abstract: \"<short summary>\"
+abstract: "<short summary>"
 author: Andrew McKnight
 tags: <space-separated list of tags>
 ---
 
 <content>
-"
+EOF
+)
 
-echo $template > blog/_posts/$today-$slug.md
+echo "$template" > blog/_posts/$today-$slug.md
