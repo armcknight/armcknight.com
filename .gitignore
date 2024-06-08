@@ -62,3 +62,6 @@ flycheck_*.el
 # End of https://www.toptal.com/developers/gitignore/api/emacs
 /.bundle/
 *.DS_Store
+
+# ignore vim swap files
+*.swp
