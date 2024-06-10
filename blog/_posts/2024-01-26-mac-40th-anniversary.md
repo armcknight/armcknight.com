@@ -4,7 +4,7 @@ date: 2024-01-26
 layout: post
 abstract: "My first Mac memories."
 author: Andrew McKnight
-tags: apple
+tags: apple history personal
 ---
 
 People are writing their memories about their formative memories with Apple's Macintosh computers in celebration of [40 years](https://mac40th.com) of their development. These are my own.
