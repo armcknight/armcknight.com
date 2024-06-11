@@ -12,7 +12,7 @@ Always a fun day, the first day of Apple's yearly WWDC! So much to get excited a
 # Some appetizers
 
 - math notes and calculator, solving handwritten expressions and drawing graphs. I love math, and am excited for how this can help teach it, looking ahead just a few years until I'm helping my own child. I have long used Grapher.app on macOS (alongside Matlab, which of course I lost access to once leaving university), as well as LaTeX for its math typesetting. I also enjoy the graphical output shown in Swift playgrounds alongside a function to show how the output changes with input for numerical types. In fact, I had just brought that up with my watch party right before they showed it in the calculator demo!
-- iPhone screencasting to and control from a Mac; at first I thought it was a neat demo, but I can't think of any serious use cases yet. But I can imagine potential futures where macOS/iOS have melded into one (which I love to [engage in](blog/2018/04/16/reach-out-and-touch-faith.html), and the software doesn't draw such a hard line between the devices any longer. If that were to happen, this would be another step on the way there, along with Handoff, Continuity and Universal Control.
+- iPhone screencasting to and control from a Mac; at first I thought it was a neat demo, but I can't think of any serious use cases yet. But I can imagine potential futures where macOS/iOS have melded into one (which I love to [engage in](https://armcknight.com/blog/2018/04/16/reach-out-and-touch-faith.html), and the software doesn't draw such a hard line between the devices any longer. If that were to happen, this would be another step on the way there, along with Handoff, Continuity and Universal Control.
 - new handwriting improvements, like how you can reflow paragraphs of handwritten text. Need to try to see if the comic-sans-ish "fixed" handwriting is uncanny valley; the idea of it seemed that way to me on first blush.
 - Messages tapback improvements, satellite support and E2EE
 - password app; I still pay for 1Password and have held off on Passkeys and other passwordless offerings coming out. But I'm interested to try this.
@@ -52,7 +52,7 @@ Apple's been working on anonymized learning for a long time. For instance, check
 
 - Predictive Completion: GitHub Copilot in Xcode. I like the way ⌥ works with the predictions to choose different things
 - Swift Assist is a leap beyond copilot-style programming
-    - This is something I've been dreaming of for a long time! I first wrote about it in "Metaprogramming" in https://armcknight.com/blog/2018/02/07/programming-20-years-in.html#metaprogramming but I've definitely thought about it much longer. Can't wait to try this!
+    - This is something I've been dreaming of for a long time! I first wrote about it in "Metaprogramming" in [Programming: 20 Years In - Metaprogramming](https://armcknight.com/blog/2018/02/07/programming-20-years-in.html#metaprogramming) but I've definitely thought about it much longer. Can't wait to try this!
 
 ## Swift Testing
 
