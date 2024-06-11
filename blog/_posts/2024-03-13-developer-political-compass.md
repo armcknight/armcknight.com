@@ -39,3 +39,6 @@ Can we improve on it?
 - Stanley Kubrick
 
 People's politics can change depending on life circumstances. So under what conditions does someone move from one area in the compass to another? Here's a tongue-in-cheek answer to that question:
+
+[update 10 June 2024]
+...I wanted to see a "me, normally -> me, when X" style overlay on this. I think I started one while trying to finish this post, but got distracted and shipped without it 😅 Maybe one day I'll finish it.
