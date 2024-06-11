@@ -26,4 +26,4 @@ tags: <space-separated list of tags>
 EOF
 )
 
-echo "$template" > blog/_posts/$today-$slug.md
+echo "$template" > blog/_drafts/$today-$slug.md
