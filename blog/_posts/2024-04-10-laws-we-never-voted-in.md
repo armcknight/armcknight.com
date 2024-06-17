@@ -7,7 +7,8 @@ author: Andrew McKnight
 tags: philosophy statistics logic
 ---
 
-_Last updated April 12, 2024: how could I forget Chesterton's fence?_
+_Update April 12, 2024: how could I forget Chesterton's fence?_
+_Update June 17, 2024: Segal's law_
 
 I've kept a list of these in my notes app for the longest time, recording names I knew and more as I read about them, often as mentioned in comments on Hacker News, or on Wikipedia rabbit hole dives resulting from them. I can't remember where I heard about some of them anymore. I'll update this list as I discover more.
 
@@ -22,6 +23,7 @@ I saw a reddit post the other day quoting Dietrich Bonhoeffer, which reminded me
   - Bonhoeffer's corrolary: Stupidity is a more dangerous enemy of the good than malice
 - Sagan standard: extraordinary claims require extraordinary evidence
 - Chesterton's fence: reforms should not be made until the reasoning behind the existing state of affairs is understood
+- Segal's law: a person with a watch knows what time it is. Someone with two can never be sure.
 
 # Economic
 
@@ -72,7 +74,6 @@ I saw a reddit post the other day quoting Dietrich Bonhoeffer, which reminded me
 - Hyrum's rule: if you expose any API, someone will use it and any current behavior will become a contract, whether used by external consumers or internal maintainers
 - Reed’s (related: Sarnoff’s)
 - Schneier’s*
-- Segal’s* (tangential)
 - Putt’s*
 - Liebniz’
 - Linus’
