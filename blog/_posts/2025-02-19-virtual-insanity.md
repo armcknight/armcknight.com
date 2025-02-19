@@ -52,7 +52,7 @@ So we’re stuck with the reality of not just 10 obvious spam calls a day, but t
 
 ---
 
-As with every technology, there is a trade-off. Dave Chappelle captured this perfectly, if not insanely crassly, in a standup joke that can be paraphrased in a safe-for-work way as: “does it help more than it hurts?“ or, Homer Simpson's quip about "the cause of, and solution to, all of life's problems." The invention of telephony and information networking absolutely helps immensely, and anyways, it’s probably the only way I would’ve been able to learn about virtual kidnapping at all. If we didn’t have even the telegraph, then we’d all be much dumber for it, and easier targets for the snake oil salesman that have always existed.
+As with every technology, there is a trade-off. Dave Chappelle captured this perfectly, if not insanely crassly, in a standup joke that can be paraphrased in a safe-for-work way as: “does it help more than it hurts?“ or, Homer Simpson's quip about "the cause of, and solution to, all of life's problems." The invention of telephony and information networking absolutely helps immensely, and anyways, it’s probably the only way I would’ve been able to learn about virtual kidnapping at all. If we didn’t have even the telegraph, then we’d all be much dumber for it, and easier targets for the snake oil salesmen that have always existed.
 
 ---
 
