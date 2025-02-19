@@ -41,3 +41,4 @@ and might want to bust the cloudfront cache:
 # TODO
 
 - [ ] for each entry in links, list other tags each link has besides the main heading it's appearing under
+- [ ] if a tag index only has one entry, hide the "Previously:" header
