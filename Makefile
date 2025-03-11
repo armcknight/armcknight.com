@@ -28,7 +28,7 @@ bust-cache:
 	aws --profile armcknight cloudfront create-invalidation --distribution-id E6BG42FYZHWB0 --paths "$(PATHS)"
 
 bust-blog-cache:
-	aws --profile armcknight cloudfront create-invalidation --distribution-id E6BG42FYZHWB0 --paths "/blog/ /blog/index.html"
+	aws --profile armcknight cloudfront create-invalidation --distribution-id E6BG42FYZHWB0 --paths "/blog/" "/blog/index.html"
 
 check-cache-invalidation-status:
 	aws --profile armcknight cloudfront list-invalidations --distribution-id E6BG42FYZHWB0
