@@ -6,8 +6,6 @@ layout: post
 tags: diy
 abstract: "Adventures in plumbing and electricity."
 ---
-Water, well, it ain't easy
-
 The cabin we bought a few years ago runs on a well. A pressure tank inside supplies the house, and when the pressure dips low enough, a pressure switch turns on power to the well to pump more water in.
 
 Right at the beginning of winter, we noticed this pump running more frequently, meaning pressure was being slowly lost somewhere. We ruled out a waterlogged tank, and replaced the interior check valve, but the issue persisted. We concluded there is a leak somewhere in the well.
