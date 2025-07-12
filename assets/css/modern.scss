@@ -329,11 +329,11 @@ blockquote p {
 // Blog listing
 .blog-posts {
   display: grid;
-  gap: var(--space-6);
+  gap: 0;
 }
 
 .blog-post-preview {
-  padding-bottom: var(--space-4);
+  padding-bottom: 0;
 }
 
 .blog-post-preview:last-child {
