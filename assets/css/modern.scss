@@ -510,6 +510,24 @@ blockquote p {
   }
 }
 
+@media (max-width: 380px) {
+  .container {
+    padding: 0 var(--space-5);
+  }
+  
+  .site-header .container {
+    padding: 0 var(--space-3);
+  }
+  
+  .header-left {
+    gap: var(--space-3);
+  }
+  
+  .site-title {
+    font-size: var(--text-3xl);
+  }
+}
+
 // Utility classes
 .text-center { text-align: center; }
 .text-muted { color: var(--text-muted); }
