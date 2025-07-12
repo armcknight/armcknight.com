@@ -481,19 +481,17 @@ blockquote p {
   }
   
   .links-sections {
-    display: flex !important;
     flex-direction: column !important;
     gap: var(--space-6) !important;
-    grid-template-columns: none !important;
+  }
+  
+  .links-column {
+    gap: var(--space-1) !important;
   }
   
   .floating-back-to-top {
     left: calc(100vw - var(--space-6) - 48px) !important;
     bottom: var(--space-6) !important;
-  }
-  
-  .links-section {
-    margin-bottom: 0;
   }
   
   .back-to-top {
@@ -552,7 +550,7 @@ blockquote p {
 
 // Links page styles
 .tags-section {
-  margin-bottom: var(--space-12);
+  margin-bottom: var(--space-4);
 }
 
 .tag-cloud {
@@ -580,21 +578,26 @@ blockquote p {
 }
 
 .links-sections {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
   gap: var(--space-8);
-  align-items: start;
+  align-items: flex-start;
+}
+
+.links-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
 }
 
 .links-section {
-  margin-bottom: var(--space-8);
-  padding-bottom: var(--space-4);
+  padding-bottom: var(--space-1);
 }
 
 .links-section-title {
   font-size: var(--text-xl);
   font-weight: 600;
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-1);
   color: var(--text-primary);
 }
 
