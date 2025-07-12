@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title | default: "Andrew McKnight" }}</title>
+  <meta name="description" content="{{ page.abstract | default: site.description | default: '' }}">
+  <meta name="author" content="Andrew McKnight">
+  <meta name="copyright" content="Andrew McKnight Copyright (c) 2024">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  <meta property="og:title" content="{% if page.title %}{{ page.title }} - {% endif %}{{ site.title | default: 'Andrew McKnight' }}">
+  <meta property="og:description" content="{{ page.abstract | default: site.description | default: '' }}">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="{{ site.url }}{{ page.url }}">
+  <meta property="twitter:title" content="{% if page.title %}{{ page.title }} - {% endif %}{{ site.title | default: 'Andrew McKnight' }}">
+  <meta property="twitter:description" content="{{ page.abstract | default: site.description | default: '' }}">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="{{ '/assets/css/modern.css' | relative_url }}">
+  
+  <!-- Feeds -->
+  {% if page.feedURL %}
+  <link rel="alternate" type="application/rss+xml" title="{{ page.feedName | default: 'RSS Feed' }}" href="{{ page.feedURL }}">
+  {% endif %}
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="content">
+        <a href="/" class="site-title">
+          <img src="https://www.gravatar.com/avatar/68f9c2600d8547ac6a2d9c10ec9a9335?s=120" alt="Andrew McKnight" class="avatar">
+          Andrew M<sup>c</sup>Knight
+        </a>
+        <nav class="site-nav">
+          <a href="/" {% if page.url == "/" %}class="active"{% endif %}>Home</a>
+          <a href="/cv" {% if page.url contains "/cv" %}class="active"{% endif %}>CV</a>
+          <a href="/work" {% if page.url contains "/work" %}class="active"{% endif %}>Work</a>
+          <a href="/blog" {% if page.url contains "/blog" %}class="active"{% endif %}>Blog</a>
+          <a href="/links" {% if page.url contains "/links" %}class="active"{% endif %}>Links</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="content">
+      {{ content }}
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="content">
+        <p>&copy; {{ 'now' | date: '%Y' }} Andrew McKnight. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html> 

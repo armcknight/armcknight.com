@@ -1,7 +1,23 @@
 ---
-stylesheet: "css/styles.css"
+layout: modern
 title: "Andrew McKnight's Home Page"
-layout: page
 ---
 
-Hello, World!
+<div class="page-header">
+  <h1 class="page-title">Welcome</h1>
+  <p class="page-subtitle">Software engineer, maker, and occasional writer</p>
+</div>
+
+<div class="home-content">
+  <p>Hello! I'm Andrew McKnight, a software engineer with a passion for creating elegant solutions to complex problems. I work primarily in iOS development, but I enjoy exploring the full stack of modern software development.</p>
+  
+  <p>On this site, you'll find my thoughts on software development, technology, and the occasional project update. I believe in sharing knowledge and learning from the broader developer community.</p>
+  
+  <h2>Recent Posts</h2>
+  {% assign recent_posts = site.posts | limit: 3 %}
+  {% include modern-blog-listing.html posts=recent_posts %}
+  
+  <p class="mt-8">
+    <a href="/blog">View all posts →</a>
+  </p>
+</div>

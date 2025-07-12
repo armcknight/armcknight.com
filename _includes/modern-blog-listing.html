@@ -1,0 +1,31 @@
+{% assign posts = include.posts | default: site.posts %}
+
+<div class="blog-posts">
+  {% for post in posts %}
+    <article class="blog-post-preview">
+      <h2 class="blog-post-title">
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      </h2>
+      
+      <div class="blog-post-meta">
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%-d %B %Y" }}</time>
+        {% if post.author %} • {{ post.author }}{% endif %}
+        {% if post.content %}
+          • {{ post.content | strip_html | number_of_words | divided_by: 200 | plus: 1 }} min read
+        {% endif %}
+      </div>
+      
+      {% if post.abstract %}
+      <div class="blog-post-abstract">{{ post.abstract }}</div>
+      {% endif %}
+      
+      {% if post.tags and post.tags.size > 0 %}
+      <div class="blog-post-tags">
+        {% for tag in post.tags %}
+          <a href="/blog/tag/{{ tag | slugify }}" class="tag">{{ tag }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </article>
+  {% endfor %}
+</div> 

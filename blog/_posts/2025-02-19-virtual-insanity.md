@@ -2,7 +2,7 @@
 title: Virtual Insanity
 date: 2025-02-19
 author: Andrew McKnight
-layout: post
+layout: modern-post
 tags: notfunny
 abstract: "A real story about how a dreamy ski day turned into a nightmare."
 ---
