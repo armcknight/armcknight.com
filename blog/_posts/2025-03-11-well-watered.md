@@ -2,7 +2,7 @@
 title: Well watered
 date: 2025-03-11
 author: Andrew McKnight
-layout: modern-post
+layout: post
 tags: diy
 abstract: "Adventures in plumbing and electricity."
 ---

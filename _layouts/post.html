@@ -1,29 +1,38 @@
 ---
-
+layout: modern
 ---
-{% include html-opening-tags.html %}
-{% assign page_title = "Andrew McKnight's Blog: " | append: page.title %}
-{% include head-tags.html title=page_title abstract=page.abstract stylesheet="../../../../css/styles.css" %}
-{% include body-opening-tags.html %}
-<div class="title">{{ page.title }}</div>
-<div class="byline">{{ page.author }} – {{ page.date | date: '%-d %B %Y'}} – {{ page.tags | join: ", " }}</div>
-<hr />
-<div id="post-content">
-  {{ content }}
-</div>
-<p>
-  <hr />
-</p>
-<p>
-  {% if page.RFC-prompt == undefined %}
-{% assign rfc_prompt = "Suggestions, questions, comments?" %}
-  {% else %}
-{% assign rfc_prompt = page.RFC-prompt %}
-  {% endif %}
-  💡 {{ rfc_prompt }} <a href="https://github.com/armcknight/armcknight.com/edit/master/blog/_posts/{{page.date | date: "%Y-%m-%d"}}-{{ page.slug }}.md">Please submit a PR</a>!
-</p>
-<p>
-  🙏🏻 Enjoy the post? Please help support more like it by <a href="https://www.paypal.me/armcknight">buying me a cup of coffee</a>!
-</p>
 
-{% include body-closing-tags.html %}
+<article>
+  <header class="article-header">
+    <h1 class="article-title">{{ page.title }}</h1>
+    <div class="article-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%-d %B %Y" }}</time>
+      {% if page.author %} • {{ page.author }}{% endif %}
+      {% if page.tags and page.tags.size > 0 %}
+      • 
+      {% for tag in page.tags %}
+        <a href="/blog/tag/{{ tag | slugify }}" class="tag">{{ tag }}</a>
+      {% endfor %}
+      {% endif %}
+    </div>
+    {% if page.abstract %}
+    <div class="article-abstract">{{ page.abstract }}</div>
+    {% endif %}
+  </header>
+
+  <div class="article-content">
+    {{ content }}
+  </div>
+
+  <footer class="article-footer mt-8">
+    <hr style="border: none; height: 1px; background-color: var(--border); margin: var(--space-8) 0;">
+    
+    <div class="article-feedback">
+      <p>💡 {{ page.RFC-prompt | default: "Suggestions, questions, comments?" }} 
+      <a href="https://github.com/armcknight/armcknight.com/edit/master/blog/_posts/{{page.date | date: '%Y-%m-%d'}}-{{ page.slug }}.md">Please submit a PR</a>!</p>
+      
+      <p>🙏🏻 Enjoy the post? Please help support more like it by 
+      <a href="https://www.paypal.me/armcknight">buying me a cup of coffee</a>!</p>
+    </div>
+  </footer>
+</article>
