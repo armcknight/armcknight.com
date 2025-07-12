@@ -1,0 +1,192 @@
+experience:
+  - dates: Jan 2019 – Current
+    company: Rightpoint Consulting
+    title: Senior iOS Developer
+    location: Remote
+    employment_type: (Contract-to-Perm)
+    tags: [ios, mobile, swift, consulting, contract, security, remote]
+    stack: [Swift, SwiftGen, SwiftLint, Sourcery, CircleCI, Postman, Browserstack, Countly, GitHub/GitLab, JIRA]
+    highlights:
+      - Security-focused app and SDK (NDA)
+
+  - dates: Nov 2013 – Current
+    company: Insight Therapeutics
+    title: Lead iOS Developer
+    location: Norfolk, VA & Remote
+    employment_type: (Contract)
+    tags: [ios, mobile, medical, healthcare, consulting, contract, remote]
+    stack: [ObjC/Swift, MessageUI, Storyboards, CoreGraphics, CoreData, FMDB, SQLite, SSZipArchive, RNCryptor, cocoapods-keys, Trello, BitBucket]
+    deliverables:
+      - name: ClotRx & DementiaRx
+        url: http://itunes.apple.com/us/app/clot-rx/id408979176?mt=8
+        description: reference e-pamphlets
+        details:
+          - Hybrid app with WKWebView
+          - Searchable, bookmarkable HTML content extracted from PDFs
+          - Interactive clinical surveys, print/email report generation
+      - name: Antibiotic Kinetics
+        url: http://itunes.apple.com/us/app/antibiotics-kinetics/id557658913?mt=8
+        description: antibiotic dosage calculator
+        details:
+          - Ported from another developer's preexisting Android app
+      - name: Current project under NDA
+    highlights:
+      - Multiple releases and design iterations of all apps
+
+  - dates: Jan – Apr 2018
+    company: 121nexus
+    title: iOS Developer
+    location: Remote
+    employment_type: (Contract)
+    tags: [ios, mobile, medical, healthcare, contract, remote, firebase, opencv]
+    stack: [Swift, AVFoundation, OpenCV, Firebase, cocoapods-keys, AWS, JIRA, BitBucket]
+    highlights:
+      - Replaced application UI and networking with their new SDK
+      - Reimplemented major area of app with new UI and platform API
+      - Added crash reporting (Crashlytics) and logging (XCGLogging)
+      - Augmented and documented analytics (Firebase)
+    deliverables:
+      - name: 121 Scan
+        url: https://itunes.apple.com/us/app/121-scan/id1187264063
+        description: Assisted launches via iTunes and another internal enterprise app
+
+  - dates: Dec 2016 – Jul 2017
+    company: Layer
+    title: iOS Developer
+    location: Remote
+    employment_type: (FTE)
+    tags: [ios, mobile, messaging, sdk, remote, objc, swift]
+    stack: [C/ObjC/Swift, CocoaPods, OCMock, Specta/Expecta, Jenkins, Rails, Thrift, WebSockets/SPDY, SQLite]
+    deliverables:
+      - ObjC SDKs for data and UI components, an embeddable app layer and fully-functional sample app
+    highlights:
+      - Rearchitected test suite to separate unit tests from integration/end-to-end tests
+      - Helped streamline developer environment configuration (Rake, Gems, CocoaPods and git submodules)
+      - Migrated old SPDY/Thrift architecture to WebSockets with rewritten Thrift specs
+      - name: TransitionKit
+        url: https://github.com/blakewatters/TransitionKit
+        description: Implemented new auth and transport layer using TransitionKit
+
+  - dates: Apr 2015 – Dec 2016
+    company: Twitter
+    title: iOS/Fullstack Developer
+    location: Cambridge, MA
+    employment_type: (FTE)
+    tags: [ios, mobile, crash-reporting, backend, fullstack, data, analytics, scala, java]
+    stack: [C/ObjC/Swift, Java/Scala/Clojure, Rails, React/Coffeescript, Storm/Heron, Cascading/Scalding, Graphite, Vertica/Zeppelin, Beanstalk/Kafka, Redis/Cassandra, AWS, TeamCity, Chef, Trello, Protobuf]
+    deliverables:
+      - Crashlytics/Fabric SDKs, Mac app and command line tools, front- and back-end maintenance and analytics, Unity iOS support
+    highlights:
+      - Streamlined build and release processes with TeamCity agents deployed via Chef
+      - Added Bitcode and tvOS compatibility to SDKs
+      - name: FABConfig
+        url: https://github.com/twitter-fabric/fabconfig
+        description: Standardized config of all Xcode projects and released the open source FABConfig
+      - Maintenance of backend lambda architecture with on-call rotations
+      - Pioneered new backend feature to cross-reference common crashes across apps and present developers with suggested fixes
+
+  - dates: Jan – Apr 2015
+    company: MC10
+    title: iOS Developer
+    location: Cambridge, MA
+    employment_type: (FTE)
+    tags: [ios, mobile, medical, wearables, bluetooth, objc, swift]
+    stack: [ObjC/Swift, CoreBluetooth, Android, JIRA]
+    deliverables:
+      - Companion iOS app for wearable peripheral with BTLE link
+    highlights:
+      - Moved all app/demo code into Git repos, no previous SCM
+      - Architected SDK and app codebases from the ground up
+      - Built out greenfield app, in beta testing on my exit
+      - Set up continuous integration and deployment with TeamCity and Fabric
+      - Assisted adoption of Agile processes
+
+  - dates: Jul 2013 – Dec 2014
+    company: Raizlabs Consulting
+    title: iOS Developer
+    location: Boston, MA
+    employment_type: (FTE)
+    tags: [ios, mobile, consulting, objc, swift, ecommerce]
+    stack: [ObjC/Swift, Jenkins, TeamCity, Trello, Basecamp]
+    deliverables:
+      - name: Care.com
+        url: https://itunes.apple.com/us/app/care.com/id328453619?mt=8
+        description: service seeker/provider matching (4 months)
+        details:
+          - iOS 7 redesign, with perspective zoom effect for a horizontally paged scroll view
+          - Dynamic UI generation from server-supplied data
+      - name: B&H Photo
+        url: https://itunes.apple.com/us/app/b-h-photo/id390928219?mt=8
+        description: e-commerce (5 months)
+        details:
+          - Custom parallactic scrolling of table view headers
+          - Push notifications with deep linking
+      - name: UniFirst
+        description: interactive enterprise sales catalog on iPad (8 months)
+        details:
+          - Drag and drop editing of clothing selections, with PDF report generation
+      - name: Invaluable
+        url: https://itunes.apple.com/US/app/id944415329
+        description: realtime high-end auction platform on iPad (1 month)
+        details:
+          - Paging of API result display in table/collection views
+
+  - dates: Oct 2012 – May 2013
+    company: ODU Systems Lab
+    title: iOS Developer
+    location: Norfolk, VA
+    employment_type: (Student Intern)
+    tags: [ios, mobile, research, student, intern, objc]
+    deliverables:
+      - "ChirpXM: location based social networking app (defunct)"
+      - Prototyped EMR iPad app for CHKD
+    highlights:
+      - Supervised two foreign exchange students
+      - Facetime with onsite clients
+
+  - dates: Aug 2012 – May 2013
+    company: Old Dominion University
+    title: iOS Developer
+    location: Norfolk, VA
+    employment_type: (Capstone Project)
+    tags: [ios, mobile, student, academic, capstone, objc, leadership]
+    stack: [ObjC, OpenEars, MapQuest]
+    highlights:
+      - Co-lead of 7 member team
+      - 4 presentations given to visiting professors and industry executives
+      - Sole developer of iOS component of total solution
+      - Highest scoring project!
+
+  - dates: May – Oct 2013
+    company: Intergraph
+    title: .NET Developer
+    location: Hampton, VA
+    employment_type: (Intern)
+    tags: [desktop, dotnet, cad, testing, qa, intern, csharp]
+    stack: [C#, VisualBasic, SQL, QF-Test, Coverity, Visual Studio, TeamFoundation]
+    highlights:
+      - Automated framework- and GUI-level testing, regression testing in numerical modules
+      - Manual acceptance testing for new features and fixes
+
+  - dates: Aug 2012 – May 2014
+    company: Old Dominion University
+    title: Research Assistant
+    location: Norfolk, VA
+    employment_type: (Graduate Student)
+    tags: [research, academic, algorithms, bioinformatics, java, cpp, mathematics]
+    highlights:
+      - Java and C++ algorithm development utilizing CGAL, Boost and Jama
+      - Image processing, robotics and machine learning applications in bioinformatics
+      - Multiple publications and conference presentations
+
+  - dates: Aug 2012 – May 2014
+    company: Old Dominion University
+    title: Lab Instructor
+    location: Norfolk, VA
+    employment_type: (Teaching Assistant)
+    tags: [teaching, academic, cpp, education, instructor]
+    highlights:
+      - "Online delivery of CS 333: Problem solving and programming in C++"
+      - "Lab instructor for CS 250: Intermediate programming in C++"
+      - "Assistant instructor for CS 150: Introduction to programming in C++"
+      - Website maintenance, grading, general student guidance 

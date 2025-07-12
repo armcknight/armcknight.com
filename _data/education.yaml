@@ -1,0 +1,10 @@
+education:
+  - year: 2013
+    degree: M.Sc., Dept. of Computer Science
+    institution: Old Dominion University
+    details:
+      - Thesis track in bioinformatics, robotics, image processing and meshing research topics
+      - Three published papers with two conference presentations
+      - C++ programming TA for three semesters
+      - Minor in actuarial mathematics
+    tags: [academic, masters, computer-science, research, bioinformatics] 

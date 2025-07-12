@@ -1,0 +1,201 @@
+---
+layout: modern
+title: "Experience"
+---
+
+<div class="page-header">
+  <h1 class="page-title">Experience</h1>
+  <p class="page-subtitle">Professional background, education, and expertise</p>
+</div>
+
+<div class="tags-section">
+  <h2>Jump to:</h2>
+  <div class="tag-cloud">
+    <a href="#employment" class="tag tag-link">Employment</a>
+    <a href="#education" class="tag tag-link">Education</a>
+    <a href="#presentations" class="tag tag-link">Speaking & Presentations</a>
+    <a href="#honors" class="tag tag-link">Honors & Awards</a>
+  </div>
+</div>
+
+<div class="experience-content">
+  
+  <section class="experience-category" id="employment">
+    <h2>Employment</h2>
+    
+    <div class="experience-timeline">
+      {% for job in site.data.experience.experience %}
+      <div class="experience-item">
+        <div class="experience-header">
+          <h3 class="experience-title">{{ job.title }}</h3>
+          <div class="experience-meta">
+            <span class="experience-company">{{ job.company }}</span>
+            <span class="experience-dates">{{ job.dates }}</span>
+            {% if job.location %}
+            <span class="experience-location">{{ job.location }}</span>
+            {% endif %}
+            {% if job.employment_type %}
+            <span class="experience-type">{{ job.employment_type }}</span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="experience-description">
+          {% if job.deliverables %}
+          <div class="experience-deliverables">
+            <h4>Deliverables:</h4>
+            {% for deliverable in job.deliverables %}
+            <div class="deliverable">
+              {% if deliverable.url %}
+              <a href="{{ deliverable.url }}" class="deliverable-name">{{ deliverable.name }}</a>
+              {% else %}
+              <span class="deliverable-name">{{ deliverable.name }}</span>
+              {% endif %}
+              {% if deliverable.description %}
+              <span class="deliverable-description">– {{ deliverable.description }}</span>
+              {% endif %}
+              {% if deliverable.details %}
+              <ul class="deliverable-details">
+                {% for detail in deliverable.details %}
+                <li>{{ detail }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+          
+          {% if job.highlights %}
+          <div class="experience-highlights">
+            <h4>Highlights:</h4>
+            <ul>
+              {% for highlight in job.highlights %}
+              <li>
+                {% if highlight.name %}
+                <strong>{{ highlight.name }}</strong>
+                {% if highlight.url %}
+                <a href="{{ highlight.url }}" class="highlight-link">{{ highlight.url }}</a>
+                {% endif %}
+                {% if highlight.description %}
+                – {{ highlight.description }}
+                {% endif %}
+                {% else %}
+                {{ highlight }}
+                {% endif %}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          
+          {% if job.stack %}
+          <div class="experience-stack">
+            <h4>Tech Stack:</h4>
+            <div class="stack-tags">
+              {% for tech in job.stack %}
+              <span class="stack-tag">{{ tech }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="experience-category" id="education">
+    <h2>Education</h2>
+    
+    <div class="experience-timeline">
+      {% for edu in site.data.education.education %}
+      <div class="experience-item">
+        <div class="experience-header">
+          <h3 class="experience-title">{{ edu.degree }}</h3>
+          <div class="experience-meta">
+            <span class="experience-company">{{ edu.institution }}</span>
+            <span class="experience-dates">{{ edu.year }}</span>
+          </div>
+        </div>
+        {% if edu.details %}
+        <div class="experience-description">
+          <ul class="experience-highlights">
+            {% for detail in edu.details %}
+            <li>{{ detail }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="experience-category" id="presentations">
+    <h2>Speaking & Presentations</h2>
+    
+    <div class="experience-timeline">
+      {% for presentation in site.data.presentations.presentations %}
+      <div class="experience-item">
+        <div class="experience-header">
+          <h3 class="experience-title">{{ presentation.title }}</h3>
+          <div class="experience-meta">
+            <span class="experience-company">{{ presentation.event }}</span>
+            <span class="experience-dates">{{ presentation.date }}</span>
+            {% if presentation.location %}
+            <span class="experience-location">{{ presentation.location }}</span>
+            {% endif %}
+          </div>
+        </div>
+        {% if presentation.venue %}
+        <div class="presentation-venue">
+          <strong>Venue:</strong> {{ presentation.venue }}
+        </div>
+        {% endif %}
+        {% if presentation.details %}
+        <div class="experience-description">
+          <ul class="experience-highlights">
+            {% for detail in presentation.details %}
+            <li>{{ detail }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="experience-category" id="honors">
+    <h2>Honors & Awards</h2>
+    
+    <div class="experience-timeline">
+      {% for honor in site.data.honors.honors %}
+      <div class="experience-item">
+        <div class="experience-header">
+          <h3 class="experience-title">{{ honor.award }}</h3>
+          <div class="experience-meta">
+            <span class="experience-company">{{ honor.institution }}</span>
+            <span class="experience-dates">{{ honor.year }}</span>
+          </div>
+        </div>
+        {% if honor.description %}
+        <div class="experience-description">
+          <p>{{ honor.description }}</p>
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  
+</div>
+
+<!-- Floating back-to-top button for all screen sizes -->
+<a href="#top" class="floating-back-to-top">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+  </svg>
+</a>
+
+

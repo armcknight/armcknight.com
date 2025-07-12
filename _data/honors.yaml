@@ -1,0 +1,33 @@
+honors:
+  - year: 2013
+    award: Gene Newman Award
+    description: Best overall paper
+    institution: Virginia Modeling, Analysis and Simulation Center Capstone conference
+    tags: [academic, research, awards, paper, conference]
+
+  - year: 2012
+    award: Graduate with Distinction
+    description: Awarded with B.Sc.
+    institution: Old Dominion University
+    tags: [academic, honors, undergraduate, distinction]
+
+  - year: 2012
+    award: Undergraduate Research Award
+    description: Outstanding undergraduate achievement
+    institution: ODU Spring Undergraduate Research Fair
+    tags: [academic, research, undergraduate, fair]
+
+  - year: 2011
+    award: First Place
+    institution: ODU-ACM Programming Contest
+    tags: [academic, programming, competition, first-place]
+
+  - year: 2010 – 2011
+    award: Dean's List
+    institution: Old Dominion University
+    tags: [academic, honors, undergraduate, deans-list]
+
+  - year: 2009
+    award: Summa Cum Laude
+    institution: Piedmont Virginia Community College
+    tags: [academic, honors, community-college, summa-cum-laude] 
