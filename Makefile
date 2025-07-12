@@ -8,10 +8,7 @@ init:
 _logs-dir:
 	mkdir -p logs
 
-_compile-css: _logs-dir
-	sass --update css 2>&1 | tee logs/sass_build.log
-
-build: _logs-dir _compile-css
+build: _logs-dir
 	rbenv exec bundle exec jekyll build --destination _site 2>&1 | tee logs/jekyll_build.log
 
 deploy: _logs-dir
