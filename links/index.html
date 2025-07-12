@@ -1,8 +1,13 @@
 ---
-layout: page
-title: "Andrew McKnight's Link Collection"
-stylesheet: "../css/styles.css"
+layout: modern
+title: "Links"
 ---
+
+<div class="page-header" id="top">
+  <h1 class="page-title">Links</h1>
+  <p class="page-subtitle">A curated collection of interesting websites and resources</p>
+</div>
+
 {% comment %}
 get set of all tags
 {% endcomment %}
@@ -17,24 +22,28 @@ get set of all tags
   {% endfor %}
 {% endfor %}
 
-{% assign uniq_tags = all_tags | split: "|" | uniq %}
+{% assign uniq_tags = all_tags | split: "|" | uniq | sort %}
 
 {% comment %}
 generate tag cloud
 {% endcomment %}
-<h1>Tags:</h1>
-{% for tag in uniq_tags %}
-<a href="#{{ tag }}">{{ tag }}</a>&nbsp;
-{% endfor %}
+<div class="tags-section">
+  <h2>Browse by Category</h2>
+  <div class="tag-cloud">
+    {% for tag in uniq_tags %}
+    <a href="#{{ tag }}" class="tag tag-link">{{ tag }}</a>
+    {% endfor %}
+  </div>
+</div>
 
 {% comment %}
 for every tag, create a box of links that have that tag
 {% endcomment %}
-{% for tag in uniq_tags %}
-  <links>
-    <h2 id="{{ tag }}">{{ tag }}:</h2>
-    <div>
-      <ul class="linklist">
+<div class="links-sections">
+  {% for tag in uniq_tags %}
+    <section class="links-section" id="{{ tag }}">
+      <h3 class="links-section-title">{{ tag | capitalize }}</h3>
+      <ul class="links-list">
         {% for link in site.data.links %}
           {% for tags_hash in link[1] %}
             {% for tag_array in tags_hash %}
@@ -44,12 +53,20 @@ for every tag, create a box of links that have that tag
               {% endfor %}
               {% assign link_tag_array = link_tags | split: "|" %}
               {% if link_tag_array contains tag %}
-                <li class="linklistitem"><a href="{{ link[0] }}">{{ link[0] }}</a></li>
+                <li class="links-list-item">
+                  <a href="{{ link[0] }}" target="_blank" rel="noopener" class="links-list-link">{{ link[0] | remove: "https://" | remove: "http://" | remove: "www." | split: "/" | first }}</a>
+                </li>
               {% endif %}
             {% endfor %}
           {% endfor %}
         {% endfor %}
       </ul>
-    </div>
-  </links>
-{% endfor %}
+      <a href="#top" class="back-to-top">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+        </svg>
+        Back to top
+      </a>
+    </section>
+  {% endfor %}
+</div>
