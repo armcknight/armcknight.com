@@ -1,25 +1,36 @@
 ---
-
+layout: modern
 ---
-{% assign page.title = "Andrew McKnight's blog: " | append: page.tag %}
-{% include html-opening-tags.html %}
-{% include head-tags.html title=page.title stylesheet="../../css/styles.css" feedURL=page.feedURL feedName=page.feedName %}
-{% include body-opening-tags.html %}
-{% assign page_name = "Tag: " | append: page.tag %}
-{% capture rss_link %}http://armcknight.com/blog/tag/{{ page.tag }}.xml{% endcapture %}
-{% capture rss_link_alt %}Andrew McKnight's {{ page.tag }} RSS Feed{% endcapture %}
 
-<center>
-  <div class="title">
-    {{ page_name }}
-    <a href="{{ rss_link }}" style="text-decoration:none;">
-        <img srcset="
-            ../../img/RSS.png 1x,
-            ../../img/RSS@2x.png 2x
-        " alt="{{ rss_link_alt }}" width="25px" />
-    </a>
-  </div>
-</center>
+<div class="page-header">
+  <h1 class="page-title">Posts tagged "{{ page.tag }}"</h1>
+  <p class="page-subtitle">{{ page.posts.size }} {% if page.posts.size == 1 %}post{% else %}posts{% endif %} found</p>
+</div>
 
-{% include blog-post-listing.html posts=page.posts %}
-{% include body-closing-tags.html %}
+<div class="blog-posts">
+  {% for post in page.posts %}
+  <article class="blog-post-preview">
+    <header>
+      <h2 class="blog-post-title">
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      </h2>
+      <div class="blog-post-meta">
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%-d %B %Y" }}</time>
+        {% if post.tags and post.tags.size > 0 %}
+        • 
+        {% for tag in post.tags %}
+          <a href="/blog/tag/{{ tag | slugify }}.html" class="tag">{{ tag }}</a>
+        {% endfor %}
+        {% endif %}
+      </div>
+    </header>
+    {% if post.abstract %}
+    <div class="blog-post-abstract">{{ post.abstract }}</div>
+    {% endif %}
+  </article>
+  {% endfor %}
+</div>
+
+<div style="margin-top: var(--space-8);">
+  <a href="/blog" style="color: var(--accent); text-decoration: none;">← Back to all posts</a>
+</div>
