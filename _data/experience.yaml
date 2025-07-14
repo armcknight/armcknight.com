@@ -218,17 +218,6 @@ experience:
       - Highest scoring project!
 
   - start: August 2012
-    end: December 2012
-    era: semi-pro
-    company: XVD Longboards
-    title: Web Developer
-    location: Norfolk, VA
-    employment_type: (Contract)
-    tags: [flash, actionscript, web]
-    highlights:
-      - Build a Flash-based website for a local skateboard company for customers to custom-design boards
-
-  - start: August 2012
     end: May 2014
     era: higher-education
     school: Old Dominion University
@@ -255,6 +244,17 @@ experience:
       - "Assistant instructor for CS 150: Introduction to programming in C++"
       - Website maintenance, grading, general student guidance 
 
+  - start: August 2011
+    end: December 2011
+    era: semi-pro
+    company: XVD Longboards
+    title: Web Developer
+    location: Norfolk, VA
+    employment_type: (Contract)
+    tags: [flash, actionscript, web]
+    deliverables:
+      - Flash-based website to custom-design boards
+
   - start: June 2003
     end: June 2009
     era: foodservice
@@ -266,3 +266,4 @@ experience:
     highlights:
       - Cooked Lebanese, Italian, British, and American cuisines
       - "Guest sous chef at Palladio, a fine dining restaurant in Charlottesville, VA connected to Barboursville Vineyards, for two special events: a Morel Feast and a Truffle Feast"
+      - Proposed and built a Flash-based website design for one of the restaurants, mostly focused on their vast beer selection

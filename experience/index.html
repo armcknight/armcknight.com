@@ -64,7 +64,8 @@ Git-style timeline - start simple with just dates
              data-school="{{ edu.institution }}"
              data-title="{{ edu.degree }}"
              data-location="{{ edu.location }}"
-             data-details="{{ edu.details | join: '||' }}"
+
+             data-highlights="{{ edu.highlights | join: '||' }}"
              data-honors="{{ edu.honors | map: 'award' | join: '||' }}"
              data-tags="{{ edu.tags | join: ',' }}"
              data-era="education">
@@ -248,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let content = '';
     
     if (commit.type === 'start') {
-      // START COMMITS: Show contextual start information
+      // START COMMITS: Show contextual start information (minimal)
       content = `<strong>${commit.company} - Started ${commit.originalDate}</strong>`;
       
     } else {
@@ -278,22 +279,12 @@ document.addEventListener('DOMContentLoaded', function() {
         content += ` ${element.dataset.employmentType}`;
       }
       
-      // Add highlights for experience entries
+      // Add highlights for experience and education entries
       if (element.dataset.highlights) {
         const highlights = element.dataset.highlights.split('||').slice(0, 4); // Show first 4 highlights
         highlights.forEach(highlight => {
           if (highlight.trim()) {
             content += `<br/>• ${highlight.trim()}`;
-          }
-        });
-      }
-      
-      // Add education details
-      if (element.dataset.details) {
-        const details = element.dataset.details.split('||').slice(0, 4); // Show first 4 details
-        details.forEach(detail => {
-          if (detail.trim()) {
-            content += `<br/>• ${detail.trim()}`;
           }
         });
       }
@@ -313,14 +304,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const stack = element.dataset.stack.split(',').map(s => s.trim()).filter(s => s);
         if (stack.length > 0) {
           content += `<br/><strong>Stack:</strong> ${stack.join(', ')}`;
-        }
-      }
-      
-      // Add tags
-      if (element.dataset.tags) {
-        const tags = element.dataset.tags.split(',').map(t => t.trim()).filter(t => t);
-        if (tags.length > 0) {
-          content += `<br/><strong>Tags:</strong> ${tags.slice(0, 8).join(', ')}`;
         }
       }
     }
@@ -438,7 +421,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let content = '';
     
     if (commit.type === 'start') {
-      // START COMMITS: Show contextual start information
+      // START COMMITS: Show contextual start information (minimal)
       content = `<strong>${commit.company} - Started ${commit.originalDate}</strong>`;
       
     } else {
@@ -468,22 +451,12 @@ document.addEventListener('DOMContentLoaded', function() {
         content += ` ${element.dataset.employmentType}`;
       }
       
-      // Add highlights for experience entries
+      // Add highlights for experience and education entries
       if (element.dataset.highlights) {
         const highlights = element.dataset.highlights.split('||').slice(0, 4); // Show first 4 highlights
         highlights.forEach(highlight => {
           if (highlight.trim()) {
             content += `<br/>• ${highlight.trim()}`;
-          }
-        });
-      }
-      
-      // Add education details
-      if (element.dataset.details) {
-        const details = element.dataset.details.split('||').slice(0, 4); // Show first 4 details
-        details.forEach(detail => {
-          if (detail.trim()) {
-            content += `<br/>• ${detail.trim()}`;
           }
         });
       }
@@ -503,14 +476,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const stack = element.dataset.stack.split(',').map(s => s.trim()).filter(s => s);
         if (stack.length > 0) {
           content += `<br/><strong>Stack:</strong> ${stack.join(', ')}`;
-        }
-      }
-      
-      // Add tags
-      if (element.dataset.tags) {
-        const tags = element.dataset.tags.split(',').map(t => t.trim()).filter(t => t);
-        if (tags.length > 0) {
-          content += `<br/><strong>Tags:</strong> ${tags.slice(0, 8).join(', ')}`;
         }
       }
     }
