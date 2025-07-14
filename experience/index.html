@@ -255,19 +255,20 @@ document.addEventListener('DOMContentLoaded', function() {
   const ctx = canvas.getContext('2d');
   const commitsContainer = document.getElementById('git-commits');
   
-  const BRANCH_WIDTH = 40;
+  const BRANCH_WIDTH = 15;
   const LINE_HEIGHT = 30;
-  const MAIN_BRANCH_X = 60; // X position of main branch
+  const MAIN_BRANCH_X = 0; // Adjusted for removed padding
   
   // Calculate canvas dimensions
   const maxBranch = Math.max(...Object.values(branchAssignments));
   const totalHeight = allCommits.length * LINE_HEIGHT + 100;
-  const totalWidth = MAIN_BRANCH_X + (maxBranch * BRANCH_WIDTH) + 100;
+  const gitGraphWidth = MAIN_BRANCH_X + (maxBranch * BRANCH_WIDTH) + 20; // Reduced padding
+  const textAreaX = gitGraphWidth + 15; // Text area starts close to git graph
   
-  // Set canvas size
-  canvas.width = totalWidth;
+  // Set canvas size (just for the git graph)
+  canvas.width = gitGraphWidth;
   canvas.height = totalHeight;
-  canvas.style.width = totalWidth + 'px';
+  canvas.style.width = gitGraphWidth + 'px';
   canvas.style.height = totalHeight + 'px';
   
   // Clear canvas
@@ -301,12 +302,12 @@ document.addEventListener('DOMContentLoaded', function() {
     dot.style.border = '2px solid white';
     dot.style.position = 'absolute';
     
-    // Commit info (date + company)
+    // Commit info (date + company) - positioned in separate text area
     const info = document.createElement('div');
     info.className = 'commit-info';
     info.style.position = 'absolute';
-    info.style.left = '20px';
-    info.style.top = '-8px';
+    info.style.left = textAreaX + 'px'; // Position in text area, not relative to dot
+    info.style.top = (yPosition - 8) + 'px'; // Align with commit dot vertically
     info.style.fontSize = '12px';
     info.style.whiteSpace = 'nowrap';
     
@@ -315,7 +316,8 @@ document.addEventListener('DOMContentLoaded', function() {
     info.textContent = `${dateStr} - ${commit.company}${typeStr}`;
     
     commitEl.appendChild(dot);
-    commitEl.appendChild(info);
+    // Add text directly to commits container instead of to individual commit element
+    commitsContainer.appendChild(info);
     commitsContainer.appendChild(commitEl);
   });
   
@@ -418,8 +420,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Set container heights
+  // Set container dimensions to accommodate both git graph and text area
   commitsContainer.style.height = totalHeight + 'px';
+  commitsContainer.style.width = (textAreaX + 300) + 'px'; // Extra space for text
   commitsContainer.style.position = 'relative';
 });
 </script>
