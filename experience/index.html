@@ -315,9 +315,15 @@ document.addEventListener('DOMContentLoaded', function() {
           if (deliverables && deliverables.length > 0) {
             content += `<br/><strong>Deliverables:</strong>`;
             deliverables.forEach(deliverable => {
-              content += `<br/>• ${deliverable.name}`;
-              if (deliverable.description) {
-                content += ` - ${deliverable.description}`;
+              if (typeof deliverable === 'string') {
+                // Simple string format
+                content += `<br/>• ${deliverable}`;
+              } else if (deliverable.name) {
+                // Object format with name/description
+                content += `<br/>• ${deliverable.name}`;
+                if (deliverable.description) {
+                  content += ` - ${deliverable.description}`;
+                }
               }
             });
           }
@@ -505,9 +511,15 @@ document.addEventListener('DOMContentLoaded', function() {
           if (deliverables && deliverables.length > 0) {
             content += `<br/><strong>Deliverables:</strong>`;
             deliverables.forEach(deliverable => {
-              content += `<br/>• ${deliverable.name}`;
-              if (deliverable.description) {
-                content += ` - ${deliverable.description}`;
+              if (typeof deliverable === 'string') {
+                // Simple string format
+                content += `<br/>• ${deliverable}`;
+              } else if (deliverable.name) {
+                // Object format with name/description
+                content += `<br/>• ${deliverable.name}`;
+                if (deliverable.description) {
+                  content += ` - ${deliverable.description}`;
+                }
               }
             });
           }
