@@ -38,13 +38,14 @@ Git-style timeline - start simple with just dates
       <!-- Simple commit list with just dates -->
       {% for job in site.data.experience.experience %}
         <div class="git-commit" 
-             data-dates="{{ job.dates }}"
+             data-start="{{ job.start }}"
+             data-end="{{ job.end }}"
              data-company="{{ job.company }}"
              data-title="{{ job.title }}"
              data-era="{{ job.era }}">
           <div class="commit-dot"></div>
           <div class="commit-info">
-            <span class="commit-date">{{ job.dates }}</span>
+            <span class="commit-date">{{ job.start }}{% if job.end %} - {{ job.end }}{% endif %}</span>
             <span class="commit-company">{{ job.company }}</span>
           </div>
         </div>
@@ -52,13 +53,14 @@ Git-style timeline - start simple with just dates
       
       {% for edu in site.data.education.education %}
         <div class="git-commit" 
-             data-dates="{{ edu.dates }}"
+             data-start="{{ edu.start }}"
+             data-end="{{ edu.end }}"
              data-company="{{ edu.institution }}"
              data-title="{{ edu.degree }}"
              data-era="education">
           <div class="commit-dot"></div>
           <div class="commit-info">
-            <span class="commit-date">{{ edu.dates }}</span>
+            <span class="commit-date">{{ edu.start }}{% if edu.end %} - {{ edu.end }}{% endif %}</span>
             <span class="commit-company">{{ edu.institution }}</span>
           </div>
         </div>
@@ -92,37 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
     return null;
   }
   
-  function parseDateRange(dateStr) {
-    if (!dateStr) return { start: null, end: null };
-    
-    const parts = dateStr.split(/[-–]/).map(s => s.trim());
-    
-    // Handle "May - October 2012" format (same year range)
-    if (parts.length === 2) {
-      const firstPart = parts[0];
-      const secondPart = parts[1];
-      
-      // Check if second part contains a year and first part is just a month
-      const secondYear = secondPart.match(/\d{4}/);
-      if (secondYear && firstPart.match(/^[A-Za-z]+$/)) {
-        const year = secondYear[0];
-        const startStr = `${firstPart} ${year}`;
-        const endStr = secondPart;
-        
-        console.log(`Parsing same-year range: "${dateStr}" -> start: "${startStr}", end: "${endStr}"`);
-        
-        return {
-          start: parseDate(startStr),
-          end: parseDate(endStr)
-        };
-      }
-    }
-    
-    return {
-      start: parseDate(parts[0]),
-      end: parts.length > 1 ? parseDate(parts[1]) : null
-    };
-  }
+
   
   // Collect all commits (start and end dates)
   let allCommits = [];
@@ -130,35 +102,38 @@ document.addEventListener('DOMContentLoaded', function() {
   // Process experience items
   const commits = document.querySelectorAll('.git-commit');
   commits.forEach(commit => {
-    const dateRange = parseDateRange(commit.dataset.dates);
+    const startDate = parseDate(commit.dataset.start);
+    const endDate = parseDate(commit.dataset.end);
     const company = commit.dataset.company;
     const era = commit.dataset.era;
     
     // Skip commits with missing company data
     if (!company || company.trim() === '') {
-      console.log(`Skipping commit with empty company: dates="${commit.dataset.dates}", era="${era}"`);
+      console.log(`Skipping commit with empty company: start="${commit.dataset.start}", end="${commit.dataset.end}", era="${era}"`);
       return;
     }
     
     // Add start commit
-    if (dateRange.start) {
+    if (startDate) {
       allCommits.push({
-        date: dateRange.start,
+        date: startDate,
         company: company,
         type: 'start',
         era: era,
-        element: commit
+        element: commit,
+        originalDate: commit.dataset.start // Store original start date string
       });
     }
     
     // Add end commit (if different from start)
-    if (dateRange.end && dateRange.end.getTime() !== dateRange.start?.getTime()) {
+    if (endDate && endDate.getTime() !== startDate?.getTime()) {
       allCommits.push({
-        date: dateRange.end,
+        date: endDate,
         company: company,
         type: 'end',
         era: era,
-        element: commit
+        element: commit,
+        originalDate: commit.dataset.end // Store original end date string
       });
     }
   });
@@ -318,9 +293,9 @@ document.addEventListener('DOMContentLoaded', function() {
     info.style.fontSize = '12px';
     info.style.whiteSpace = 'nowrap';
     
-    const dateStr = commit.date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    // Use original date string instead of formatting parsed dates
     const typeStr = commit.type === 'end' ? ' (end)' : '';
-    info.textContent = `${dateStr} - ${commit.company}${typeStr}`;
+    info.textContent = `${commit.originalDate} - ${commit.company}${typeStr}`;
     
     commitEl.appendChild(dot);
     // Add text directly to commits container instead of to individual commit element

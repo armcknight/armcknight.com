@@ -1,5 +1,6 @@
 experience:
-  - dates: January 2021 – Current
+  - start: January 2021
+    end: Current
     era: professional
     company: Sentry
     title: Senior iOS Developer
@@ -13,7 +14,8 @@ experience:
       - Wrangled sample and demo apps for developers and Sales team
       - Numerous improvements to CI and build system
 
-  - dates: November 2019 – January 2021
+  - start: November 2019
+    end: January 2021
     era: professional
     company: Specto
     title: Senior iOS Developer
@@ -26,7 +28,8 @@ experience:
       - Python scripts to generate scoped Xcode projects from Bazel targets (pre `rules-xcode`)
       - Acquired by Sentry in December 2020
 
-  - dates: January 2019 – November 2019
+  - start: January 2019
+    end: November 2019
     era: professional
     company: Rightpoint Consulting
     title: Senior iOS Developer
@@ -37,7 +40,8 @@ experience:
     highlights:
       - Security-focused app and SDK (NDA)
 
-  - dates: September 2011 – Current
+  - start: September 2011
+    end: Current
     era: professional
     company: Insight Therapeutics
     title: Lead iOS Developer
@@ -62,7 +66,8 @@ experience:
     highlights:
       - Multiple releases and design iterations of all apps
 
-  - dates: January 2018 – April 2018
+  - start: January 2018
+    end: April 2018
     era: professional
     company: 121nexus
     title: iOS Developer
@@ -80,7 +85,8 @@ experience:
         url: https://itunes.apple.com/us/app/121-scan/id1187264063
         description: Assisted launches via iTunes and another internal enterprise app
 
-  - dates: December 2016 – July 2017
+  - start: December 2016
+    end: July 2017
     era: professional
     company: Layer
     title: iOS Developer
@@ -98,7 +104,8 @@ experience:
         url: https://github.com/blakewatters/TransitionKit
         description: Implemented new auth and transport layer using TransitionKit
 
-  - dates: April 2015 – December 2016
+  - start: April 2015
+    end: December 2016
     era: professional
     company: Twitter
     title: iOS/Fullstack Developer
@@ -117,7 +124,8 @@ experience:
       - Maintenance of backend lambda architecture with on-call rotations
       - Pioneered new backend feature to cross-reference common crashes across apps and present developers with suggested fixes
 
-  - dates: Jan – Apr 2015
+  - start: January 2015
+    end: April 2015
     era: professional
     company: MC10
     title: iOS Developer
@@ -134,7 +142,8 @@ experience:
       - Set up continuous integration and deployment with TeamCity and Fabric
       - Assisted adoption of Agile processes
 
-  - dates: July 2013 – December 2014
+  - start: July 2013
+    end: December 2014
     era: professional
     company: Raizlabs Consulting
     title: iOS Developer
@@ -165,7 +174,8 @@ experience:
         details:
           - Paging of API result display in table/collection views
 
-  - dates: October 2012 – May 2013
+  - start: October 2012
+    end: May 2013
     era: semi-pro
     school: ODU (Systems Lab)
     title: iOS Developer
@@ -179,7 +189,8 @@ experience:
       - Supervised two foreign exchange students
       - Facetime with onsite clients
 
-  - dates: May – October 2012
+  - start: May 2012
+    end: October 2012
     era: semi-pro
     company: Intergraph
     title: .NET Developer
@@ -191,7 +202,8 @@ experience:
       - Automated framework- and GUI-level testing, regression testing in numerical modules
       - Manual acceptance testing for new features and fixes
 
-  - dates: August 2012 – May 2013
+  - start: August 2012
+    end: May 2013
     era: higher-education
     school: Old Dominion University
     title: iOS Developer
@@ -205,7 +217,8 @@ experience:
       - Sole developer of iOS component of total solution
       - Highest scoring project!
 
-  - dates: August 2012 - December 2012
+  - start: August 2012
+    end: December 2012
     era: semi-pro
     company: XVD Longboards
     title: Web Developer
@@ -215,7 +228,8 @@ experience:
     highlights:
       - Build a Flash-based website for a local skateboard company for customers to custom-design boards
 
-  - dates: August 2012 – May 2014
+  - start: August 2012
+    end: May 2014
     era: higher-education
     school: Old Dominion University
     title: Research Assistant
@@ -227,7 +241,8 @@ experience:
       - Image processing, robotics and machine learning applications in bioinformatics
       - Multiple publications and conference presentations
 
-  - dates: August 2012 – May 2014
+  - start: August 2012
+    end: May 2014
     era: higher-education
     school: Old Dominion University
     title: Lab Instructor
@@ -240,7 +255,8 @@ experience:
       - "Assistant instructor for CS 150: Introduction to programming in C++"
       - Website maintenance, grading, general student guidance 
 
-  - dates: June 2003 - June 2009
+  - start: June 2003
+    end: June 2009
     era: foodservice
     company: Numerous
     title: Chef

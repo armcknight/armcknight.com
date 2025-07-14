@@ -1,5 +1,6 @@
 education:
-  - dates: 2010 - 2013
+  - start: 2010
+    end: 2013
     degree: M.Sc., Dept. of Computer Science
     institution: Old Dominion University
     details:
@@ -36,7 +37,8 @@ education:
         award: Dean's List
         institution: Old Dominion University
         tags: [academic, honors, undergraduate, deans-list]
-  - dates: 2003 - 2009
+  - start: 2003
+    end: 2009
     degree: A.Sc., Dept. of Computer Science
     institution: Piedmont Virginia Community College    
     tags: [academic, masters, computer-science, research, bioinformatics] 
@@ -46,7 +48,8 @@ education:
         institution: Piedmont Virginia Community College
         tags: [academic, honors, community-college, summa-cum-laude]
   
-  - dates: 1999 - 2003
+  - start: 1999
+    end: 2003
     degree: High School Diploma
     institution: CD Hylton High School
     location: Woodbridge, VA
@@ -56,7 +59,8 @@ education:
       - "Self-taught DOS and command line basics"
       - "Advanced studies diploma"
   
-  - dates: 1997 - 1999
+  - start: 1997
+    end: 1999
     institution: Middle School
     location: Manassas, VA
     tags: [middle-school]
