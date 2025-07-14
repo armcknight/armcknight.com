@@ -1282,25 +1282,25 @@ blockquote p {
   border-radius: 8px;
   padding: var(--space-4);
   background: var(--background);
+  overflow: auto;
 }
 
-.git-graph-lines {
+#git-canvas {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: var(--space-4);
+  left: var(--space-4);
   pointer-events: none;
+  z-index: 1;
 }
 
-.git-branch-line {
-  transition: opacity 0.2s ease;
-}
+// Canvas-based branch lines - no additional styling needed
 
 .git-commits {
   position: relative;
   width: 100%;
   height: 100%;
+  z-index: 2;
+  padding: var(--space-4);
 }
 
 .git-commit {
