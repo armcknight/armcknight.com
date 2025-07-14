@@ -245,69 +245,83 @@ document.addEventListener('DOMContentLoaded', function() {
   // Function to calculate actual rendered text height
   function calculateTextHeight(commit) {
     const element = commit.element;
+    let content = '';
     
-    // Build the exact same content that will be rendered
-    const typeStr = commit.type === 'end' ? ' (end)' : '';
-    let content = `<strong>${commit.originalDate} - ${commit.company}${typeStr}</strong>`;
-    
-    // Add title if available
-    if (element.dataset.title) {
-      content += `<br/><em>${element.dataset.title}</em>`;
-    }
-    
-    // Add location if available
-    if (element.dataset.location) {
-      content += `<br/>${element.dataset.location}`;
-    }
-    
-    // Add employment type if available
-    if (element.dataset.employmentType) {
-      content += ` ${element.dataset.employmentType}`;
-    }
-    
-    // Add highlights for start commits
-    if (commit.type === 'start' && element.dataset.highlights) {
-      const highlights = element.dataset.highlights.split('||').slice(0, 4);
-      highlights.forEach(highlight => {
-        if (highlight.trim()) {
-          content += `<br/>• ${highlight.trim()}`;
-        }
-      });
-    }
-    
-    // Add education details
-    if (element.dataset.details) {
-      const details = element.dataset.details.split('||').slice(0, 4);
-      details.forEach(detail => {
-        if (detail.trim()) {
-          content += `<br/>• ${detail.trim()}`;
-        }
-      });
-    }
-    
-    // Add education honors
-    if (element.dataset.honors) {
-      const honors = element.dataset.honors.split('||').slice(0, 3);
-      honors.forEach(honor => {
-        if (honor.trim()) {
-          content += `<br/>🏆 ${honor.trim()}`;
-        }
-      });
-    }
-    
-    // Add technology stack for experience entries
-    if (commit.type === 'start' && element.dataset.stack) {
-      const stack = element.dataset.stack.split(',').map(s => s.trim()).filter(s => s);
-      if (stack.length > 0) {
-        content += `<br/><strong>Stack:</strong> ${stack.join(', ')}`;
+    if (commit.type === 'start') {
+      // START COMMITS: Show contextual start information
+      content = `<strong>${commit.company} - Started ${commit.originalDate}</strong>`;
+      
+    } else {
+      // END COMMITS: Show date range and all detailed information
+      const startDate = element.dataset.start;
+      const endDate = element.dataset.end;
+      const isCurrentJob = endDate === 'Current';
+      
+      if (isCurrentJob) {
+        content = `<strong>${commit.company} - ${startDate} to Present</strong>`;
+      } else {
+        content = `<strong>${commit.company} - ${startDate} - ${endDate}</strong>`;
       }
-    }
-    
-    // Add tags
-    if (element.dataset.tags) {
-      const tags = element.dataset.tags.split(',').map(t => t.trim()).filter(t => t);
-      if (tags.length > 0) {
-        content += `<br/><strong>Tags:</strong> ${tags.slice(0, 8).join(', ')}`;
+      
+      // Add title if available
+      if (element.dataset.title) {
+        content += `<br/><em>${element.dataset.title}</em>`;
+      }
+      
+      // Add location if available
+      if (element.dataset.location) {
+        content += `<br/>${element.dataset.location}`;
+      }
+      
+      // Add employment type if available
+      if (element.dataset.employmentType) {
+        content += ` ${element.dataset.employmentType}`;
+      }
+      
+      // Add highlights for experience entries
+      if (element.dataset.highlights) {
+        const highlights = element.dataset.highlights.split('||').slice(0, 4); // Show first 4 highlights
+        highlights.forEach(highlight => {
+          if (highlight.trim()) {
+            content += `<br/>• ${highlight.trim()}`;
+          }
+        });
+      }
+      
+      // Add education details
+      if (element.dataset.details) {
+        const details = element.dataset.details.split('||').slice(0, 4); // Show first 4 details
+        details.forEach(detail => {
+          if (detail.trim()) {
+            content += `<br/>• ${detail.trim()}`;
+          }
+        });
+      }
+      
+      // Add education honors
+      if (element.dataset.honors) {
+        const honors = element.dataset.honors.split('||').slice(0, 3); // Show first 3 honors
+        honors.forEach(honor => {
+          if (honor.trim()) {
+            content += `<br/>🏆 ${honor.trim()}`;
+          }
+        });
+      }
+      
+      // Add technology stack for experience entries
+      if (element.dataset.stack) {
+        const stack = element.dataset.stack.split(',').map(s => s.trim()).filter(s => s);
+        if (stack.length > 0) {
+          content += `<br/><strong>Stack:</strong> ${stack.join(', ')}`;
+        }
+      }
+      
+      // Add tags
+      if (element.dataset.tags) {
+        const tags = element.dataset.tags.split(',').map(t => t.trim()).filter(t => t);
+        if (tags.length > 0) {
+          content += `<br/><strong>Tags:</strong> ${tags.slice(0, 8).join(', ')}`;
+        }
       }
     }
     
@@ -419,70 +433,85 @@ document.addEventListener('DOMContentLoaded', function() {
     info.style.fontFamily = 'Charter, Georgia, Times New Roman, serif';
     info.style.whiteSpace = 'normal'; // Allow wrapping for multi-line content
     
-    // Build rich content from data attributes
-    const typeStr = commit.type === 'end' ? ' (end)' : '';
+    // Build content based on commit type
     const element = commit.element;
+    let content = '';
     
-    let content = `<strong>${commit.originalDate} - ${commit.company}${typeStr}</strong>`;
-    
-    // Add title if available
-    if (element.dataset.title) {
-      content += `<br/><em>${element.dataset.title}</em>`;
-    }
-    
-    // Add location if available
-    if (element.dataset.location) {
-      content += `<br/>${element.dataset.location}`;
-    }
-    
-    // Add employment type if available
-    if (element.dataset.employmentType) {
-      content += ` ${element.dataset.employmentType}`;
-    }
-    
-    // Add highlights for start commits
-    if (commit.type === 'start' && element.dataset.highlights) {
-      const highlights = element.dataset.highlights.split('||').slice(0, 4); // Show first 4 highlights
-      highlights.forEach(highlight => {
-        if (highlight.trim()) {
-          content += `<br/>• ${highlight.trim()}`;
-        }
-      });
-    }
-    
-    // Add education details
-    if (element.dataset.details) {
-      const details = element.dataset.details.split('||').slice(0, 4); // Show first 4 details
-      details.forEach(detail => {
-        if (detail.trim()) {
-          content += `<br/>• ${detail.trim()}`;
-        }
-      });
-    }
-    
-    // Add education honors
-    if (element.dataset.honors) {
-      const honors = element.dataset.honors.split('||').slice(0, 3); // Show first 3 honors
-      honors.forEach(honor => {
-        if (honor.trim()) {
-          content += `<br/>🏆 ${honor.trim()}`;
-        }
-      });
-    }
-    
-    // Add technology stack for experience entries
-    if (commit.type === 'start' && element.dataset.stack) {
-      const stack = element.dataset.stack.split(',').map(s => s.trim()).filter(s => s);
-      if (stack.length > 0) {
-        content += `<br/><strong>Stack:</strong> ${stack.join(', ')}`;
+    if (commit.type === 'start') {
+      // START COMMITS: Show contextual start information
+      content = `<strong>${commit.company} - Started ${commit.originalDate}</strong>`;
+      
+    } else {
+      // END COMMITS: Show date range and all detailed information
+      const startDate = element.dataset.start;
+      const endDate = element.dataset.end;
+      const isCurrentJob = endDate === 'Current';
+      
+      if (isCurrentJob) {
+        content = `<strong>${commit.company} - ${startDate} to Present</strong>`;
+      } else {
+        content = `<strong>${commit.company} - ${startDate} - ${endDate}</strong>`;
       }
-    }
-    
-    // Add tags
-    if (element.dataset.tags) {
-      const tags = element.dataset.tags.split(',').map(t => t.trim()).filter(t => t);
-      if (tags.length > 0) {
-        content += `<br/><strong>Tags:</strong> ${tags.slice(0, 8).join(', ')}`;
+      
+      // Add title if available
+      if (element.dataset.title) {
+        content += `<br/><em>${element.dataset.title}</em>`;
+      }
+      
+      // Add location if available
+      if (element.dataset.location) {
+        content += `<br/>${element.dataset.location}`;
+      }
+      
+      // Add employment type if available
+      if (element.dataset.employmentType) {
+        content += ` ${element.dataset.employmentType}`;
+      }
+      
+      // Add highlights for experience entries
+      if (element.dataset.highlights) {
+        const highlights = element.dataset.highlights.split('||').slice(0, 4); // Show first 4 highlights
+        highlights.forEach(highlight => {
+          if (highlight.trim()) {
+            content += `<br/>• ${highlight.trim()}`;
+          }
+        });
+      }
+      
+      // Add education details
+      if (element.dataset.details) {
+        const details = element.dataset.details.split('||').slice(0, 4); // Show first 4 details
+        details.forEach(detail => {
+          if (detail.trim()) {
+            content += `<br/>• ${detail.trim()}`;
+          }
+        });
+      }
+      
+      // Add education honors
+      if (element.dataset.honors) {
+        const honors = element.dataset.honors.split('||').slice(0, 3); // Show first 3 honors
+        honors.forEach(honor => {
+          if (honor.trim()) {
+            content += `<br/>🏆 ${honor.trim()}`;
+          }
+        });
+      }
+      
+      // Add technology stack for experience entries
+      if (element.dataset.stack) {
+        const stack = element.dataset.stack.split(',').map(s => s.trim()).filter(s => s);
+        if (stack.length > 0) {
+          content += `<br/><strong>Stack:</strong> ${stack.join(', ')}`;
+        }
+      }
+      
+      // Add tags
+      if (element.dataset.tags) {
+        const tags = element.dataset.tags.split(',').map(t => t.trim()).filter(t => t);
+        if (tags.length > 0) {
+          content += `<br/><strong>Tags:</strong> ${tags.slice(0, 8).join(', ')}`;
+        }
       }
     }
     
