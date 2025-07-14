@@ -1511,9 +1511,6 @@ blockquote p {
 .timeline-main-line:hover::after,
 .timeline-branch-line:hover::after {
   opacity: 1;
-  background-color: var(--accent);
-  color: white;
-  border-color: var(--accent);
   transform: translateX(-50%) translateY(-2px);
 }
 
@@ -1540,10 +1537,14 @@ blockquote p {
 
 .era-bracket:hover .era-tooltip {
   opacity: 1;
+  pointer-events: auto;
+  transform: translateY(-50%) translateX(-4px);
+}
+
+.era-tooltip:hover {
   background-color: var(--accent);
   color: white;
   border-color: var(--accent);
-  transform: translateY(-50%) translateX(-4px);
 }
 
 // Right column: Content area
