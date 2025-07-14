@@ -392,25 +392,25 @@ document.addEventListener('DOMContentLoaded', function() {
         const startCommitIndex = allCommits.findIndex(c => c === startCommit);
         const startY = startCommitIndex * LINE_HEIGHT + 20;
         
-        // Draw the horizontal fork line at this entry's start point
+        // Draw the horizontal fork line at this entry's start point (aligned with dot center)
         ctx.strokeStyle = getBranchColor(branchIndex);
         ctx.beginPath();
-        ctx.moveTo(MAIN_BRANCH_X, startY);
-        ctx.lineTo(sideX, startY);
+        ctx.moveTo(MAIN_BRANCH_X, startY + 5); // +5px to align with center of 10px dot
+        ctx.lineTo(sideX, startY + 5);
         ctx.stroke();
         
         console.log(`  Fork line for ${entry.company} (${entry.era}): from (${MAIN_BRANCH_X}, ${startY}) to (${sideX}, ${startY})`);
         
-        // Draw the vertical line for this entry only
-        if (endCommit && endCommit !== startCommit) {
-          const endCommitIndex = allCommits.findIndex(c => c === endCommit);
-          const endY = endCommitIndex * LINE_HEIGHT + 20;
-          
-          ctx.strokeStyle = getBranchColor(branchIndex);
-          ctx.beginPath();
-          ctx.moveTo(sideX, startY);
-          ctx.lineTo(sideX, endY);
-          ctx.stroke();
+                 // Draw the vertical line for this entry only
+         if (endCommit && endCommit !== startCommit) {
+           const endCommitIndex = allCommits.findIndex(c => c === endCommit);
+           const endY = endCommitIndex * LINE_HEIGHT + 20;
+           
+           ctx.strokeStyle = getBranchColor(branchIndex);
+           ctx.beginPath();
+           ctx.moveTo(sideX, startY + 5); // +5px to align with center of 10px dot
+           ctx.lineTo(sideX, endY + 5);   // +5px to align with center of 10px dot
+           ctx.stroke();
           
           console.log(`  Vertical line for ${entry.company} (${entry.era}): from (${sideX}, ${startY}) to (${sideX}, ${endY})`);
         }
