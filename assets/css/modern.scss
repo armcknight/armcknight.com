@@ -11,6 +11,7 @@
   --accent-hover: #1d4ed8;
   --accent-rgb: 37, 99, 235;
   --border: #e5e7eb;
+  --border-rgb: 229, 231, 235;
   --background: #ffffff;
   --background-alt: #f9fafb;
   --code-bg: #f3f4f6;
@@ -1293,6 +1294,7 @@ blockquote p {
   align-items: center;
   justify-content: flex-end;
   padding-right: var(--space-3);
+  cursor: pointer;
 }
 
 .era-bracket::before {
@@ -1315,17 +1317,7 @@ blockquote p {
   border-radius: 1px;
 }
 
-.era-label {
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--text-secondary);
-  background: var(--background);
-  padding: var(--space-1) var(--space-2);
-  border-radius: 4px;
-  border: 1px solid var(--border);
-  white-space: nowrap;
-  margin-right: var(--space-2);
-}
+
 
 /* Position era brackets based on timeline */
 .era-professional {
@@ -1343,10 +1335,7 @@ blockquote p {
   background: #2563eb;
 }
 
-.era-professional .era-label {
-  color: #2563eb;
-  border-color: #2563eb;
-}
+
 
 .era-semi-pro {
   top: 400px;
@@ -1363,10 +1352,7 @@ blockquote p {
   background: #7c3aed;
 }
 
-.era-semi-pro .era-label {
-  color: #7c3aed;
-  border-color: #7c3aed;
-}
+
 
 .era-higher-education {
   top: 800px;
@@ -1383,10 +1369,7 @@ blockquote p {
   background: #dc2626;
 }
 
-.era-higher-education .era-label {
-  color: #dc2626;
-  border-color: #dc2626;
-}
+
 
 .era-primary-education {
   top: 1200px;
@@ -1403,10 +1386,7 @@ blockquote p {
   background: #ea580c;
 }
 
-.era-primary-education .era-label {
-  color: #ea580c;
-  border-color: #ea580c;
-}
+
 
 .era-foodservice {
   top: 1400px;
@@ -1423,32 +1403,45 @@ blockquote p {
   background: #059669;
 }
 
-.era-foodservice .era-label {
-  color: #059669;
-  border-color: #059669;
-}
+
 
 /* Hide amateur era for now */
 .era-amateur {
   display: none;
 }
 
-// Git-style timeline with multiple branches
+// Git-style timeline with two-column layout
 .git-timeline {
   position: relative;
-  flex: 1;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--space-6);
   min-height: 2000px;
 }
 
-// Main timeline line (center)
+// Left column: Git graph visualization
+.timeline-graph {
+  position: relative;
+  height: 100%;
+}
+
+// Main timeline line (center of graph)
 .timeline-main-line {
   position: absolute;
-  left: 60px;
+  left: 80px;
   top: 0;
   bottom: 0;
   width: 3px;
-  background: var(--border);
+  background: rgba(var(--border-rgb), 0.3);
   border-radius: 2px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.timeline-main-line:hover {
+  background: var(--border);
+  width: 4px;
+  left: 79px;
 }
 
 // Branch lines for overlapping experiences
@@ -1457,98 +1450,154 @@ blockquote p {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: var(--border);
-  opacity: 0.6;
+  background: rgba(var(--border-rgb), 0.2);
   border-radius: 1px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.timeline-branch-line:hover {
+  background: var(--border);
+  width: 3px;
 }
 
 .timeline-branch-1 {
-  left: 20px;
+  left: 40px;
+}
+
+.timeline-branch-1:hover {
+  left: 39px;
 }
 
 .timeline-branch-2 {
-  left: 100px;
+  left: 120px;
+}
+
+.timeline-branch-2:hover {
+  left: 119px;
 }
 
 .timeline-branch-3 {
-  left: 140px;
+  left: 160px;
 }
 
-// Timeline items
+.timeline-branch-3:hover {
+  left: 159px;
+}
+
+// Timeline line tooltips - styled like tag/skill-tag elements
+.timeline-main-line::after,
+.timeline-branch-line::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  top: 20px;
+  transform: translateX(-50%);
+  font-family: var(--font-family-sans);
+  font-size: var(--text-sm);
+  background-color: var(--background-alt);
+  color: var(--text-secondary);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.15s ease;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-main-line:hover::after,
+.timeline-branch-line:hover::after {
+  opacity: 1;
+  background-color: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  transform: translateX(-50%) translateY(-2px);
+}
+
+// Era bracket tooltips - styled like tag/skill-tag elements
+.era-tooltip {
+  position: absolute;
+  right: 120%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-family-sans);
+  font-size: var(--text-sm);
+  background-color: var(--background-alt);
+  color: var(--text-secondary);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.15s ease;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.era-bracket:hover .era-tooltip {
+  opacity: 1;
+  background-color: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  transform: translateY(-50%) translateX(-4px);
+}
+
+// Right column: Content area
+.timeline-content {
+  position: relative;
+}
+
+// Timeline items - all uniformly left-aligned
 .timeline-item {
   position: relative;
   margin-bottom: var(--space-6);
-  padding: var(--space-5);
+  padding: var(--space-3) 0;
+}
+
+// Timeline dots positioned in left column
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  top: var(--space-3);
+  width: 14px;
+  height: 14px;
   background: var(--background);
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  border: 3px solid var(--border);
+  border-radius: 50%;
+  z-index: 2;
   transition: all 0.2s ease;
-  margin-left: 180px;
-  max-width: 600px;
 }
 
-// Branch positioning
-.timeline-item[data-branch="main"] {
-  margin-left: 100px;
-}
-
+// Position dots on their respective timeline branches in left column
 .timeline-item[data-branch="main"]::before {
-  left: -46px;
-}
-
-.timeline-item[data-branch="branch-1"] {
-  margin-left: 60px;
+  left: calc(-200px - var(--space-6) + 80px - 7px);
 }
 
 .timeline-item[data-branch="branch-1"]::before {
-  left: -46px;
-}
-
-.timeline-item[data-branch="branch-2"] {
-  margin-left: 140px;
+  left: calc(-200px - var(--space-6) + 40px - 7px);
 }
 
 .timeline-item[data-branch="branch-2"]::before {
-  left: -46px;
-}
-
-.timeline-item[data-branch="branch-3"] {
-  margin-left: 180px;
+  left: calc(-200px - var(--space-6) + 120px - 7px);
 }
 
 .timeline-item[data-branch="branch-3"]::before {
-  left: -46px;
-}
-
-.timeline-item[data-branch="overlay"] {
-  margin-left: 200px;
-  background: rgba(var(--accent-rgb), 0.05);
-  border-color: var(--accent);
+  left: calc(-200px - var(--space-6) + 160px - 7px);
 }
 
 .timeline-item[data-branch="overlay"]::before {
-  left: -146px;
+  left: calc(-200px - var(--space-6) + 80px - 7px);
   background: var(--accent);
   border-color: var(--accent);
 }
 
-.timeline-item:hover {
-  border-color: var(--accent);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transform: translateX(4px);
-}
-
-// Timeline dots
-.timeline-item::before {
-  content: '';
-  position: absolute;
-  top: var(--space-5);
-  width: 12px;
-  height: 12px;
-  background: var(--background);
-  border: 2px solid var(--border);
-  border-radius: 50%;
-  z-index: 2;
+.timeline-item:hover::before {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.2);
 }
 
 // Era-specific dot colors
@@ -1576,7 +1625,7 @@ blockquote p {
   border-color: #059669;
 }
 
-// Experience item content styling
+// Experience item content styling - clean, minimal, uniform
 .experience-item-content {
   width: 100%;
 }
@@ -1615,12 +1664,11 @@ blockquote p {
 
 .presentation-item {
   opacity: 0.8;
-  transform: scale(0.95);
+  font-style: italic;
 }
 
 .presentation-item:hover {
   opacity: 1;
-  transform: scale(1) translateX(4px);
 }
 
 // Honors section styling
@@ -1659,7 +1707,7 @@ blockquote p {
   font-size: var(--text-sm);
 }
 
-// Enhanced responsive design for git timeline
+// Enhanced responsive design for two-column timeline
 @media (max-width: 768px) {
   .timeline-container {
     flex-direction: column;
@@ -1692,13 +1740,21 @@ blockquote p {
   }
   
   .git-timeline {
+    grid-template-columns: 60px 1fr;
+    gap: var(--space-4);
     min-height: auto;
   }
   
   .timeline-main-line,
   .timeline-branch-line {
-    left: var(--space-4);
+    left: 30px;
     width: 2px;
+  }
+  
+  .timeline-main-line:hover,
+  .timeline-branch-line:hover {
+    width: 3px;
+    left: 29px;
   }
   
   .timeline-branch-1,
@@ -1708,25 +1764,34 @@ blockquote p {
   }
   
   .timeline-item {
-    margin-left: var(--space-8);
-    max-width: none;
-  }
-  
-  .timeline-item[data-branch="main"],
-  .timeline-item[data-branch="branch-1"],
-  .timeline-item[data-branch="branch-2"],
-  .timeline-item[data-branch="branch-3"],
-  .timeline-item[data-branch="overlay"] {
-    margin-left: var(--space-8);
+    padding: var(--space-2) 0;
   }
   
   .timeline-item::before {
-    left: calc(-1 * var(--space-8) + var(--space-4) - 6px);
+    left: calc(-60px - var(--space-4) + 30px - 6px);
+    width: 12px;
+    height: 12px;
+    border-width: 2px;
+  }
+  
+  .timeline-item[data-branch="main"]::before,
+  .timeline-item[data-branch="branch-1"]::before,
+  .timeline-item[data-branch="branch-2"]::before,
+  .timeline-item[data-branch="branch-3"]::before,
+  .timeline-item[data-branch="overlay"]::before {
+    left: calc(-60px - var(--space-4) + 30px - 6px);
   }
   
   .experience-meta {
     flex-direction: column;
     gap: var(--space-1);
+  }
+  
+  // Hide tooltips on mobile
+  .timeline-main-line::after,
+  .timeline-branch-line::after,
+  .era-tooltip {
+    display: none;
   }
 }
 
@@ -1741,8 +1806,52 @@ blockquote p {
     padding: var(--space-1);
   }
   
+  .git-timeline {
+    grid-template-columns: 40px 1fr;
+    gap: var(--space-3);
+  }
+  
+  .timeline-main-line,
+  .timeline-branch-line {
+    left: 20px;
+  }
+  
+  .timeline-main-line:hover,
+  .timeline-branch-line:hover {
+    left: 19px;
+  }
+  
   .timeline-item {
-    padding: var(--space-4);
+    padding: var(--space-2) 0;
     margin-bottom: var(--space-4);
   }
+  
+  .timeline-item::before {
+    left: calc(-40px - var(--space-3) + 20px - 6px);
+  }
+  
+  .timeline-item[data-branch="main"]::before,
+  .timeline-item[data-branch="branch-1"]::before,
+  .timeline-item[data-branch="branch-2"]::before,
+  .timeline-item[data-branch="branch-3"]::before,
+  .timeline-item[data-branch="overlay"]::before {
+    left: calc(-40px - var(--space-3) + 20px - 6px);
+  }
+  
+  .experience-title {
+    font-size: var(--text-lg);
+  }
+}
+
+.timeline-item[data-branch="overlay"] {
+  opacity: 0.8;
+  background: rgba(var(--accent-rgb), 0.02);
+  border-left: 2px solid rgba(var(--accent-rgb), 0.2);
+  padding-left: var(--space-3);
+}
+
+.timeline-item[data-branch="overlay"]:hover {
+  opacity: 1;
+  background: rgba(var(--accent-rgb), 0.05);
+  border-left-color: var(--accent);
 }

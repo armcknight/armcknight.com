@@ -70,214 +70,220 @@ Unified chronological timeline with git-branch style visualization
     <!-- Era brackets positioned via CSS -->
     <div class="era-brackets">
       <div class="era-bracket era-professional" id="era-professional">
-        <div class="era-label">Professional</div>
+        <div class="era-tooltip">Professional</div>
       </div>
       <div class="era-bracket era-semi-pro" id="era-semi-pro">
-        <div class="era-label">Semi-Pro</div>
+        <div class="era-tooltip">Semi-Pro</div>
       </div>
       <div class="era-bracket era-amateur" id="era-amateur">
-        <div class="era-label">Amateur</div>
+        <div class="era-tooltip">Amateur</div>
       </div>
       <div class="era-bracket era-higher-education" id="era-higher-education">
-        <div class="era-label">Higher Ed</div>
+        <div class="era-tooltip">Higher Education</div>
       </div>
       <div class="era-bracket era-primary-education" id="era-primary-education">
-        <div class="era-label">Primary Ed</div>
+        <div class="era-tooltip">Primary Education</div>
       </div>
       <div class="era-bracket era-foodservice" id="era-foodservice">
-        <div class="era-label">Food Service</div>
+        <div class="era-tooltip">Food Service</div>
       </div>
     </div>
     
     <div class="git-timeline">
-      <!-- Main timeline line -->
-      <div class="timeline-main-line"></div>
+      <!-- Left column: Git graph visualization -->
+      <div class="timeline-graph">
+        <!-- Main timeline line -->
+        <div class="timeline-main-line" data-tooltip="Main Career Path"></div>
+        
+        <!-- Branch lines for overlapping experiences -->
+        <div class="timeline-branch-line timeline-branch-1" data-tooltip="Contracts & Side Work"></div>
+        <div class="timeline-branch-line timeline-branch-2" data-tooltip="Long-term Parallel Work"></div>
+        <div class="timeline-branch-line timeline-branch-3" data-tooltip="Academic & Research"></div>
+      </div>
       
-      <!-- Branch lines for overlapping experiences -->
-      <div class="timeline-branch-line timeline-branch-1"></div>
-      <div class="timeline-branch-line timeline-branch-2"></div>
-      <div class="timeline-branch-line timeline-branch-3"></div>
-      
-      {% comment %}Manually sorted items in reverse chronological order{% endcomment %}
-      
-      {% comment %}Current/Recent Professional{% endcomment %}
-      {% for job in site.data.experience.experience %}
-        {% if job.dates contains "2021" and job.dates contains "Current" %}
-          <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
-            {% include experience-item.html item=job type="experience" %}
+      <!-- Right column: Content area -->
+      <div class="timeline-content">
+        {% comment %}Manually sorted items in reverse chronological order{% endcomment %}
+        
+        {% comment %}Current/Recent Professional{% endcomment %}
+        {% for job in site.data.experience.experience %}
+          {% if job.dates contains "2021" and job.dates contains "Current" %}
+            <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
+              {% include experience-item.html item=job type="experience" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% for job in site.data.experience.experience %}
+          {% if job.dates contains "2019" and job.company == "Specto" %}
+            <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
+              {% include experience-item.html item=job type="experience" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% for job in site.data.experience.experience %}
+          {% if job.dates contains "2019" and job.company == "Rightpoint" %}
+            <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-1">
+              {% include experience-item.html item=job type="experience" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% comment %}Long-running contract (overlaps with many others){% endcomment %}
+        {% for job in site.data.experience.experience %}
+          {% if job.company == "Insight Therapeutics" %}
+            <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-2">
+              {% include experience-item.html item=job type="experience" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% comment %}2018 contract{% endcomment %}
+        {% for job in site.data.experience.experience %}
+          {% if job.dates contains "2018" %}
+            <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
+              {% include experience-item.html item=job type="experience" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% comment %}2016-2017 jobs{% endcomment %}
+        {% for job in site.data.experience.experience %}
+          {% if job.dates contains "2016" and job.company == "Layer" %}
+            <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
+              {% include experience-item.html item=job type="experience" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% for job in site.data.experience.experience %}
+          {% if job.dates contains "2015" and job.company == "Twitter" %}
+            <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
+              {% include experience-item.html item=job type="experience" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% for job in site.data.experience.experience %}
+          {% if job.dates contains "2015" and job.company == "MC10" %}
+            <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
+              {% include experience-item.html item=job type="experience" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% comment %}2013-2014 period{% endcomment %}
+        {% for job in site.data.experience.experience %}
+          {% if job.company == "Raizlabs" %}
+            <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
+              {% include experience-item.html item=job type="experience" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% comment %}Education - Masters{% endcomment %}
+        {% for edu in site.data.education.education %}
+          {% if edu.dates contains "2010" and edu.dates contains "2013" %}
+            <div class="timeline-item" data-era="higher-education" data-branch="branch-3">
+              {% include experience-item.html item=edu type="education" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% comment %}2013 overlapping experiences{% endcomment %}
+        {% for job in site.data.experience.experience %}
+          {% if job.dates contains "2013" and job.employment_type contains "Intern" and job.company == "Intergraph" %}
+            <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-1">
+              {% include experience-item.html item=job type="experience" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% comment %}2012-2013 academic and work experiences{% endcomment %}
+        {% for job in site.data.experience.experience %}
+          {% if job.dates contains "2012" and job.school == "ODU (Systems Lab)" %}
+            <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-2">
+              {% include experience-item.html item=job type="experience" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% for job in site.data.experience.experience %}
+          {% if job.dates contains "2012" and job.employment_type contains "Capstone" %}
+            <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-3">
+              {% include experience-item.html item=job type="experience" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% for job in site.data.experience.experience %}
+          {% if job.company == "XVD Longboards" %}
+            <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-1">
+              {% include experience-item.html item=job type="experience" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% for job in site.data.experience.experience %}
+          {% if job.title == "Research Assistant" %}
+            <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-2">
+              {% include experience-item.html item=job type="experience" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% for job in site.data.experience.experience %}
+          {% if job.title == "Lab Instructor" %}
+            <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-3">
+              {% include experience-item.html item=job type="experience" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% comment %}Earlier education{% endcomment %}
+        {% for edu in site.data.education.education %}
+          {% if edu.dates contains "2003" and edu.dates contains "2009" %}
+            <div class="timeline-item" data-era="primary-education" data-branch="main">
+              {% include experience-item.html item=edu type="education" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% comment %}Food service career{% endcomment %}
+        {% for job in site.data.experience.experience %}
+          {% if job.era == "foodservice" %}
+            <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-1">
+              {% include experience-item.html item=job type="experience" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% comment %}High school{% endcomment %}
+        {% for edu in site.data.education.education %}
+          {% if edu.institution contains "High School" %}
+            <div class="timeline-item" data-era="primary-education" data-branch="main">
+              {% include experience-item.html item=edu type="education" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% comment %}Middle school{% endcomment %}
+        {% for edu in site.data.education.education %}
+          {% if edu.institution contains "Middle School" %}
+            <div class="timeline-item" data-era="primary-education" data-branch="main">
+              {% include experience-item.html item=edu type="education" %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% comment %}Presentations{% endcomment %}
+        {% for presentation in site.data.presentations.presentations %}
+          <div class="timeline-item presentation-item" data-era="professional" data-branch="overlay">
+            {% include experience-item.html item=presentation type="presentation" %}
           </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% for job in site.data.experience.experience %}
-        {% if job.dates contains "2019" and job.company == "Specto" %}
-          <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
-            {% include experience-item.html item=job type="experience" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% for job in site.data.experience.experience %}
-        {% if job.dates contains "2019" and job.company == "Rightpoint" %}
-          <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-1">
-            {% include experience-item.html item=job type="experience" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% comment %}Long-running contract (overlaps with many others){% endcomment %}
-      {% for job in site.data.experience.experience %}
-        {% if job.company == "Insight Therapeutics" %}
-          <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-2">
-            {% include experience-item.html item=job type="experience" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% comment %}2018 contract{% endcomment %}
-      {% for job in site.data.experience.experience %}
-        {% if job.dates contains "2018" %}
-          <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
-            {% include experience-item.html item=job type="experience" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% comment %}2016-2017 jobs{% endcomment %}
-      {% for job in site.data.experience.experience %}
-        {% if job.dates contains "2016" and job.company == "Layer" %}
-          <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
-            {% include experience-item.html item=job type="experience" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% for job in site.data.experience.experience %}
-        {% if job.dates contains "2015" and job.company == "Twitter" %}
-          <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
-            {% include experience-item.html item=job type="experience" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% for job in site.data.experience.experience %}
-        {% if job.dates contains "2015" and job.company == "MC10" %}
-          <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
-            {% include experience-item.html item=job type="experience" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% comment %}2013-2014 period{% endcomment %}
-      {% for job in site.data.experience.experience %}
-        {% if job.company == "Raizlabs" %}
-          <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
-            {% include experience-item.html item=job type="experience" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% comment %}Education - Masters{% endcomment %}
-      {% for edu in site.data.education.education %}
-        {% if edu.dates contains "2010" and edu.dates contains "2013" %}
-          <div class="timeline-item" data-era="higher-education" data-branch="branch-3">
-            {% include experience-item.html item=edu type="education" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% comment %}2013 overlapping experiences{% endcomment %}
-      {% for job in site.data.experience.experience %}
-        {% if job.dates contains "2013" and job.employment_type contains "Intern" and job.company == "Intergraph" %}
-          <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-1">
-            {% include experience-item.html item=job type="experience" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% comment %}2012-2013 academic and work experiences{% endcomment %}
-      {% for job in site.data.experience.experience %}
-        {% if job.dates contains "2012" and job.school == "ODU (Systems Lab)" %}
-          <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-2">
-            {% include experience-item.html item=job type="experience" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% for job in site.data.experience.experience %}
-        {% if job.dates contains "2012" and job.employment_type contains "Capstone" %}
-          <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-3">
-            {% include experience-item.html item=job type="experience" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% for job in site.data.experience.experience %}
-        {% if job.company == "XVD Longboards" %}
-          <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-1">
-            {% include experience-item.html item=job type="experience" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% for job in site.data.experience.experience %}
-        {% if job.title == "Research Assistant" %}
-          <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-2">
-            {% include experience-item.html item=job type="experience" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% for job in site.data.experience.experience %}
-        {% if job.title == "Lab Instructor" %}
-          <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-3">
-            {% include experience-item.html item=job type="experience" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% comment %}Earlier education{% endcomment %}
-      {% for edu in site.data.education.education %}
-        {% if edu.dates contains "2003" and edu.dates contains "2009" %}
-          <div class="timeline-item" data-era="primary-education" data-branch="main">
-            {% include experience-item.html item=edu type="education" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% comment %}Food service career{% endcomment %}
-      {% for job in site.data.experience.experience %}
-        {% if job.era == "foodservice" %}
-          <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-1">
-            {% include experience-item.html item=job type="experience" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% comment %}High school{% endcomment %}
-      {% for edu in site.data.education.education %}
-        {% if edu.institution contains "High School" %}
-          <div class="timeline-item" data-era="primary-education" data-branch="main">
-            {% include experience-item.html item=edu type="education" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% comment %}Middle school{% endcomment %}
-      {% for edu in site.data.education.education %}
-        {% if edu.institution contains "Middle School" %}
-          <div class="timeline-item" data-era="primary-education" data-branch="main">
-            {% include experience-item.html item=edu type="education" %}
-          </div>
-        {% endif %}
-      {% endfor %}
-      
-      {% comment %}Presentations{% endcomment %}
-      {% for presentation in site.data.presentations.presentations %}
-        <div class="timeline-item presentation-item" data-era="professional" data-branch="overlay">
-          {% include experience-item.html item=presentation type="presentation" %}
-        </div>
-      {% endfor %}
+        {% endfor %}
+      </div>
     </div>
   </div>
 </div>

@@ -167,7 +167,7 @@ experience:
 
   - dates: October 2012 – May 2013
     era: semi-pro
-    company: ODU Systems Lab
+    school: ODU (Systems Lab)
     title: iOS Developer
     location: Norfolk, VA
     employment_type: (Student Intern)
@@ -193,7 +193,7 @@ experience:
 
   - dates: August 2012 – May 2013
     era: higher-education
-    company: Old Dominion University
+    school: Old Dominion University
     title: iOS Developer
     location: Norfolk, VA
     employment_type: (Capstone Project)
@@ -217,7 +217,7 @@ experience:
 
   - dates: August 2012 – May 2014
     era: higher-education
-    company: Old Dominion University
+    school: Old Dominion University
     title: Research Assistant
     location: Norfolk, VA
     employment_type: (Graduate Student)
@@ -229,7 +229,7 @@ experience:
 
   - dates: Auust 2012 – May 2014
     era: higher-education
-    company: Old Dominion University
+    school: Old Dominion University
     title: Lab Instructor
     location: Norfolk, VA
     employment_type: (Teaching Assistant)
@@ -240,7 +240,7 @@ experience:
       - "Assistant instructor for CS 150: Introduction to programming in C++"
       - Website maintenance, grading, general student guidance 
 
-  - dates: June 2003 - June 2012
+  - dates: June 2003 - June 2009
     era: foodservice
     company: Numerous
     title: Chef
@@ -248,14 +248,5 @@ experience:
     employment_type: (Hourly)
     tags: [foodservice, chef, sous-chef]
     highlights:
+      - Lebanese, Italian, British, and American cuisines
       - "Guest chef at Palladio, a fine dining restaurant in Charlottesville, VA connected to Barboursville Vineyards, for two special events: a Morel Feast and a Truffle Feast"
-
-  - dates: June 2003 - June 2012
-    era: foodservice
-    company: Numerous
-    title: Chef
-    location: Woodbridge, VA; Charlottesville, VA
-    employment_type: (Hourly)
-    tags: [foodservice, chef, sous-chef, hourly, remote]
-    highlights:
-      - 
