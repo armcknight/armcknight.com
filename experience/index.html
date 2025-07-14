@@ -201,19 +201,26 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log(`${entry.company} (${entry.era}): ${entry.start.toLocaleDateString()} - ${entry.end.toLocaleDateString()}`);
   });
   
-  // Track active ranges on each branch (skip branch 0 - it's the empty trunk)
-  const activeBranches = []; // No main branch entries
+  // Assign each experience a unique branch number for colors (skip branch 0 - it's the empty trunk)
   let nextBranch = 1; // Start from branch 1
+  
+  // Also create efficient horizontal positioning based on overlaps
+  const branchPositions = {}; // Maps branch number to horizontal position index
+  const activeBranches = []; // Track active ranges for efficient positioning
+  let nextPosition = 1; // Start from position 1 (position 0 is main branch)
   
   console.log('=== DEBUG: Branch assignments ===');
   sortedEntries.forEach(entry => {
     const key = entry.company + entry.era;
     
-    // Check if this entry overlaps with any active range on existing branches
-    let assignedBranch = -1;
+    // Every experience gets its own unique branch number for color
+    branchAssignments[key] = nextBranch++;
     
-    for (let branchIndex = 0; branchIndex < activeBranches.length; branchIndex++) {
-      const activeBranch = activeBranches[branchIndex];
+    // But for horizontal positioning, find the leftmost available position
+    let assignedPosition = -1;
+    
+    for (let positionIndex = 0; positionIndex < activeBranches.length; positionIndex++) {
+      const activeBranch = activeBranches[positionIndex];
       let hasOverlap = false;
       
       for (let activeEntry of activeBranch) {
@@ -225,23 +232,23 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       
       if (!hasOverlap) {
-        // No overlap, can use this branch
-        assignedBranch = branchIndex + 1; // +1 because we skip branch 0
+        // No overlap, can use this position
+        assignedPosition = positionIndex + 1; // +1 because position 0 is main branch
         break;
       }
     }
     
-    // If no existing branch can accommodate this entry, create a new branch
-    if (assignedBranch === -1) {
-      assignedBranch = nextBranch++;
+    // If no existing position can accommodate this entry, create a new position
+    if (assignedPosition === -1) {
+      assignedPosition = nextPosition++;
       activeBranches.push([]);
     }
     
-    // Assign all commits for this entry to the chosen branch
-    branchAssignments[key] = assignedBranch;
-    activeBranches[assignedBranch - 1].push(entry); // -1 because activeBranches is 0-indexed but branch numbers start from 1
+    // Map branch number to horizontal position
+    branchPositions[branchAssignments[key]] = assignedPosition;
+    activeBranches[assignedPosition - 1].push(entry); // -1 because activeBranches is 0-indexed but position numbers start from 1
     
-    console.log(`${entry.company} (${entry.era}) -> Branch ${assignedBranch} (dedicated branch)`);
+    console.log(`${entry.company} (${entry.era}) -> Branch ${branchAssignments[key]} (color) -> Position ${assignedPosition} (horizontal)`);
   });
   
   // Apply branch assignments to commits
@@ -260,10 +267,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const MAIN_BRANCH_X = 0; // Adjusted for removed padding
   
   // Calculate canvas dimensions
-  const maxBranch = Math.max(...Object.values(branchAssignments));
+  const maxPosition = Math.max(...Object.values(branchPositions));
   const totalHeight = allCommits.length * LINE_HEIGHT + 100;
-  const gitGraphWidth = MAIN_BRANCH_X + (maxBranch * BRANCH_WIDTH) + 20; // Reduced padding
-  const textAreaX = gitGraphWidth + 15; // Text area starts close to git graph
+  const gitGraphWidth = MAIN_BRANCH_X + (maxPosition * BRANCH_WIDTH) + 10; // Minimal padding
+  const textAreaX = gitGraphWidth + 10; // Text area starts very close to git graph
   
   // Set canvas size (just for the git graph)
   canvas.width = gitGraphWidth;
@@ -323,12 +330,34 @@ document.addEventListener('DOMContentLoaded', function() {
   
   function getBranchX(branchIndex) {
     if (branchIndex === 0) return MAIN_BRANCH_X; // Main branch
-    return MAIN_BRANCH_X + (branchIndex * BRANCH_WIDTH); // Side branches
+    const position = branchPositions[branchIndex] || branchIndex; // Use position mapping, fallback to branch index
+    return MAIN_BRANCH_X + (position * BRANCH_WIDTH); // Side branches
   }
   
   function getBranchColor(branchIndex) {
-    const colors = ['#2563eb', '#dc2626', '#059669', '#7c3aed', '#ea580c', '#f59e0b'];
-    return colors[branchIndex] || '#666';
+    const colors = [
+      '#2563eb', // blue
+      '#dc2626', // red
+      '#059669', // green
+      '#7c3aed', // purple
+      '#ea580c', // orange
+      '#f59e0b', // yellow
+      '#0891b2', // cyan
+      '#be185d', // pink
+      '#65a30d', // lime
+      '#c2410c', // red-orange
+      '#7c2d12', // brown
+      '#374151', // gray
+      '#1e40af', // blue-700
+      '#b91c1c', // red-700
+      '#047857', // emerald-700
+      '#6d28d9', // violet-700
+      '#c2410c', // orange-700
+      '#a16207', // yellow-700
+      '#0e7490', // cyan-700
+      '#be185d', // rose-700
+    ];
+    return colors[branchIndex % colors.length]; // Cycle through colors
   }
   
   function drawGitBranches(ctx, commits, branchAssignments) {
@@ -446,6 +475,3 @@ document.addEventListener('DOMContentLoaded', function() {
     <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
   </svg>
 </a>
-
-
-
