@@ -47,6 +47,7 @@ Git-style timeline - start simple with just dates
              data-highlights="{{ job.highlights | join: '||' }}"
              data-tags="{{ job.tags | join: ',' }}"
              data-stack="{{ job.stack | join: ',' }}"
+             data-deliverables="{{ job.deliverables | jsonify | escape }}"
              data-era="{{ job.era }}">
           <div class="commit-dot"></div>
           <div class="commit-info">
@@ -306,6 +307,24 @@ document.addEventListener('DOMContentLoaded', function() {
           content += `<br/><strong>Stack:</strong> ${stack.join(', ')}`;
         }
       }
+      
+      // Add deliverables for experience entries
+      if (element.dataset.deliverables) {
+        try {
+          const deliverables = JSON.parse(element.dataset.deliverables);
+          if (deliverables && deliverables.length > 0) {
+            content += `<br/><strong>Deliverables:</strong>`;
+            deliverables.forEach(deliverable => {
+              content += `<br/>• ${deliverable.name}`;
+              if (deliverable.description) {
+                content += ` - ${deliverable.description}`;
+              }
+            });
+          }
+        } catch (e) {
+          // Skip if JSON parsing fails
+        }
+      }
     }
     
     // Create a temporary element with exact same styling to measure actual height
@@ -476,6 +495,24 @@ document.addEventListener('DOMContentLoaded', function() {
         const stack = element.dataset.stack.split(',').map(s => s.trim()).filter(s => s);
         if (stack.length > 0) {
           content += `<br/><strong>Stack:</strong> ${stack.join(', ')}`;
+        }
+      }
+      
+      // Add deliverables for experience entries
+      if (element.dataset.deliverables) {
+        try {
+          const deliverables = JSON.parse(element.dataset.deliverables);
+          if (deliverables && deliverables.length > 0) {
+            content += `<br/><strong>Deliverables:</strong>`;
+            deliverables.forEach(deliverable => {
+              content += `<br/>• ${deliverable.name}`;
+              if (deliverable.description) {
+                content += ` - ${deliverable.description}`;
+              }
+            });
+          }
+        } catch (e) {
+          // Skip if JSON parsing fails
         }
       }
     }

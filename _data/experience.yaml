@@ -244,8 +244,8 @@ experience:
       - "Assistant instructor for CS 150: Introduction to programming in C++"
       - Website maintenance, grading, general student guidance 
 
-  - start: August 2011
-    end: December 2011
+  - start: October 2010
+    end: April 2011
     era: semi-pro
     company: XVD Longboards
     title: Web Developer
@@ -254,6 +254,8 @@ experience:
     tags: [flash, actionscript, web]
     deliverables:
       - Flash-based website to custom-design boards
+    highlights:
+      - Paid with a couple custom designed longboards, which I got to help build myself!
 
   - start: June 2003
     end: June 2009
