@@ -380,18 +380,46 @@ document.addEventListener('DOMContentLoaded', function() {
         const startCommitIndex = allCommits.findIndex(c => c === startCommit);
         const startY = startCommitIndex * LINE_HEIGHT + 20;
         
+        // Calculate coordinated curve offsets for symmetry
+        const horizontalDistance = sideX - MAIN_BRANCH_X;
+        const idealOffset = horizontalDistance;
+        
+        let forkStartOffset = idealOffset;
+        let mergeEndOffset = idealOffset;
+        
+        // If there's both a start and end commit, coordinate the curves
+        if (endCommit && endCommit !== startCommit) {
+          const endCommitIndex = allCommits.findIndex(c => c === endCommit);
+          const endY = endCommitIndex * LINE_HEIGHT + 20;
+          
+          // Calculate available space to avoid intersections
+          const nextCommitIndex = endCommitIndex - 1; // Next chronologically newer commit
+          
+          if (nextCommitIndex >= 0) {
+            // There's a next commit - calculate total available space
+            const nextCommitY = nextCommitIndex * LINE_HEIGHT + 20;
+            const totalAvailableSpace = startY - nextCommitY - 20; // 20px buffer
+            const requiredSpace = forkStartOffset + mergeEndOffset;
+            
+            // If we need more space than available, scale both curves proportionally
+            if (requiredSpace > totalAvailableSpace) {
+              const scaleFactor = totalAvailableSpace / requiredSpace;
+              forkStartOffset *= scaleFactor;
+              mergeEndOffset *= scaleFactor;
+            }
+          }
+        }
+        
         // Draw the curved fork line at this entry's start point (aligned with dot center)
         ctx.strokeStyle = getBranchColor(branchIndex);
         ctx.beginPath();
         
         // Create a smooth gitgraph.js-style curve from vertical main branch to horizontal branch
-        const horizontalDistance = sideX - MAIN_BRANCH_X;
-        const curveStartOffset = horizontalDistance;
-        const curveStart = startY + 5 + curveStartOffset; // Start point on main branch (below the commit)
+        const curveStart = startY + 5 + forkStartOffset; // Start point on main branch (below the commit)
         const curveEnd = startY + 5; // End point on horizontal branch line (at commit level)
         
         // Debug: Check exact curve coordinates
-        console.log(`Fork curve ${entry.company}: ends at (${sideX}, ${curveEnd}), startOffset=${curveStartOffset}`);
+        console.log(`Fork curve ${entry.company}: ends at (${sideX}, ${curveEnd}), startOffset=${forkStartOffset}`);
         
         // Use cubic Bezier curve with control points for smooth S-curve transition
         const controlDistance = horizontalDistance * 0.5; // How far out the control points extend
@@ -423,24 +451,12 @@ document.addEventListener('DOMContentLoaded', function() {
                ctx.strokeStyle = getBranchColor(branchIndex);
                ctx.beginPath();
                
-               // Create a smooth gitgraph.js-style curve from horizontal branch to vertical main branch
-                                const mergeStart = endY + 5; // Start point on horizontal branch line (at commit level)
+                                // Create a smooth gitgraph.js-style curve from horizontal branch to vertical main branch
+                 const mergeStart = endY + 5; // Start point on horizontal branch line (at commit level)
                  const mergeHorizontalDistance = sideX - MAIN_BRANCH_X;
                  
-                 // Calculate merge end position to avoid intersections with next commit
-                 const nextCommitIndex = endCommitIndex - 1; // Next chronologically newer commit
-                 let mergeEnd;
-                 
-                 if (nextCommitIndex >= 0) {
-                   // There's a next commit - merge before it
-                   const nextCommitY = nextCommitIndex * LINE_HEIGHT + 20;
-                   const maxMergeEnd = nextCommitY + 10; // Leave some gap before next commit
-                   const idealMergeEnd = endY + 5 - mergeHorizontalDistance;
-                   mergeEnd = Math.min(idealMergeEnd, maxMergeEnd);
-                 } else {
-                   // No next commit - use ideal position
-                   mergeEnd = endY + 5 - mergeHorizontalDistance;
-                 }
+                 // Use the coordinated merge end offset for symmetry
+                 const mergeEnd = endY + 5 - mergeEndOffset; // Use coordinated offset
                
                // Use cubic Bezier curve with control points for smooth S-curve transition
                const mergeControlDistance = mergeHorizontalDistance * 0.5; // How far out the control points extend
