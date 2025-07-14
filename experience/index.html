@@ -424,10 +424,23 @@ document.addEventListener('DOMContentLoaded', function() {
                ctx.beginPath();
                
                // Create a smooth gitgraph.js-style curve from horizontal branch to vertical main branch
-               const mergeStart = endY + 5; // Start point on horizontal branch line (at commit level)
-               const mergeHorizontalDistance = sideX - MAIN_BRANCH_X;
-               const mergeEndOffset = mergeHorizontalDistance;
-               const mergeEnd = endY + 5 - mergeEndOffset; // End point on main branch (above the commit)
+                                const mergeStart = endY + 5; // Start point on horizontal branch line (at commit level)
+                 const mergeHorizontalDistance = sideX - MAIN_BRANCH_X;
+                 
+                 // Calculate merge end position to avoid intersections with next commit
+                 const nextCommitIndex = endCommitIndex - 1; // Next chronologically newer commit
+                 let mergeEnd;
+                 
+                 if (nextCommitIndex >= 0) {
+                   // There's a next commit - merge before it
+                   const nextCommitY = nextCommitIndex * LINE_HEIGHT + 20;
+                   const maxMergeEnd = nextCommitY + 10; // Leave some gap before next commit
+                   const idealMergeEnd = endY + 5 - mergeHorizontalDistance;
+                   mergeEnd = Math.min(idealMergeEnd, maxMergeEnd);
+                 } else {
+                   // No next commit - use ideal position
+                   mergeEnd = endY + 5 - mergeHorizontalDistance;
+                 }
                
                // Use cubic Bezier curve with control points for smooth S-curve transition
                const mergeControlDistance = mergeHorizontalDistance * 0.5; // How far out the control points extend
