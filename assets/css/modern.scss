@@ -1278,12 +1278,12 @@ blockquote p {
 .timeline-container {
   position: relative;
   display: flex;
-  gap: var(--space-8);
+  gap: var(--space-4);
 }
 
 .era-brackets {
   position: relative;
-  width: 120px;
+  width: 40px;
   flex-shrink: 0;
 }
 
@@ -1414,7 +1414,7 @@ blockquote p {
 .git-timeline {
   position: relative;
   display: grid;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 120px 1fr;
   gap: var(--space-6);
   min-height: 2000px;
 }
@@ -1428,7 +1428,7 @@ blockquote p {
 // Main timeline line (center of graph)
 .timeline-main-line {
   position: absolute;
-  left: 80px;
+  left: 60px;
   top: 0;
   bottom: 0;
   width: 3px;
@@ -1441,7 +1441,7 @@ blockquote p {
 .timeline-main-line:hover {
   background: var(--border);
   width: 4px;
-  left: 79px;
+  left: 59px;
 }
 
 // Branch lines for overlapping experiences
@@ -1462,27 +1462,27 @@ blockquote p {
 }
 
 .timeline-branch-1 {
-  left: 40px;
+  left: 20px;
 }
 
 .timeline-branch-1:hover {
-  left: 39px;
+  left: 19px;
 }
 
 .timeline-branch-2 {
-  left: 120px;
+  left: 40px;
 }
 
 .timeline-branch-2:hover {
-  left: 119px;
+  left: 39px;
 }
 
 .timeline-branch-3 {
-  left: 160px;
+  left: 80px;
 }
 
 .timeline-branch-3:hover {
-  left: 159px;
+  left: 79px;
 }
 
 // Timeline line tooltips - styled like tag/skill-tag elements
@@ -1517,9 +1517,9 @@ blockquote p {
 // Era bracket tooltips - styled like tag/skill-tag elements
 .era-tooltip {
   position: absolute;
-  right: 120%;
-  top: 50%;
-  transform: translateY(-50%);
+  left: 50%;
+  top: 20px;
+  transform: translateX(-50%);
   font-family: var(--font-family-sans);
   font-size: var(--text-sm);
   background-color: var(--background-alt);
@@ -1538,7 +1538,7 @@ blockquote p {
 .era-bracket:hover .era-tooltip {
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(-50%) translateX(-4px);
+  transform: translateX(-50%) translateY(-2px);
 }
 
 .era-tooltip:hover {
