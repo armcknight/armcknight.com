@@ -317,7 +317,7 @@ document.addEventListener('DOMContentLoaded', function() {
     tempElement.style.visibility = 'hidden';
     tempElement.style.fontSize = '1.125rem'; // --text-lg: match website body text
     tempElement.style.lineHeight = '1.75';   // match website body text
-    tempElement.style.width = '672px';       // --content-width: align with page content
+    tempElement.style.width = '500px';       // Reasonable width that fits with git graph
     tempElement.style.fontFamily = 'Charter, Georgia, Times New Roman, serif';
     tempElement.style.whiteSpace = 'normal';
     tempElement.innerHTML = content;
@@ -415,7 +415,7 @@ document.addEventListener('DOMContentLoaded', function() {
     info.style.top = textY + 'px'; // Use text position for the text (no offset needed)
     info.style.fontSize = '1.125rem'; // --text-lg: match website body text
     info.style.lineHeight = '1.75';   // match website body text
-    info.style.width = '672px';       // --content-width: align with page content
+    info.style.width = '500px';       // Reasonable width that fits with git graph
     info.style.fontFamily = 'Charter, Georgia, Times New Roman, serif';
     info.style.whiteSpace = 'normal'; // Allow wrapping for multi-line content
     
@@ -668,7 +668,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Set container dimensions to accommodate both git graph and text area
   commitsContainer.style.height = totalHeight + 'px';
-  commitsContainer.style.width = (textAreaX + 672) + 'px'; // Extra space for wider text area
+  commitsContainer.style.width = (textAreaX + 500) + 'px'; // Extra space for text area
   commitsContainer.style.position = 'relative';
 });
 </script>
