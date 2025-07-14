@@ -403,7 +403,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         console.log(`  Fork line for ${entry.company} (${entry.era}): from (${MAIN_BRANCH_X}, ${startY}) to (${sideX}, ${startY})`);
         
-                 // Draw the vertical line for this entry only
+                          // Draw the vertical line for this entry only
          if (endCommit && endCommit !== startCommit) {
            const endCommitIndex = allCommits.findIndex(c => c === endCommit);
            const endY = endCommitIndex * LINE_HEIGHT + 20;
@@ -413,9 +413,23 @@ document.addEventListener('DOMContentLoaded', function() {
            ctx.moveTo(sideX, startY + 5); // +5px to align with center of 10px dot
            ctx.lineTo(sideX, endY + 5);   // +5px to align with center of 10px dot
            ctx.stroke();
-          
-          console.log(`  Vertical line for ${entry.company} (${entry.era}): from (${sideX}, ${startY}) to (${sideX}, ${endY})`);
-        }
+           
+           console.log(`  Vertical line for ${entry.company} (${entry.era}): from (${sideX}, ${startY}) to (${sideX}, ${endY})`);
+           
+           // Draw merge line back to main branch if this entry has ended (not "current")
+           const today = new Date();
+           const daysDiff = Math.abs(endCommit.date - today) / (1000 * 60 * 60 * 24);
+           
+           if (daysDiff > 30) { // If end date is more than 30 days from today, it's not "current"
+             ctx.strokeStyle = getBranchColor(branchIndex);
+             ctx.beginPath();
+             ctx.moveTo(sideX, endY + 5);
+             ctx.lineTo(MAIN_BRANCH_X, endY + 5);
+             ctx.stroke();
+             
+             console.log(`  Merge line for ${entry.company} (${entry.era}): from (${sideX}, ${endY}) back to main branch`);
+           }
+         }
       }
     });
   }
