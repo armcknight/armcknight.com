@@ -168,30 +168,85 @@ document.addEventListener('DOMContentLoaded', function() {
   
   console.log('Total commits:', allCommits.length);
   
-  // Assign branches
-  // Main branch = primary full-time career progression  
-  // Side branches = concurrent jobs, education, contracts
+  // Assign branches based on overlapping date ranges
+  // Main branch = sequential career progression
+  // Side branches = concurrent/overlapping activities
   const branchAssignments = {};
   
-  // Only specific concurrent/contract work should branch off
-  const sideBranchCompanies = ['Insight Therapeutics'];
+  // Group commits by company+era to get their full date ranges
+  const entryRanges = {};
+  allCommits.forEach(commit => {
+    const key = commit.company + commit.era;
+    if (!entryRanges[key]) {
+      entryRanges[key] = {
+        company: commit.company,
+        era: commit.era,
+        start: commit.date,
+        end: commit.date,
+        commits: []
+      };
+    }
+    entryRanges[key].commits.push(commit);
+    
+    // Update the range
+    if (commit.date < entryRanges[key].start) entryRanges[key].start = commit.date;
+    if (commit.date > entryRanges[key].end) entryRanges[key].end = commit.date;
+  });
   
+  // Sort entries by start date (earliest first)
+  const sortedEntries = Object.values(entryRanges).sort((a, b) => a.start - b.start);
+  
+  console.log('=== DEBUG: Entry ranges ===');
+  sortedEntries.forEach(entry => {
+    console.log(`${entry.company} (${entry.era}): ${entry.start.toLocaleDateString()} - ${entry.end.toLocaleDateString()}`);
+  });
+  
+  // Track active ranges on each branch
+  const activeBranches = [[]]; // Start with main branch (index 0)
   let nextSideBranch = 1;
   
   console.log('=== DEBUG: Branch assignments ===');
-  allCommits.forEach(commit => {
-    const key = commit.company + commit.era;
+  sortedEntries.forEach(entry => {
+    const key = entry.company + entry.era;
     
-    if (!branchAssignments[key]) {
-      if (sideBranchCompanies.includes(commit.company)) {
-        branchAssignments[key] = nextSideBranch++; // Side branch
-        console.log(`${commit.company} (${commit.era}) -> Side branch (${branchAssignments[key]})`);
-      } else {
-        branchAssignments[key] = 0; // Main branch (everything else)
-        console.log(`${commit.company} (${commit.era}) -> Main branch (0)`);
+    // Check if this entry overlaps with any active range on the main branch
+    let assignedBranch = -1;
+    
+    for (let branchIndex = 0; branchIndex < activeBranches.length; branchIndex++) {
+      const activeBranch = activeBranches[branchIndex];
+      let hasOverlap = false;
+      
+      for (let activeEntry of activeBranch) {
+        // Check if current entry overlaps with this active entry
+        if (entry.start < activeEntry.end && entry.end > activeEntry.start) {
+          hasOverlap = true;
+          break;
+        }
+      }
+      
+      if (!hasOverlap) {
+        // No overlap, can use this branch
+        assignedBranch = branchIndex;
+        break;
       }
     }
     
+    // If no existing branch can accommodate this entry, create a new side branch
+    if (assignedBranch === -1) {
+      assignedBranch = nextSideBranch++;
+      activeBranches.push([]);
+    }
+    
+    // Assign all commits for this entry to the chosen branch
+    branchAssignments[key] = assignedBranch;
+    activeBranches[assignedBranch].push(entry);
+    
+    console.log(`${entry.company} (${entry.era}) -> Branch ${assignedBranch} ${assignedBranch === 0 ? '(main)' : '(side)'}`);
+  });
+  
+  // Apply branch assignments to commits
+  allCommits.forEach(commit => {
+    const key = commit.company + commit.era;
     commit.branch = branchAssignments[key];
   });
   
@@ -350,5 +405,6 @@ document.addEventListener('DOMContentLoaded', function() {
     <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
   </svg>
 </a>
+
 
 
