@@ -44,7 +44,7 @@ Git-style timeline - start simple with just dates
              data-title="{{ job.title }}"
              data-location="{{ job.location }}"
              data-employment-type="{{ job.employment_type }}"
-             data-highlights="{{ job.highlights | join: '||' }}"
+             data-highlights="{{ job.highlights | jsonify | escape }}"
              data-tags="{{ job.tags | join: ',' }}"
              data-stack="{{ job.stack | join: ',' }}"
              data-deliverables="{{ job.deliverables | jsonify | escape }}"
@@ -66,7 +66,7 @@ Git-style timeline - start simple with just dates
              data-title="{{ edu.degree }}"
              data-location="{{ edu.location }}"
 
-             data-highlights="{{ edu.highlights | join: '||' }}"
+             data-highlights="{{ edu.highlights | jsonify | escape }}"
              data-honors="{{ edu.honors | map: 'award' | join: '||' }}"
              data-tags="{{ edu.tags | join: ',' }}"
              data-era="education">
@@ -282,12 +282,27 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Add highlights for experience and education entries
       if (element.dataset.highlights) {
-        const highlights = element.dataset.highlights.split('||').slice(0, 4); // Show first 4 highlights
-        highlights.forEach(highlight => {
-          if (highlight.trim()) {
-            content += `<br/>• ${highlight.trim()}`;
+        try {
+          const highlights = JSON.parse(element.dataset.highlights);
+          if (highlights && highlights.length > 0) {
+            highlights.slice(0, 4).forEach(highlight => { // Show first 4 highlights
+              if (typeof highlight === 'string') {
+                // Simple string format
+                content += `<br/>• ${highlight}`;
+              } else if (highlight.name && highlight.description) {
+                // Object format with name/url/description
+                let description = highlight.description;
+                if (highlight.url) {
+                  // Replace instances of the name in the description with a link
+                  description = description.replace(new RegExp(highlight.name, 'g'), `<a href="${highlight.url}" target="_blank">${highlight.name}</a>`);
+                }
+                content += `<br/>• ${description}`;
+              }
+            });
           }
-        });
+        } catch (e) {
+          // Skip if JSON parsing fails
+        }
       }
       
       // Add education honors
@@ -300,13 +315,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       }
       
-      // Add technology stack for experience entries
-      if (element.dataset.stack) {
-        const stack = element.dataset.stack.split(',').map(s => s.trim()).filter(s => s);
-        if (stack.length > 0) {
-          content += `<br/><strong>Stack:</strong> ${stack.join(', ')}`;
-        }
-      }
+      // Skip adding stack to content - will be rendered as tag cloud separately
       
       // Add deliverables for experience entries
       if (element.dataset.deliverables) {
@@ -323,6 +332,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 content += `<br/>• ${deliverable.name}`;
                 if (deliverable.description) {
                   content += ` - ${deliverable.description}`;
+                }
+                // Add details if available
+                if (deliverable.details && deliverable.details.length > 0) {
+                  content += `<ul style="font-size: 0.95rem; margin: 0.5rem 0 0 1.5rem; padding-left: 1rem;">`;
+                  deliverable.details.forEach(detail => {
+                    content += `<li style="margin-bottom: 0.25rem;">${detail}</li>`;
+                  });
+                  content += `</ul>`;
                 }
               }
             });
@@ -346,10 +363,21 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add to document to measure, then remove
     document.body.appendChild(tempElement);
-    const actualHeight = tempElement.offsetHeight;
+    const textHeight = tempElement.offsetHeight;
     document.body.removeChild(tempElement);
     
-    return actualHeight;
+    // Calculate stack height for end commits
+    let stackHeight = 0;
+    if (commit.type === 'end' && element.dataset.stack) {
+      const stack = element.dataset.stack.split(',').map(s => s.trim()).filter(s => s);
+      if (stack.length > 0) {
+        // Each tag: 0.75rem font (12px) + 6px padding + 2px border + 3px gap
+        // Approximation: 12px + 6px + 2px + 3px = 23px per tag
+        stackHeight = stack.length * 23;
+      }
+    }
+    
+    return Math.max(textHeight, stackHeight);
   }
   
   // NEW APPROACH: Text-first layout to prevent overlaps
@@ -478,12 +506,27 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Add highlights for experience and education entries
       if (element.dataset.highlights) {
-        const highlights = element.dataset.highlights.split('||').slice(0, 4); // Show first 4 highlights
-        highlights.forEach(highlight => {
-          if (highlight.trim()) {
-            content += `<br/>• ${highlight.trim()}`;
+        try {
+          const highlights = JSON.parse(element.dataset.highlights);
+          if (highlights && highlights.length > 0) {
+            highlights.slice(0, 4).forEach(highlight => { // Show first 4 highlights
+              if (typeof highlight === 'string') {
+                // Simple string format
+                content += `<br/>• ${highlight}`;
+              } else if (highlight.name && highlight.description) {
+                // Object format with name/url/description
+                let description = highlight.description;
+                if (highlight.url) {
+                  // Replace instances of the name in the description with a link
+                  description = description.replace(new RegExp(highlight.name, 'g'), `<a href="${highlight.url}" target="_blank">${highlight.name}</a>`);
+                }
+                content += `<br/>• ${description}`;
+              }
+            });
           }
-        });
+        } catch (e) {
+          // Skip if JSON parsing fails
+        }
       }
       
       // Add education honors
@@ -494,14 +537,6 @@ document.addEventListener('DOMContentLoaded', function() {
             content += `<br/>🏆 ${honor.trim()}`;
           }
         });
-      }
-      
-      // Add technology stack for experience entries
-      if (element.dataset.stack) {
-        const stack = element.dataset.stack.split(',').map(s => s.trim()).filter(s => s);
-        if (stack.length > 0) {
-          content += `<br/><strong>Stack:</strong> ${stack.join(', ')}`;
-        }
       }
       
       // Add deliverables for experience entries
@@ -520,6 +555,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (deliverable.description) {
                   content += ` - ${deliverable.description}`;
                 }
+                // Add details if available
+                if (deliverable.details && deliverable.details.length > 0) {
+                  content += `<ul style="font-size: 0.95rem; margin: 0.5rem 0 0 1.5rem; padding-left: 1rem;">`;
+                  deliverable.details.forEach(detail => {
+                    content += `<li style="margin-bottom: 0.25rem;">${detail}</li>`;
+                  });
+                  content += `</ul>`;
+                }
               }
             });
           }
@@ -530,6 +573,41 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     info.innerHTML = content;
+    
+    // Create tag cloud for technology stack (positioned to the right)
+    if (commit.type === 'end' && element.dataset.stack) {
+      const stack = element.dataset.stack.split(',').map(s => s.trim()).filter(s => s);
+      if (stack.length > 0) {
+        const tagCloud = document.createElement('div');
+        tagCloud.className = 'stack-tag-cloud';
+        tagCloud.style.position = 'absolute';
+        tagCloud.style.left = (textAreaX + 510) + 'px'; // Position to the right of text
+        tagCloud.style.top = textY + 'px';
+        tagCloud.style.display = 'flex';
+        tagCloud.style.flexDirection = 'column';
+        tagCloud.style.gap = '3px';
+        tagCloud.style.alignItems = 'flex-start';
+        
+        stack.forEach(tech => {
+          const tag = document.createElement('span');
+          tag.className = 'stack-tag';
+          tag.textContent = tech;
+          tag.style.fontSize = '0.75rem';
+          tag.style.backgroundColor = '#f3f4f6';
+          tag.style.color = '#666';
+          tag.style.padding = '3px 8px';
+          tag.style.borderRadius = '6px';
+          tag.style.border = '1px solid #e5e7eb';
+          tag.style.whiteSpace = 'nowrap';
+          tag.style.textAlign = 'center';
+          tag.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+          
+          tagCloud.appendChild(tag);
+        });
+        
+        commitsContainer.appendChild(tagCloud);
+      }
+    }
     
     commitEl.appendChild(dot);
     // Add text directly to commits container instead of to individual commit element
@@ -711,7 +789,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Set container dimensions to accommodate both git graph and text area
   commitsContainer.style.height = totalHeight + 'px';
-  commitsContainer.style.width = (textAreaX + 500) + 'px'; // Extra space for text area
+  commitsContainer.style.width = (textAreaX + 630) + 'px'; // Extra space for text area and tag cloud column
   commitsContainer.style.position = 'relative';
 });
 </script>
