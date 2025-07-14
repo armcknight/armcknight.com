@@ -141,8 +141,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Sort chronologically (newest first)
   allCommits.sort((a, b) => b.date - a.date);
   
-  console.log('Total commits:', allCommits.length);
-  
   // Assign branches - every experience gets its own branch
   // Main branch = empty trunk line
   // All experiences get dedicated side branches
@@ -171,11 +169,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Sort entries by start date (earliest first)
   const sortedEntries = Object.values(entryRanges).sort((a, b) => a.start - b.start);
   
-  console.log('=== DEBUG: Entry ranges ===');
-  sortedEntries.forEach(entry => {
-    console.log(`${entry.company} (${entry.era}): ${entry.start.toLocaleDateString()} - ${entry.end.toLocaleDateString()}`);
-  });
-  
   // Assign each experience a unique branch number for colors (skip branch 0 - it's the empty trunk)
   let nextBranch = 1; // Start from branch 1
   
@@ -184,7 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const activeBranches = []; // Track active ranges for efficient positioning
   let nextPosition = 1; // Start from position 1 (position 0 is main branch)
   
-  console.log('=== DEBUG: Branch assignments ===');
   sortedEntries.forEach(entry => {
     const key = entry.company + entry.era;
     
@@ -222,8 +214,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Map branch number to horizontal position
     branchPositions[branchAssignments[key]] = assignedPosition;
     activeBranches[assignedPosition - 1].push(entry); // -1 because activeBranches is 0-indexed but position numbers start from 1
-    
-    console.log(`${entry.company} (${entry.era}) -> Branch ${branchAssignments[key]} (color) -> Position ${assignedPosition} (horizontal)`);
   });
   
   // Apply branch assignments to commits
@@ -271,8 +261,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const commitEl = document.createElement('div');
     commitEl.className = 'git-commit';
     commitEl.style.position = 'absolute';
-    commitEl.style.left = (xPosition - 5) + 'px'; // Center dot on branch line
+    commitEl.style.left = (xPosition - 5) + 'px'; // Align dot with branch line
     commitEl.style.top = yPosition + 'px';
+    
+    // Debug: Check exact dot positioning
+    console.log(`Dot ${commit.company}: positioned at (${xPosition - 5}, ${yPosition}), center at (${xPosition}, ${yPosition + 5})`);
     
     // Commit dot
     const dot = document.createElement('div');
@@ -306,7 +299,8 @@ document.addEventListener('DOMContentLoaded', function() {
   function getBranchX(branchIndex) {
     if (branchIndex === 0) return MAIN_BRANCH_X; // Main branch
     const position = branchPositions[branchIndex] || branchIndex; // Use position mapping, fallback to branch index
-    return MAIN_BRANCH_X + (position * BRANCH_WIDTH); // Side branches
+    const result = MAIN_BRANCH_X + (position * BRANCH_WIDTH); // Side branches
+    return result;
   }
   
   function getBranchColor(branchIndex) {
@@ -349,30 +343,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Find the start and end positions for each branch
     const branchRanges = {};
     
-    console.log('=== DEBUG: Processing commits for branch ranges ===');
     commits.forEach((commit, index) => {
       const yPos = index * LINE_HEIGHT + 20;
       const branchIndex = commit.branch;
       
-      console.log(`Commit ${index}: "${commit.company}" (${commit.type}) - Branch ${branchIndex} at yPos ${yPos}`);
-      
       if (!branchRanges[branchIndex]) {
         branchRanges[branchIndex] = { top: yPos, bottom: yPos };
-        console.log(`  -> New branch ${branchIndex}: top=${yPos}, bottom=${yPos}`);
       } else {
         branchRanges[branchIndex].bottom = yPos; // Since commits are sorted newest first, bottom is the last we see (chronologically earliest)
-        console.log(`  -> Updated branch ${branchIndex}: top=${branchRanges[branchIndex].top}, bottom=${yPos}`);
       }
     });
     
-    console.log('=== DEBUG: Final branch ranges ===');
-    Object.keys(branchRanges).forEach(branchIndex => {
-      const range = branchRanges[branchIndex];
-      console.log(`Branch ${branchIndex}: top=${range.top}, bottom=${range.bottom} (height: ${range.bottom - range.top}px)`);
-    });
-    
     // Draw individual vertical and horizontal lines for each entry
-    console.log('=== DEBUG: Drawing individual entry lines ===');
     Object.values(entryRanges).forEach(entry => {
       const key = entry.company + entry.era;
       const branchIndex = branchAssignments[key];
@@ -398,14 +380,29 @@ document.addEventListener('DOMContentLoaded', function() {
         const startCommitIndex = allCommits.findIndex(c => c === startCommit);
         const startY = startCommitIndex * LINE_HEIGHT + 20;
         
-        // Draw the horizontal fork line at this entry's start point (aligned with dot center)
+        // Draw the curved fork line at this entry's start point (aligned with dot center)
         ctx.strokeStyle = getBranchColor(branchIndex);
         ctx.beginPath();
-        ctx.moveTo(MAIN_BRANCH_X, startY + 5); // +5px to align with center of 10px dot
-        ctx.lineTo(sideX, startY + 5);
-        ctx.stroke();
         
-        console.log(`  Fork line for ${entry.company} (${entry.era}): from (${MAIN_BRANCH_X}, ${startY}) to (${sideX}, ${startY})`);
+        // Create a smooth gitgraph.js-style curve from vertical main branch to horizontal branch
+        const horizontalDistance = sideX - MAIN_BRANCH_X;
+        const curveStartOffset = horizontalDistance;
+        const curveStart = startY + 5 + curveStartOffset; // Start point on main branch (below the commit)
+        const curveEnd = startY + 5; // End point on horizontal branch line (at commit level)
+        
+        // Debug: Check exact curve coordinates
+        console.log(`Fork curve ${entry.company}: ends at (${sideX}, ${curveEnd}), startOffset=${curveStartOffset}`);
+        
+        // Use cubic Bezier curve with control points for smooth S-curve transition
+        const controlDistance = horizontalDistance * 0.5; // How far out the control points extend
+        
+        ctx.moveTo(MAIN_BRANCH_X, curveStart);
+        ctx.bezierCurveTo(
+          MAIN_BRANCH_X, curveStart - controlDistance, // First control point (pull vertically from start)
+          sideX, curveEnd + controlDistance,           // Second control point (pull vertically from end)
+          sideX, curveEnd                              // End point
+        );
+        ctx.stroke();
         
                           // Draw the vertical line for this entry only
          if (endCommit && endCommit !== startCommit) {
@@ -418,21 +415,31 @@ document.addEventListener('DOMContentLoaded', function() {
            ctx.lineTo(sideX, endY + 5);   // +5px to align with center of 10px dot
            ctx.stroke();
            
-           console.log(`  Vertical line for ${entry.company} (${entry.era}): from (${sideX}, ${startY}) to (${sideX}, ${endY})`);
+           // Debug: Check exact vertical line coordinates
+           console.log(`Vertical line ${entry.company}: from (${sideX}, ${startY + 5}) to (${sideX}, ${endY + 5})`);
            
-           // Draw merge line back to main branch if this entry has ended (not "current")
-           const today = new Date();
-           const daysDiff = Math.abs(endCommit.date - today) / (1000 * 60 * 60 * 24);
-           
-           if (daysDiff > 30) { // If end date is more than 30 days from today, it's not "current"
-             ctx.strokeStyle = getBranchColor(branchIndex);
-             ctx.beginPath();
-             ctx.moveTo(sideX, endY + 5);
-             ctx.lineTo(MAIN_BRANCH_X, endY + 5);
-             ctx.stroke();
-             
-             console.log(`  Merge line for ${entry.company} (${entry.era}): from (${sideX}, ${endY}) back to main branch`);
-           }
+                                    // Draw curved merge line back to main branch if this entry has ended (not "current")
+           if (endCommit.originalDate !== 'Current') { // If end date is not "Current"
+               ctx.strokeStyle = getBranchColor(branchIndex);
+               ctx.beginPath();
+               
+               // Create a smooth gitgraph.js-style curve from horizontal branch to vertical main branch
+               const mergeStart = endY + 5; // Start point on horizontal branch line (at commit level)
+               const mergeHorizontalDistance = sideX - MAIN_BRANCH_X;
+               const mergeEndOffset = mergeHorizontalDistance;
+               const mergeEnd = endY + 5 - mergeEndOffset; // End point on main branch (above the commit)
+               
+               // Use cubic Bezier curve with control points for smooth S-curve transition
+               const mergeControlDistance = mergeHorizontalDistance * 0.5; // How far out the control points extend
+               
+               ctx.moveTo(sideX, mergeStart);
+               ctx.bezierCurveTo(
+                 sideX, mergeStart - mergeControlDistance, // First control point (pull vertically from start)
+                 MAIN_BRANCH_X, mergeEnd + mergeControlDistance, // Second control point (pull vertically from end)
+                 MAIN_BRANCH_X, mergeEnd                   // End point on main branch
+               );
+               ctx.stroke();
+             }
          }
       }
     });
