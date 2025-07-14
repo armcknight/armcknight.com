@@ -168,9 +168,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   console.log('Total commits:', allCommits.length);
   
-  // Assign branches based on overlapping date ranges
-  // Main branch = sequential career progression
-  // Side branches = concurrent/overlapping activities
+  // Assign branches - every experience gets its own branch
+  // Main branch = empty trunk line
+  // All experiences get dedicated side branches
   const branchAssignments = {};
   
   // Group commits by company+era to get their full date ranges
@@ -201,15 +201,15 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log(`${entry.company} (${entry.era}): ${entry.start.toLocaleDateString()} - ${entry.end.toLocaleDateString()}`);
   });
   
-  // Track active ranges on each branch
-  const activeBranches = [[]]; // Start with main branch (index 0)
-  let nextSideBranch = 1;
+  // Track active ranges on each branch (skip branch 0 - it's the empty trunk)
+  const activeBranches = []; // No main branch entries
+  let nextBranch = 1; // Start from branch 1
   
   console.log('=== DEBUG: Branch assignments ===');
   sortedEntries.forEach(entry => {
     const key = entry.company + entry.era;
     
-    // Check if this entry overlaps with any active range on the main branch
+    // Check if this entry overlaps with any active range on existing branches
     let assignedBranch = -1;
     
     for (let branchIndex = 0; branchIndex < activeBranches.length; branchIndex++) {
@@ -226,22 +226,22 @@ document.addEventListener('DOMContentLoaded', function() {
       
       if (!hasOverlap) {
         // No overlap, can use this branch
-        assignedBranch = branchIndex;
+        assignedBranch = branchIndex + 1; // +1 because we skip branch 0
         break;
       }
     }
     
-    // If no existing branch can accommodate this entry, create a new side branch
+    // If no existing branch can accommodate this entry, create a new branch
     if (assignedBranch === -1) {
-      assignedBranch = nextSideBranch++;
+      assignedBranch = nextBranch++;
       activeBranches.push([]);
     }
     
     // Assign all commits for this entry to the chosen branch
     branchAssignments[key] = assignedBranch;
-    activeBranches[assignedBranch].push(entry);
+    activeBranches[assignedBranch - 1].push(entry); // -1 because activeBranches is 0-indexed but branch numbers start from 1
     
-    console.log(`${entry.company} (${entry.era}) -> Branch ${assignedBranch} ${assignedBranch === 0 ? '(main)' : '(side)'}`);
+    console.log(`${entry.company} (${entry.era}) -> Branch ${assignedBranch} (dedicated branch)`);
   });
   
   // Apply branch assignments to commits
