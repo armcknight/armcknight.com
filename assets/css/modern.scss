@@ -9,6 +9,7 @@
   --text-muted: #999;
   --accent: #2563eb;
   --accent-hover: #1d4ed8;
+  --accent-rgb: 37, 99, 235;
   --border: #e5e7eb;
   --background: #ffffff;
   --background-alt: #f9fafb;
@@ -1258,5 +1259,490 @@ blockquote p {
   
   .year-header {
     font-size: var(--text-2xl);
+  }
+}
+
+// Era-based experience timeline styles
+.unified-timeline {
+  margin-top: var(--space-8);
+}
+
+.unified-timeline h2 {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  margin-bottom: var(--space-6);
+  color: var(--text-primary);
+}
+
+.timeline-container {
+  position: relative;
+  display: flex;
+  gap: var(--space-8);
+}
+
+.era-brackets {
+  position: relative;
+  width: 120px;
+  flex-shrink: 0;
+}
+
+.era-bracket {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: var(--space-3);
+}
+
+.era-bracket::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  width: 2px;
+  background: var(--border);
+  border-radius: 1px;
+}
+
+.era-bracket::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: 0;
+  width: 6px;
+  height: 2px;
+  background: var(--border);
+  border-radius: 1px;
+}
+
+.era-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--background);
+  padding: var(--space-1) var(--space-2);
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+  margin-right: var(--space-2);
+}
+
+/* Position era brackets based on timeline */
+.era-professional {
+  top: 0;
+  height: 800px;
+}
+
+.era-professional::before {
+  height: 100%;
+  background: #2563eb;
+  opacity: 0.3;
+}
+
+.era-professional::after {
+  background: #2563eb;
+}
+
+.era-professional .era-label {
+  color: #2563eb;
+  border-color: #2563eb;
+}
+
+.era-semi-pro {
+  top: 400px;
+  height: 600px;
+}
+
+.era-semi-pro::before {
+  height: 100%;
+  background: #7c3aed;
+  opacity: 0.3;
+}
+
+.era-semi-pro::after {
+  background: #7c3aed;
+}
+
+.era-semi-pro .era-label {
+  color: #7c3aed;
+  border-color: #7c3aed;
+}
+
+.era-higher-education {
+  top: 800px;
+  height: 400px;
+}
+
+.era-higher-education::before {
+  height: 100%;
+  background: #dc2626;
+  opacity: 0.3;
+}
+
+.era-higher-education::after {
+  background: #dc2626;
+}
+
+.era-higher-education .era-label {
+  color: #dc2626;
+  border-color: #dc2626;
+}
+
+.era-primary-education {
+  top: 1200px;
+  height: 300px;
+}
+
+.era-primary-education::before {
+  height: 100%;
+  background: #ea580c;
+  opacity: 0.3;
+}
+
+.era-primary-education::after {
+  background: #ea580c;
+}
+
+.era-primary-education .era-label {
+  color: #ea580c;
+  border-color: #ea580c;
+}
+
+.era-foodservice {
+  top: 1400px;
+  height: 200px;
+}
+
+.era-foodservice::before {
+  height: 100%;
+  background: #059669;
+  opacity: 0.3;
+}
+
+.era-foodservice::after {
+  background: #059669;
+}
+
+.era-foodservice .era-label {
+  color: #059669;
+  border-color: #059669;
+}
+
+/* Hide amateur era for now */
+.era-amateur {
+  display: none;
+}
+
+// Git-style timeline with multiple branches
+.git-timeline {
+  position: relative;
+  flex: 1;
+  min-height: 2000px;
+}
+
+// Main timeline line (center)
+.timeline-main-line {
+  position: absolute;
+  left: 60px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--border);
+  border-radius: 2px;
+}
+
+// Branch lines for overlapping experiences
+.timeline-branch-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+  opacity: 0.6;
+  border-radius: 1px;
+}
+
+.timeline-branch-1 {
+  left: 20px;
+}
+
+.timeline-branch-2 {
+  left: 100px;
+}
+
+.timeline-branch-3 {
+  left: 140px;
+}
+
+// Timeline items
+.timeline-item {
+  position: relative;
+  margin-bottom: var(--space-6);
+  padding: var(--space-5);
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  margin-left: 180px;
+  max-width: 600px;
+}
+
+// Branch positioning
+.timeline-item[data-branch="main"] {
+  margin-left: 100px;
+}
+
+.timeline-item[data-branch="main"]::before {
+  left: -46px;
+}
+
+.timeline-item[data-branch="branch-1"] {
+  margin-left: 60px;
+}
+
+.timeline-item[data-branch="branch-1"]::before {
+  left: -46px;
+}
+
+.timeline-item[data-branch="branch-2"] {
+  margin-left: 140px;
+}
+
+.timeline-item[data-branch="branch-2"]::before {
+  left: -46px;
+}
+
+.timeline-item[data-branch="branch-3"] {
+  margin-left: 180px;
+}
+
+.timeline-item[data-branch="branch-3"]::before {
+  left: -46px;
+}
+
+.timeline-item[data-branch="overlay"] {
+  margin-left: 200px;
+  background: rgba(var(--accent-rgb), 0.05);
+  border-color: var(--accent);
+}
+
+.timeline-item[data-branch="overlay"]::before {
+  left: -146px;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.timeline-item:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateX(4px);
+}
+
+// Timeline dots
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  top: var(--space-5);
+  width: 12px;
+  height: 12px;
+  background: var(--background);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+// Era-specific dot colors
+.timeline-item[data-era="professional"]::before {
+  border-color: #2563eb;
+}
+
+.timeline-item[data-era="semi-pro"]::before {
+  border-color: #7c3aed;
+}
+
+.timeline-item[data-era="amateur"]::before {
+  border-color: #059669;
+}
+
+.timeline-item[data-era="higher-education"]::before {
+  border-color: #dc2626;
+}
+
+.timeline-item[data-era="primary-education"]::before {
+  border-color: #ea580c;
+}
+
+.timeline-item[data-era="foodservice"]::before {
+  border-color: #059669;
+}
+
+// Experience item content styling
+.experience-item-content {
+  width: 100%;
+}
+
+.experience-title {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+  color: var(--text-primary);
+}
+
+.experience-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.experience-company {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.experience-dates {
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.presentation-venue {
+  margin-bottom: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.presentation-item {
+  opacity: 0.8;
+  transform: scale(0.95);
+}
+
+.presentation-item:hover {
+  opacity: 1;
+  transform: scale(1) translateX(4px);
+}
+
+// Honors section styling
+.experience-honors {
+  margin-top: var(--space-4);
+}
+
+.experience-honors h4 {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.experience-honors ul {
+  margin: 0;
+  padding-left: var(--space-4);
+}
+
+.experience-honors li {
+  margin-bottom: var(--space-2);
+  line-height: 1.6;
+}
+
+.experience-honors li:last-child {
+  margin-bottom: 0;
+}
+
+.experience-honors strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.experience-honors em {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+// Enhanced responsive design for git timeline
+@media (max-width: 768px) {
+  .timeline-container {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  
+  .era-brackets {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    gap: var(--space-4);
+    overflow-x: auto;
+    padding: var(--space-2) 0;
+  }
+  
+  .era-bracket {
+    position: relative;
+    width: auto;
+    height: 40px;
+    flex-shrink: 0;
+  }
+  
+  .era-bracket::before,
+  .era-bracket::after {
+    display: none;
+  }
+  
+  .era-label {
+    margin-right: 0;
+  }
+  
+  .git-timeline {
+    min-height: auto;
+  }
+  
+  .timeline-main-line,
+  .timeline-branch-line {
+    left: var(--space-4);
+    width: 2px;
+  }
+  
+  .timeline-branch-1,
+  .timeline-branch-2,
+  .timeline-branch-3 {
+    display: none;
+  }
+  
+  .timeline-item {
+    margin-left: var(--space-8);
+    max-width: none;
+  }
+  
+  .timeline-item[data-branch="main"],
+  .timeline-item[data-branch="branch-1"],
+  .timeline-item[data-branch="branch-2"],
+  .timeline-item[data-branch="branch-3"],
+  .timeline-item[data-branch="overlay"] {
+    margin-left: var(--space-8);
+  }
+  
+  .timeline-item::before {
+    left: calc(-1 * var(--space-8) + var(--space-4) - 6px);
+  }
+  
+  .experience-meta {
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+}
+
+@media (max-width: 480px) {
+  .era-brackets {
+    height: 50px;
+    gap: var(--space-2);
+  }
+  
+  .era-label {
+    font-size: var(--text-xs);
+    padding: var(--space-1);
+  }
+  
+  .timeline-item {
+    padding: var(--space-4);
+    margin-bottom: var(--space-4);
   }
 }

@@ -1,20 +1,49 @@
 experience:
-  - dates: Jan 2019 – Current
+  - dates: January 2021 – Current
+    era: professional
+    company: Sentry
+    title: Senior iOS Developer
+    location: Remote
+    employment_type: (FTE)
+    tags: [iOS, macOS, tvOS, watchOS, visionOS, cocoa, swiftUI, mobile, swift, objective-c++, xcodegen, github-actions]
+    stack: [Swift, Objective-C++, SwiftUI, XcodeGen, GitHub Actions, SauceLabs]
+    highlights:
+      - Integrating Specto's profiling feature into Sentry's Cocoa SDK
+      - "User Feedback widget: first user-facing UI shipped in Sentry Cocoa SDK"
+      - Wrangled sample and demo apps for developers and Sales team
+      - Numerous improvements to CI and build system
+
+  - dates: November 2019 – January 2021
+    era: professional
+    company: Specto
+    title: Senior iOS Developer
+    location: Remote
+    employment_type: (FTE)
+    tags: [iOS, macOS, mobile, objective-c++, swift, cocoa, protobuf, jinja, xcodegen, bazel, python, go, github-actions]
+    stack: [Objective-C++, Swift, Protobuf, Jinja, XcodeGen, Bazel, Python, Go, GitHub Actions]
+    highlights:
+      - Mobile app profiling SDK with shared C++ core between iOS and Android
+      - Python scripts to generate scoped Xcode projects from Bazel targets (pre `rules-xcode`)
+      - Acquired by Sentry in December 2020
+
+  - dates: January 2019 – November 2019
+    era: professional
     company: Rightpoint Consulting
     title: Senior iOS Developer
     location: Remote
     employment_type: (Contract-to-Perm)
-    tags: [ios, mobile, swift, consulting, contract, security, remote]
+    tags: [iOS, mobile, swift, consulting, contract, security, remote]
     stack: [Swift, SwiftGen, SwiftLint, Sourcery, CircleCI, Postman, Browserstack, Countly, GitHub/GitLab, JIRA]
     highlights:
       - Security-focused app and SDK (NDA)
 
-  - dates: Nov 2013 – Current
+  - dates: November 2013 – Current
+    era: professional
     company: Insight Therapeutics
     title: Lead iOS Developer
     location: Norfolk, VA & Remote
     employment_type: (Contract)
-    tags: [ios, mobile, medical, healthcare, consulting, contract, remote]
+    tags: [iOS, mobile, medical, healthcare, consulting, contract, remote]
     stack: [ObjC/Swift, MessageUI, Storyboards, CoreGraphics, CoreData, FMDB, SQLite, SSZipArchive, RNCryptor, cocoapods-keys, Trello, BitBucket]
     deliverables:
       - name: ClotRx & DementiaRx
@@ -33,12 +62,13 @@ experience:
     highlights:
       - Multiple releases and design iterations of all apps
 
-  - dates: Jan – Apr 2018
+  - dates: January 2018 – April 2018
+    era: professional
     company: 121nexus
     title: iOS Developer
     location: Remote
     employment_type: (Contract)
-    tags: [ios, mobile, medical, healthcare, contract, remote, firebase, opencv]
+    tags: [iOS, mobile, medical, healthcare, contract, remote, firebase, opencv]
     stack: [Swift, AVFoundation, OpenCV, Firebase, cocoapods-keys, AWS, JIRA, BitBucket]
     highlights:
       - Replaced application UI and networking with their new SDK
@@ -50,12 +80,13 @@ experience:
         url: https://itunes.apple.com/us/app/121-scan/id1187264063
         description: Assisted launches via iTunes and another internal enterprise app
 
-  - dates: Dec 2016 – Jul 2017
+  - dates: December 2016 – July 2017
+    era: professional
     company: Layer
     title: iOS Developer
     location: Remote
     employment_type: (FTE)
-    tags: [ios, mobile, messaging, sdk, remote, objc, swift]
+    tags: [iOS, mobile, messaging, sdk, remote, objc, swift]
     stack: [C/ObjC/Swift, CocoaPods, OCMock, Specta/Expecta, Jenkins, Rails, Thrift, WebSockets/SPDY, SQLite]
     deliverables:
       - ObjC SDKs for data and UI components, an embeddable app layer and fully-functional sample app
@@ -67,12 +98,13 @@ experience:
         url: https://github.com/blakewatters/TransitionKit
         description: Implemented new auth and transport layer using TransitionKit
 
-  - dates: Apr 2015 – Dec 2016
+  - dates: April 2015 – December 2016
+    era: professional
     company: Twitter
     title: iOS/Fullstack Developer
     location: Cambridge, MA
     employment_type: (FTE)
-    tags: [ios, mobile, crash-reporting, backend, fullstack, data, analytics, scala, java]
+    tags: [iOS, mobile, crash-reporting, backend, fullstack, data, analytics, scala, java]
     stack: [C/ObjC/Swift, Java/Scala/Clojure, Rails, React/Coffeescript, Storm/Heron, Cascading/Scalding, Graphite, Vertica/Zeppelin, Beanstalk/Kafka, Redis/Cassandra, AWS, TeamCity, Chef, Trello, Protobuf]
     deliverables:
       - Crashlytics/Fabric SDKs, Mac app and command line tools, front- and back-end maintenance and analytics, Unity iOS support
@@ -86,11 +118,12 @@ experience:
       - Pioneered new backend feature to cross-reference common crashes across apps and present developers with suggested fixes
 
   - dates: Jan – Apr 2015
+    era: professional
     company: MC10
     title: iOS Developer
     location: Cambridge, MA
     employment_type: (FTE)
-    tags: [ios, mobile, medical, wearables, bluetooth, objc, swift]
+    tags: [iOS, mobile, medical, wearables, bluetooth, objc, swift]
     stack: [ObjC/Swift, CoreBluetooth, Android, JIRA]
     deliverables:
       - Companion iOS app for wearable peripheral with BTLE link
@@ -101,12 +134,13 @@ experience:
       - Set up continuous integration and deployment with TeamCity and Fabric
       - Assisted adoption of Agile processes
 
-  - dates: Jul 2013 – Dec 2014
+  - dates: July 2013 – December 2014
+    era: professional
     company: Raizlabs Consulting
     title: iOS Developer
     location: Boston, MA
     employment_type: (FTE)
-    tags: [ios, mobile, consulting, objc, swift, ecommerce]
+    tags: [iOS, mobile, consulting, objc, swift, ecommerce]
     stack: [ObjC/Swift, Jenkins, TeamCity, Trello, Basecamp]
     deliverables:
       - name: Care.com
@@ -131,12 +165,13 @@ experience:
         details:
           - Paging of API result display in table/collection views
 
-  - dates: Oct 2012 – May 2013
+  - dates: October 2012 – May 2013
+    era: semi-pro
     company: ODU Systems Lab
     title: iOS Developer
     location: Norfolk, VA
     employment_type: (Student Intern)
-    tags: [ios, mobile, research, student, intern, objc]
+    tags: [iOS, mobile, research, student, intern, objc]
     deliverables:
       - "ChirpXM: location based social networking app (defunct)"
       - Prototyped EMR iPad app for CHKD
@@ -144,20 +179,8 @@ experience:
       - Supervised two foreign exchange students
       - Facetime with onsite clients
 
-  - dates: Aug 2012 – May 2013
-    company: Old Dominion University
-    title: iOS Developer
-    location: Norfolk, VA
-    employment_type: (Capstone Project)
-    tags: [ios, mobile, student, academic, capstone, objc, leadership]
-    stack: [ObjC, OpenEars, MapQuest]
-    highlights:
-      - Co-lead of 7 member team
-      - 4 presentations given to visiting professors and industry executives
-      - Sole developer of iOS component of total solution
-      - Highest scoring project!
-
-  - dates: May – Oct 2013
+  - dates: May – October 2013
+    era: semi-pro
     company: Intergraph
     title: .NET Developer
     location: Hampton, VA
@@ -168,7 +191,32 @@ experience:
       - Automated framework- and GUI-level testing, regression testing in numerical modules
       - Manual acceptance testing for new features and fixes
 
-  - dates: Aug 2012 – May 2014
+  - dates: August 2012 – May 2013
+    era: higher-education
+    company: Old Dominion University
+    title: iOS Developer
+    location: Norfolk, VA
+    employment_type: (Capstone Project)
+    tags: [iOS, mobile, student, academic, capstone, objc, leadership]
+    stack: [ObjC, OpenEars, MapQuest]
+    highlights:
+      - Co-lead of 7 member team
+      - 4 presentations given to visiting professors and industry executives
+      - Sole developer of iOS component of total solution
+      - Highest scoring project!
+
+  - dates: August 2012 - December 2012
+    era: semi-pro
+    company: XVD Longboards
+    title: Web Developer
+    location: Norfolk, VA
+    employment_type: (Contract)
+    tags: [flash, actionscript, web]
+    highlights:
+      - Build a Flash-based website for a local skateboard company for customers to custom-design boards
+
+  - dates: August 2012 – May 2014
+    era: higher-education
     company: Old Dominion University
     title: Research Assistant
     location: Norfolk, VA
@@ -179,7 +227,8 @@ experience:
       - Image processing, robotics and machine learning applications in bioinformatics
       - Multiple publications and conference presentations
 
-  - dates: Aug 2012 – May 2014
+  - dates: Auust 2012 – May 2014
+    era: higher-education
     company: Old Dominion University
     title: Lab Instructor
     location: Norfolk, VA
@@ -190,3 +239,23 @@ experience:
       - "Lab instructor for CS 250: Intermediate programming in C++"
       - "Assistant instructor for CS 150: Introduction to programming in C++"
       - Website maintenance, grading, general student guidance 
+
+  - dates: June 2003 - June 2012
+    era: foodservice
+    company: Numerous
+    title: Chef
+    location: Woodbridge, VA; Charlottesville, VA
+    employment_type: (Hourly)
+    tags: [foodservice, chef, sous-chef]
+    highlights:
+      - "Guest chef at Palladio, a fine dining restaurant in Charlottesville, VA connected to Barboursville Vineyards, for two special events: a Morel Feast and a Truffle Feast"
+
+  - dates: June 2003 - June 2012
+    era: foodservice
+    company: Numerous
+    title: Chef
+    location: Woodbridge, VA; Charlottesville, VA
+    employment_type: (Hourly)
+    tags: [foodservice, chef, sous-chef, hourly, remote]
+    highlights:
+      - 

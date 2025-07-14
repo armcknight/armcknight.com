@@ -8,190 +8,280 @@ title: "Experience"
   <p class="page-subtitle">Professional background, education, and expertise</p>
 </div>
 
+{% comment %}
+Era navigation section
+{% endcomment %}
 <div class="tags-section">
-  <h2>Jump to:</h2>
+  <h2>Jump to Era:</h2>
   <div class="tag-cloud">
-    <a href="#employment" class="tag tag-link">Employment</a>
-    <a href="#education" class="tag tag-link">Education</a>
-    <a href="#presentations" class="tag tag-link">Speaking & Presentations</a>
-    <a href="#honors" class="tag tag-link">Honors & Awards</a>
+    <a href="#era-professional" class="tag tag-link">Professional</a>
+    <a href="#era-semi-pro" class="tag tag-link">Semi-Pro</a>
+    <a href="#era-amateur" class="tag tag-link">Amateur</a>
+    <a href="#era-higher-education" class="tag tag-link">Higher Education</a>
+    <a href="#era-primary-education" class="tag tag-link">Primary Education</a>
+    <a href="#era-foodservice" class="tag tag-link">Food Service</a>
   </div>
 </div>
 
-<div class="experience-content">
+{% comment %}
+Collect and sort all experiences
+{% endcomment %}
+{% assign all_items = "" | split: "" %}
+
+{% comment %}Add experience items{% endcomment %}
+{% for job in site.data.experience.experience %}
+  {% assign item = job %}
+  {% assign item = item | assign: "type", "experience" %}
+  {% assign all_items = all_items | push: item %}
+{% endfor %}
+
+{% comment %}Add education items{% endcomment %}
+{% for edu in site.data.education.education %}
+  {% assign era = "higher-education" %}
+  {% if edu.institution contains "Community College" %}
+    {% assign era = "primary-education" %}
+  {% elsif edu.institution contains "High School" %}
+    {% assign era = "primary-education" %}
+  {% elsif edu.institution contains "Middle School" %}
+    {% assign era = "primary-education" %}
+  {% endif %}
   
-  <section class="experience-category" id="employment">
-    <h2>Employment</h2>
+  {% assign item = edu %}
+  {% assign item = item | assign: "type", "education" %}
+  {% assign item = item | assign: "era", era %}
+  {% assign all_items = all_items | push: item %}
+{% endfor %}
+
+{% comment %}Add presentations{% endcomment %}
+{% for presentation in site.data.presentations.presentations %}
+  {% assign item = presentation %}
+  {% assign item = item | assign: "type", "presentation" %}
+  {% assign item = item | assign: "era", "professional" %}
+  {% assign all_items = all_items | push: item %}
+{% endfor %}
+
+{% comment %}
+Unified chronological timeline with git-branch style visualization
+{% endcomment %}
+<div class="unified-timeline">
+  <h2>Complete Timeline</h2>
+  
+  <div class="timeline-container">
+    <!-- Era brackets positioned via CSS -->
+    <div class="era-brackets">
+      <div class="era-bracket era-professional" id="era-professional">
+        <div class="era-label">Professional</div>
+      </div>
+      <div class="era-bracket era-semi-pro" id="era-semi-pro">
+        <div class="era-label">Semi-Pro</div>
+      </div>
+      <div class="era-bracket era-amateur" id="era-amateur">
+        <div class="era-label">Amateur</div>
+      </div>
+      <div class="era-bracket era-higher-education" id="era-higher-education">
+        <div class="era-label">Higher Ed</div>
+      </div>
+      <div class="era-bracket era-primary-education" id="era-primary-education">
+        <div class="era-label">Primary Ed</div>
+      </div>
+      <div class="era-bracket era-foodservice" id="era-foodservice">
+        <div class="era-label">Food Service</div>
+      </div>
+    </div>
     
-    <div class="experience-timeline">
+    <div class="git-timeline">
+      <!-- Main timeline line -->
+      <div class="timeline-main-line"></div>
+      
+      <!-- Branch lines for overlapping experiences -->
+      <div class="timeline-branch-line timeline-branch-1"></div>
+      <div class="timeline-branch-line timeline-branch-2"></div>
+      <div class="timeline-branch-line timeline-branch-3"></div>
+      
+      {% comment %}Manually sorted items in reverse chronological order{% endcomment %}
+      
+      {% comment %}Current/Recent Professional{% endcomment %}
       {% for job in site.data.experience.experience %}
-      <div class="experience-item">
-        <div class="experience-header">
-          <h3 class="experience-title">{{ job.title }}</h3>
-          <div class="experience-meta">
-            <span class="experience-company">{{ job.company }}</span>
-            <span class="experience-dates">{{ job.dates }}</span>
-            {% if job.location %}
-            <span class="experience-location">{{ job.location }}</span>
-            {% endif %}
-            {% if job.employment_type %}
-            <span class="experience-type">{{ job.employment_type }}</span>
-            {% endif %}
+        {% if job.dates contains "2021" and job.dates contains "Current" %}
+          <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
+            {% include experience-item.html item=job type="experience" %}
           </div>
-        </div>
-        <div class="experience-description">
-          {% if job.deliverables %}
-          <div class="experience-deliverables">
-            <h4>Deliverables:</h4>
-            {% for deliverable in job.deliverables %}
-            <div class="deliverable">
-              {% if deliverable.url %}
-              <a href="{{ deliverable.url }}" class="deliverable-name">{{ deliverable.name }}</a>
-              {% else %}
-              <span class="deliverable-name">{{ deliverable.name }}</span>
-              {% endif %}
-              {% if deliverable.description %}
-              <span class="deliverable-description">– {{ deliverable.description }}</span>
-              {% endif %}
-              {% if deliverable.details %}
-              <ul class="deliverable-details">
-                {% for detail in deliverable.details %}
-                <li>{{ detail }}</li>
-                {% endfor %}
-              </ul>
-              {% endif %}
-            </div>
-            {% endfor %}
-          </div>
-          {% endif %}
-          
-          {% if job.highlights %}
-          <div class="experience-highlights">
-            <h4>Highlights:</h4>
-            <ul>
-              {% for highlight in job.highlights %}
-              <li>
-                {% if highlight.name %}
-                <strong>{{ highlight.name }}</strong>
-                {% if highlight.url %}
-                <a href="{{ highlight.url }}" class="highlight-link">{{ highlight.url }}</a>
-                {% endif %}
-                {% if highlight.description %}
-                – {{ highlight.description }}
-                {% endif %}
-                {% else %}
-                {{ highlight }}
-                {% endif %}
-              </li>
-              {% endfor %}
-            </ul>
-          </div>
-          {% endif %}
-          
-          {% if job.stack %}
-          <div class="experience-stack">
-            <h4>Tech Stack:</h4>
-            <div class="stack-tags">
-              {% for tech in job.stack %}
-              <span class="stack-tag">{{ tech }}</span>
-              {% endfor %}
-            </div>
-          </div>
-          {% endif %}
-        </div>
-      </div>
+        {% endif %}
       {% endfor %}
-    </div>
-  </section>
-
-  <section class="experience-category" id="education">
-    <h2>Education</h2>
-    
-    <div class="experience-timeline">
+      
+      {% for job in site.data.experience.experience %}
+        {% if job.dates contains "2019" and job.company == "Specto" %}
+          <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
+            {% include experience-item.html item=job type="experience" %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% for job in site.data.experience.experience %}
+        {% if job.dates contains "2019" and job.company == "Rightpoint" %}
+          <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-1">
+            {% include experience-item.html item=job type="experience" %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% comment %}Long-running contract (overlaps with many others){% endcomment %}
+      {% for job in site.data.experience.experience %}
+        {% if job.company == "Insight Therapeutics" %}
+          <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-2">
+            {% include experience-item.html item=job type="experience" %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% comment %}2018 contract{% endcomment %}
+      {% for job in site.data.experience.experience %}
+        {% if job.dates contains "2018" %}
+          <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
+            {% include experience-item.html item=job type="experience" %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% comment %}2016-2017 jobs{% endcomment %}
+      {% for job in site.data.experience.experience %}
+        {% if job.dates contains "2016" and job.company == "Layer" %}
+          <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
+            {% include experience-item.html item=job type="experience" %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% for job in site.data.experience.experience %}
+        {% if job.dates contains "2015" and job.company == "Twitter" %}
+          <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
+            {% include experience-item.html item=job type="experience" %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% for job in site.data.experience.experience %}
+        {% if job.dates contains "2015" and job.company == "MC10" %}
+          <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
+            {% include experience-item.html item=job type="experience" %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% comment %}2013-2014 period{% endcomment %}
+      {% for job in site.data.experience.experience %}
+        {% if job.company == "Raizlabs" %}
+          <div class="timeline-item" data-era="{{ job.era }}" data-branch="main">
+            {% include experience-item.html item=job type="experience" %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% comment %}Education - Masters{% endcomment %}
       {% for edu in site.data.education.education %}
-      <div class="experience-item">
-        <div class="experience-header">
-          <h3 class="experience-title">{{ edu.degree }}</h3>
-          <div class="experience-meta">
-            <span class="experience-company">{{ edu.institution }}</span>
-            <span class="experience-dates">{{ edu.year }}</span>
+        {% if edu.dates contains "2010" and edu.dates contains "2013" %}
+          <div class="timeline-item" data-era="higher-education" data-branch="branch-3">
+            {% include experience-item.html item=edu type="education" %}
           </div>
-        </div>
-        {% if edu.details %}
-        <div class="experience-description">
-          <ul class="experience-highlights">
-            {% for detail in edu.details %}
-            <li>{{ detail }}</li>
-            {% endfor %}
-          </ul>
-        </div>
         {% endif %}
-      </div>
       {% endfor %}
-    </div>
-  </section>
-
-  <section class="experience-category" id="presentations">
-    <h2>Speaking & Presentations</h2>
-    
-    <div class="experience-timeline">
+      
+      {% comment %}2013 overlapping experiences{% endcomment %}
+      {% for job in site.data.experience.experience %}
+        {% if job.dates contains "2013" and job.employment_type contains "Intern" and job.company == "Intergraph" %}
+          <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-1">
+            {% include experience-item.html item=job type="experience" %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% comment %}2012-2013 academic and work experiences{% endcomment %}
+      {% for job in site.data.experience.experience %}
+        {% if job.dates contains "2012" and job.school == "ODU (Systems Lab)" %}
+          <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-2">
+            {% include experience-item.html item=job type="experience" %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% for job in site.data.experience.experience %}
+        {% if job.dates contains "2012" and job.employment_type contains "Capstone" %}
+          <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-3">
+            {% include experience-item.html item=job type="experience" %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% for job in site.data.experience.experience %}
+        {% if job.company == "XVD Longboards" %}
+          <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-1">
+            {% include experience-item.html item=job type="experience" %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% for job in site.data.experience.experience %}
+        {% if job.title == "Research Assistant" %}
+          <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-2">
+            {% include experience-item.html item=job type="experience" %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% for job in site.data.experience.experience %}
+        {% if job.title == "Lab Instructor" %}
+          <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-3">
+            {% include experience-item.html item=job type="experience" %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% comment %}Earlier education{% endcomment %}
+      {% for edu in site.data.education.education %}
+        {% if edu.dates contains "2003" and edu.dates contains "2009" %}
+          <div class="timeline-item" data-era="primary-education" data-branch="main">
+            {% include experience-item.html item=edu type="education" %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% comment %}Food service career{% endcomment %}
+      {% for job in site.data.experience.experience %}
+        {% if job.era == "foodservice" %}
+          <div class="timeline-item" data-era="{{ job.era }}" data-branch="branch-1">
+            {% include experience-item.html item=job type="experience" %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% comment %}High school{% endcomment %}
+      {% for edu in site.data.education.education %}
+        {% if edu.institution contains "High School" %}
+          <div class="timeline-item" data-era="primary-education" data-branch="main">
+            {% include experience-item.html item=edu type="education" %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% comment %}Middle school{% endcomment %}
+      {% for edu in site.data.education.education %}
+        {% if edu.institution contains "Middle School" %}
+          <div class="timeline-item" data-era="primary-education" data-branch="main">
+            {% include experience-item.html item=edu type="education" %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% comment %}Presentations{% endcomment %}
       {% for presentation in site.data.presentations.presentations %}
-      <div class="experience-item">
-        <div class="experience-header">
-          <h3 class="experience-title">{{ presentation.title }}</h3>
-          <div class="experience-meta">
-            <span class="experience-company">{{ presentation.event }}</span>
-            <span class="experience-dates">{{ presentation.date }}</span>
-            {% if presentation.location %}
-            <span class="experience-location">{{ presentation.location }}</span>
-            {% endif %}
-          </div>
+        <div class="timeline-item presentation-item" data-era="professional" data-branch="overlay">
+          {% include experience-item.html item=presentation type="presentation" %}
         </div>
-        {% if presentation.venue %}
-        <div class="presentation-venue">
-          <strong>Venue:</strong> {{ presentation.venue }}
-        </div>
-        {% endif %}
-        {% if presentation.details %}
-        <div class="experience-description">
-          <ul class="experience-highlights">
-            {% for detail in presentation.details %}
-            <li>{{ detail }}</li>
-            {% endfor %}
-          </ul>
-        </div>
-        {% endif %}
-      </div>
       {% endfor %}
     </div>
-  </section>
-
-  <section class="experience-category" id="honors">
-    <h2>Honors & Awards</h2>
-    
-    <div class="experience-timeline">
-      {% for honor in site.data.honors.honors %}
-      <div class="experience-item">
-        <div class="experience-header">
-          <h3 class="experience-title">{{ honor.award }}</h3>
-          <div class="experience-meta">
-            <span class="experience-company">{{ honor.institution }}</span>
-            <span class="experience-dates">{{ honor.year }}</span>
-          </div>
-        </div>
-        {% if honor.description %}
-        <div class="experience-description">
-          <p>{{ honor.description }}</p>
-        </div>
-        {% endif %}
-      </div>
-      {% endfor %}
-    </div>
-  </section>
-  
+  </div>
 </div>
 
-<!-- Floating back-to-top button for all screen sizes -->
 <a href="#top" class="floating-back-to-top">
   <svg viewBox="0 0 24 24" fill="currentColor">
     <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
