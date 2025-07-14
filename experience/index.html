@@ -365,32 +365,56 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log(`Branch ${branchIndex}: top=${range.top}, bottom=${range.bottom} (height: ${range.bottom - range.top}px)`);
     });
     
-    // Draw side branches
-    Object.keys(branchRanges).forEach(branchIndex => {
-      branchIndex = parseInt(branchIndex);
-      if (branchIndex === 0) return; // Skip main branch
+    // Draw individual vertical and horizontal lines for each entry
+    console.log('=== DEBUG: Drawing individual entry lines ===');
+    Object.values(entryRanges).forEach(entry => {
+      const key = entry.company + entry.era;
+      const branchIndex = branchAssignments[key];
       
-      const range = branchRanges[branchIndex];
+      if (branchIndex === 0) return; // Skip main branch entries
+      
       const sideX = getBranchX(branchIndex);
       
-      console.log(`=== DEBUG: Drawing branch ${branchIndex} ===`);
-      console.log(`  Side branch X: ${sideX}`);
-      console.log(`  Vertical line from (${sideX}, ${range.bottom}) to (${sideX}, ${range.top})`);
-      console.log(`  Horizontal fork line from (${MAIN_BRANCH_X}, ${range.bottom}) to (${sideX}, ${range.bottom})`);
+      // Find the Y positions of the entry's start and end commits
+      const startCommit = allCommits.find((commit, index) => {
+        return commit.company === entry.company && 
+               commit.era === entry.era && 
+               commit.type === 'start';
+      });
       
-      // Draw the vertical side branch line (from chronologically earliest to latest)
-      ctx.strokeStyle = getBranchColor(branchIndex);
-      ctx.beginPath();
-      ctx.moveTo(sideX, range.bottom); // Start at chronologically earliest (bottom)
-      ctx.lineTo(sideX, range.top); // End at chronologically latest (top)
-      ctx.stroke();
+      const endCommit = allCommits.find((commit, index) => {
+        return commit.company === entry.company && 
+               commit.era === entry.era && 
+               commit.type === 'end';
+      });
       
-      // Draw the horizontal fork line at the chronologically earliest point (where branch starts)
-      ctx.strokeStyle = getBranchColor(branchIndex);
-      ctx.beginPath();
-      ctx.moveTo(MAIN_BRANCH_X, range.bottom);
-      ctx.lineTo(sideX, range.bottom);
-      ctx.stroke();
+      if (startCommit) {
+        const startCommitIndex = allCommits.findIndex(c => c === startCommit);
+        const startY = startCommitIndex * LINE_HEIGHT + 20;
+        
+        // Draw the horizontal fork line at this entry's start point
+        ctx.strokeStyle = getBranchColor(branchIndex);
+        ctx.beginPath();
+        ctx.moveTo(MAIN_BRANCH_X, startY);
+        ctx.lineTo(sideX, startY);
+        ctx.stroke();
+        
+        console.log(`  Fork line for ${entry.company} (${entry.era}): from (${MAIN_BRANCH_X}, ${startY}) to (${sideX}, ${startY})`);
+        
+        // Draw the vertical line for this entry only
+        if (endCommit && endCommit !== startCommit) {
+          const endCommitIndex = allCommits.findIndex(c => c === endCommit);
+          const endY = endCommitIndex * LINE_HEIGHT + 20;
+          
+          ctx.strokeStyle = getBranchColor(branchIndex);
+          ctx.beginPath();
+          ctx.moveTo(sideX, startY);
+          ctx.lineTo(sideX, endY);
+          ctx.stroke();
+          
+          console.log(`  Vertical line for ${entry.company} (${entry.era}): from (${sideX}, ${startY}) to (${sideX}, ${endY})`);
+        }
+      }
     });
   }
   
