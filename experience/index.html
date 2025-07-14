@@ -285,10 +285,11 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
           const highlights = JSON.parse(element.dataset.highlights);
           if (highlights && highlights.length > 0) {
+            content += `<ul style="margin: 0.5rem 0; padding-left: 1.5rem;">`;
             highlights.slice(0, 4).forEach(highlight => { // Show first 4 highlights
               if (typeof highlight === 'string') {
                 // Simple string format
-                content += `<br/>• ${highlight}`;
+                content += `<li style="margin-bottom: 0.25rem;">${highlight}</li>`;
               } else if (highlight.name && highlight.description) {
                 // Object format with name/url/description
                 let description = highlight.description;
@@ -296,9 +297,10 @@ document.addEventListener('DOMContentLoaded', function() {
                   // Replace instances of the name in the description with a link
                   description = description.replace(new RegExp(highlight.name, 'g'), `<a href="${highlight.url}" target="_blank">${highlight.name}</a>`);
                 }
-                content += `<br/>• ${description}`;
+                content += `<li style="margin-bottom: 0.25rem;">${description}</li>`;
               }
             });
+            content += `</ul>`;
           }
         } catch (e) {
           // Skip if JSON parsing fails
@@ -323,16 +325,18 @@ document.addEventListener('DOMContentLoaded', function() {
           const deliverables = JSON.parse(element.dataset.deliverables);
           if (deliverables && deliverables.length > 0) {
             content += `<br/><strong>Deliverables:</strong>`;
+            content += `<ul style="margin: 0.5rem 0; padding-left: 1.5rem;">`;
             deliverables.forEach(deliverable => {
               if (typeof deliverable === 'string') {
                 // Simple string format
-                content += `<br/>• ${deliverable}`;
+                content += `<li style="margin-bottom: 0.25rem;">${deliverable}</li>`;
               } else if (deliverable.name) {
                 // Object format with name/description
-                content += `<br/>• ${deliverable.name}`;
+                let deliverableContent = deliverable.name;
                 if (deliverable.description) {
-                  content += ` - ${deliverable.description}`;
+                  deliverableContent += ` - ${deliverable.description}`;
                 }
+                content += `<li style="margin-bottom: 0.25rem;">${deliverableContent}`;
                 // Add details if available
                 if (deliverable.details && deliverable.details.length > 0) {
                   content += `<ul style="font-size: 0.95rem; margin: 0.5rem 0 0 1.5rem; padding-left: 1rem;">`;
@@ -341,8 +345,10 @@ document.addEventListener('DOMContentLoaded', function() {
                   });
                   content += `</ul>`;
                 }
+                content += `</li>`;
               }
             });
+            content += `</ul>`;
           }
         } catch (e) {
           // Skip if JSON parsing fails
@@ -509,10 +515,11 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
           const highlights = JSON.parse(element.dataset.highlights);
           if (highlights && highlights.length > 0) {
+            content += `<ul style="margin: 0.5rem 0; padding-left: 1.5rem;">`;
             highlights.slice(0, 4).forEach(highlight => { // Show first 4 highlights
               if (typeof highlight === 'string') {
                 // Simple string format
-                content += `<br/>• ${highlight}`;
+                content += `<li style="margin-bottom: 0.25rem;">${highlight}</li>`;
               } else if (highlight.name && highlight.description) {
                 // Object format with name/url/description
                 let description = highlight.description;
@@ -520,9 +527,10 @@ document.addEventListener('DOMContentLoaded', function() {
                   // Replace instances of the name in the description with a link
                   description = description.replace(new RegExp(highlight.name, 'g'), `<a href="${highlight.url}" target="_blank">${highlight.name}</a>`);
                 }
-                content += `<br/>• ${description}`;
+                content += `<li style="margin-bottom: 0.25rem;">${description}</li>`;
               }
             });
+            content += `</ul>`;
           }
         } catch (e) {
           // Skip if JSON parsing fails
@@ -545,16 +553,18 @@ document.addEventListener('DOMContentLoaded', function() {
           const deliverables = JSON.parse(element.dataset.deliverables);
           if (deliverables && deliverables.length > 0) {
             content += `<br/><strong>Deliverables:</strong>`;
+            content += `<ul style="margin: 0.5rem 0; padding-left: 1.5rem;">`;
             deliverables.forEach(deliverable => {
               if (typeof deliverable === 'string') {
                 // Simple string format
-                content += `<br/>• ${deliverable}`;
+                content += `<li style="margin-bottom: 0.25rem;">${deliverable}</li>`;
               } else if (deliverable.name) {
                 // Object format with name/description
-                content += `<br/>• ${deliverable.name}`;
+                let deliverableContent = deliverable.name;
                 if (deliverable.description) {
-                  content += ` - ${deliverable.description}`;
+                  deliverableContent += ` - ${deliverable.description}`;
                 }
+                content += `<li style="margin-bottom: 0.25rem;">${deliverableContent}`;
                 // Add details if available
                 if (deliverable.details && deliverable.details.length > 0) {
                   content += `<ul style="font-size: 0.95rem; margin: 0.5rem 0 0 1.5rem; padding-left: 1rem;">`;
@@ -563,8 +573,10 @@ document.addEventListener('DOMContentLoaded', function() {
                   });
                   content += `</ul>`;
                 }
+                content += `</li>`;
               }
             });
+            content += `</ul>`;
           }
         } catch (e) {
           // Skip if JSON parsing fails
