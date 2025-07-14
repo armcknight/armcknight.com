@@ -65,7 +65,8 @@ Git-style timeline - start simple with just dates
              data-title="{{ edu.degree }}"
              data-location="{{ edu.location }}"
              data-details="{{ edu.details | join: '||' }}"
-             data-honors="{{ edu.honors | join: '||' }}"
+             data-honors="{{ edu.honors | map: 'award' | join: '||' }}"
+             data-tags="{{ edu.tags | join: ',' }}"
              data-era="education">
           <div class="commit-dot"></div>
           <div class="commit-info">
@@ -241,30 +242,91 @@ document.addEventListener('DOMContentLoaded', function() {
   const LINE_HEIGHT = 30;
   const MAIN_BRANCH_X = 0; // Adjusted for removed padding
   
-  // Function to calculate text height based on content
+  // Function to calculate actual rendered text height
   function calculateTextHeight(commit) {
     const element = commit.element;
-    let lineCount = 1; // Base line for date/company
     
-    // Add line for title
-    if (element.dataset.title) lineCount++;
+    // Build the exact same content that will be rendered
+    const typeStr = commit.type === 'end' ? ' (end)' : '';
+    let content = `<strong>${commit.originalDate} - ${commit.company}${typeStr}</strong>`;
     
-    // Add line for location/employment type
-    if (element.dataset.location || element.dataset.employmentType) lineCount++;
+    // Add title if available
+    if (element.dataset.title) {
+      content += `<br/><em>${element.dataset.title}</em>`;
+    }
     
-    // Add lines for highlights (start commits only)
+    // Add location if available
+    if (element.dataset.location) {
+      content += `<br/>${element.dataset.location}`;
+    }
+    
+    // Add employment type if available
+    if (element.dataset.employmentType) {
+      content += ` ${element.dataset.employmentType}`;
+    }
+    
+    // Add highlights for start commits
     if (commit.type === 'start' && element.dataset.highlights) {
-      const highlights = element.dataset.highlights.split('||').slice(0, 2);
-      lineCount += highlights.filter(h => h.trim()).length;
+      const highlights = element.dataset.highlights.split('||').slice(0, 4);
+      highlights.forEach(highlight => {
+        if (highlight.trim()) {
+          content += `<br/>• ${highlight.trim()}`;
+        }
+      });
     }
     
-    // Add lines for education details
+    // Add education details
     if (element.dataset.details) {
-      const details = element.dataset.details.split('||').slice(0, 2);
-      lineCount += details.filter(d => d.trim()).length;
+      const details = element.dataset.details.split('||').slice(0, 4);
+      details.forEach(detail => {
+        if (detail.trim()) {
+          content += `<br/>• ${detail.trim()}`;
+        }
+      });
     }
     
-    return lineCount * 15.6; // 15.6px per line (12px font * 1.3 line-height)
+    // Add education honors
+    if (element.dataset.honors) {
+      const honors = element.dataset.honors.split('||').slice(0, 3);
+      honors.forEach(honor => {
+        if (honor.trim()) {
+          content += `<br/>🏆 ${honor.trim()}`;
+        }
+      });
+    }
+    
+    // Add technology stack for experience entries
+    if (commit.type === 'start' && element.dataset.stack) {
+      const stack = element.dataset.stack.split(',').map(s => s.trim()).filter(s => s);
+      if (stack.length > 0) {
+        content += `<br/><strong>Stack:</strong> ${stack.join(', ')}`;
+      }
+    }
+    
+    // Add tags
+    if (element.dataset.tags) {
+      const tags = element.dataset.tags.split(',').map(t => t.trim()).filter(t => t);
+      if (tags.length > 0) {
+        content += `<br/><strong>Tags:</strong> ${tags.slice(0, 8).join(', ')}`;
+      }
+    }
+    
+    // Create a temporary element with exact same styling to measure actual height
+    const tempElement = document.createElement('div');
+    tempElement.style.position = 'absolute';
+    tempElement.style.visibility = 'hidden';
+    tempElement.style.fontSize = '12px';
+    tempElement.style.lineHeight = '1.3';
+    tempElement.style.width = '300px';
+    tempElement.style.whiteSpace = 'normal';
+    tempElement.innerHTML = content;
+    
+    // Add to document to measure, then remove
+    document.body.appendChild(tempElement);
+    const actualHeight = tempElement.offsetHeight;
+    document.body.removeChild(tempElement);
+    
+    return actualHeight;
   }
   
   // NEW APPROACH: Text-first layout to prevent overlaps
@@ -274,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let cumulativeY = 20; // Start with padding from top
   const textPositions = [];
   
-  // Layout all commits with consistent spacing based on text content
+  // Layout all commits with fixed spacing to prevent overlaps
   allCommits.forEach((commit, index) => {
     const textHeight = calculateTextHeight(commit);
     const yPosition = cumulativeY;
@@ -285,7 +347,9 @@ document.addEventListener('DOMContentLoaded', function() {
       textHeight: textHeight
     });
     
-    cumulativeY += Math.max(textHeight, 40) + 25; // Minimum 40px height + 25px spacing
+    // Use actual measured height + reasonable buffer
+    const entrySpacing = textHeight + 30; // Actual height + 30px buffer
+    cumulativeY += entrySpacing;
   });
   
   // Now map git commit dots to text positions (adapting git graph to text layout)
@@ -376,7 +440,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add highlights for start commits
     if (commit.type === 'start' && element.dataset.highlights) {
-      const highlights = element.dataset.highlights.split('||').slice(0, 2); // Show first 2 highlights
+      const highlights = element.dataset.highlights.split('||').slice(0, 4); // Show first 4 highlights
       highlights.forEach(highlight => {
         if (highlight.trim()) {
           content += `<br/>• ${highlight.trim()}`;
@@ -386,12 +450,38 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add education details
     if (element.dataset.details) {
-      const details = element.dataset.details.split('||').slice(0, 2); // Show first 2 details
+      const details = element.dataset.details.split('||').slice(0, 4); // Show first 4 details
       details.forEach(detail => {
         if (detail.trim()) {
           content += `<br/>• ${detail.trim()}`;
         }
       });
+    }
+    
+    // Add education honors
+    if (element.dataset.honors) {
+      const honors = element.dataset.honors.split('||').slice(0, 3); // Show first 3 honors
+      honors.forEach(honor => {
+        if (honor.trim()) {
+          content += `<br/>🏆 ${honor.trim()}`;
+        }
+      });
+    }
+    
+    // Add technology stack for experience entries
+    if (commit.type === 'start' && element.dataset.stack) {
+      const stack = element.dataset.stack.split(',').map(s => s.trim()).filter(s => s);
+      if (stack.length > 0) {
+        content += `<br/><strong>Stack:</strong> ${stack.join(', ')}`;
+      }
+    }
+    
+    // Add tags
+    if (element.dataset.tags) {
+      const tags = element.dataset.tags.split(',').map(t => t.trim()).filter(t => t);
+      if (tags.length > 0) {
+        content += `<br/><strong>Tags:</strong> ${tags.slice(0, 8).join(', ')}`;
+      }
     }
     
     info.innerHTML = content;
