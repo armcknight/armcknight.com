@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', function() {
     tempElement.style.visibility = 'hidden';
     tempElement.style.fontSize = '1.125rem'; // --text-lg: match website body text
     tempElement.style.lineHeight = '1.75';   // match website body text
-    tempElement.style.width = '500px';       // Reasonable width that fits with git graph
+    tempElement.style.width = '450px';       // Reasonable width that fits with git graph
     tempElement.style.fontFamily = 'Charter, Georgia, Times New Roman, serif';
     tempElement.style.whiteSpace = 'normal';
     tempElement.innerHTML = content;
@@ -497,7 +497,7 @@ document.addEventListener('DOMContentLoaded', function() {
     info.style.top = textY + 'px'; // Use text position for the text (no offset needed)
     info.style.fontSize = '1.125rem'; // --text-lg: match website body text
     info.style.lineHeight = '1.75';   // match website body text
-    info.style.width = '500px';       // Reasonable width that fits with git graph
+    info.style.width = '450px';       // Reasonable width that fits with git graph
     info.style.fontFamily = 'Charter, Georgia, Times New Roman, serif';
     info.style.whiteSpace = 'normal'; // Allow wrapping for multi-line content
     
@@ -640,12 +640,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const tagCloud = document.createElement('div');
         tagCloud.className = 'stack-tag-cloud';
         tagCloud.style.position = 'absolute';
-        tagCloud.style.left = (textAreaX + 510) + 'px'; // Position to the right of text
+        tagCloud.style.left = (textAreaX + 460) + 'px'; // Position to the right of text
         tagCloud.style.top = textY + 'px';
         tagCloud.style.display = 'flex';
         tagCloud.style.flexDirection = 'column';
         tagCloud.style.gap = '3px';
         tagCloud.style.alignItems = 'flex-start';
+        tagCloud.style.maxWidth = '120px';
         
         stack.forEach(tech => {
           const tag = document.createElement('span');
@@ -657,7 +658,9 @@ document.addEventListener('DOMContentLoaded', function() {
           tag.style.padding = '3px 8px';
           tag.style.borderRadius = '6px';
           tag.style.border = '1px solid #e5e7eb';
-          tag.style.whiteSpace = 'nowrap';
+          tag.style.whiteSpace = 'normal';
+          tag.style.wordBreak = 'break-word';
+          tag.style.maxWidth = '120px';
           tag.style.textAlign = 'center';
           tag.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
           
@@ -848,7 +851,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Set container dimensions to accommodate both git graph and text area
   commitsContainer.style.height = totalHeight + 'px';
-  commitsContainer.style.width = (textAreaX + 630) + 'px'; // Extra space for text area and tag cloud column
+  commitsContainer.style.width = (textAreaX + 580) + 'px'; // Extra space for text area and tag cloud column
   commitsContainer.style.position = 'relative';
 });
 </script>
