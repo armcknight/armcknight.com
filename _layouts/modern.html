@@ -86,5 +86,40 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    // Handle floating back-to-top button positioning relative to footer
+    document.addEventListener('DOMContentLoaded', function() {
+      const floatingButton = document.querySelector('.floating-back-to-top');
+      const footer = document.querySelector('.site-footer');
+      
+      if (!floatingButton || !footer) return;
+      
+      const buttonSpacing = 24; // var(--space-6) = 1.5rem = 24px
+      
+      function updateButtonPosition() {
+        const footerRect = footer.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        
+        // Check if footer is visible from the bottom
+        if (footerRect.top < windowHeight) {
+          // Footer is visible, position button above footer
+          const footerVisibleHeight = windowHeight - footerRect.top;
+          const newBottom = footerVisibleHeight + buttonSpacing;
+          floatingButton.style.bottom = newBottom + 'px';
+        } else {
+          // Footer not visible, use default position
+          floatingButton.style.bottom = buttonSpacing + 'px';
+        }
+      }
+      
+      // Update on scroll and resize
+      window.addEventListener('scroll', updateButtonPosition);
+      window.addEventListener('resize', updateButtonPosition);
+      
+      // Initial update
+      updateButtonPosition();
+    });
+  </script>
 </body>
 </html> 

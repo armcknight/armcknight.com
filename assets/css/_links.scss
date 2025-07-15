@@ -52,7 +52,7 @@
 .floating-back-to-top {
   position: fixed;
   bottom: var(--space-6);
-  left: calc(100vw - var(--space-6) - 48px);
+  right: var(--space-6);
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -60,7 +60,7 @@
   color: var(--text-muted);
   border: 1px solid var(--border);
   cursor: pointer;
-  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, bottom 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -83,15 +83,6 @@
   height: 20px;
 }
 
-// Position floating button outside content margin on desktop
-@media (min-width: 651px) {
-  .floating-back-to-top {
-    left: calc(50% + var(--content-width) / 2 + var(--space-8));
-    right: auto;
-    position: fixed;
-  }
-}
-
 // Responsive design for links page
 @media (max-width: 650px) {
   .links-sections {
@@ -101,10 +92,5 @@
   
   .links-column {
     gap: var(--space-1) !important;
-  }
-  
-  .floating-back-to-top {
-    left: calc(100vw - var(--space-6) - 48px) !important;
-    bottom: var(--space-6) !important;
   }
 } 
