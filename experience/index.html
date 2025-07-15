@@ -474,14 +474,8 @@ document.addEventListener('DOMContentLoaded', function() {
                   const sortedItems = [...categoryItems].sort((a, b) => a.length - b.length);
                   sortedItems.forEach(tech => {
                     const tag = document.createElement('span');
+                    tag.className = 'stack-tag';
                     tag.textContent = tech;
-                    tag.style.fontSize = '0.75rem';
-                    tag.style.backgroundColor = '#F1EFEC';
-                    tag.style.color = '#666';
-                    tag.style.padding = '2px 6px';
-                    tag.style.borderRadius = '4px';
-                    tag.style.border = '1px solid #D4C9BE';
-                    tag.style.whiteSpace = 'nowrap';
                     tagsContainer.appendChild(tag);
                   });
                   
@@ -557,18 +551,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     const tag = document.createElement('span');
                     tag.className = 'stack-tag';
                     tag.textContent = tech;
-                    tag.style.fontSize = '0.75rem';
-                    tag.style.backgroundColor = '#F1EFEC';
-                    tag.style.color = '#666';
-                    tag.style.padding = '3px 8px';
-                    tag.style.borderRadius = '6px';
-                    tag.style.border = '1px solid #D4C9BE';
-                    tag.style.whiteSpace = 'normal';
-                    tag.style.wordBreak = 'break-word';
-                    tag.style.maxWidth = '120px';
-                    tag.style.textAlign = 'center';
-                    tag.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-                    
                     categoryContainer.appendChild(tag);
                   });
                   
@@ -921,14 +903,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     const sortedItems = [...categoryItems].sort((a, b) => a.length - b.length);
                     sortedItems.forEach(tech => {
                       const tag = document.createElement('span');
+                      tag.className = 'stack-tag';
                       tag.textContent = tech;
-                      tag.style.fontSize = '0.75rem';
-                      tag.style.backgroundColor = '#F1EFEC';
-                      tag.style.color = '#666';
-                      tag.style.padding = '2px 6px';
-                      tag.style.borderRadius = '4px';
-                      tag.style.border = '1px solid #D4C9BE';
-                      tag.style.whiteSpace = 'nowrap';
                       tagsContainer.appendChild(tag);
                     });
                     
@@ -984,17 +960,6 @@ document.addEventListener('DOMContentLoaded', function() {
                       const tag = document.createElement('span');
                       tag.className = 'stack-tag';
                       tag.textContent = tech;
-                      tag.style.fontSize = '0.75rem';
-                      tag.style.backgroundColor = '#F1EFEC';
-                      tag.style.color = '#666';
-                      tag.style.padding = '3px 8px';
-                      tag.style.borderRadius = '6px';
-                      tag.style.border = '1px solid #D4C9BE';
-                      tag.style.whiteSpace = 'normal';
-                      tag.style.wordBreak = 'break-word';
-                      tag.style.maxWidth = '120px';
-                      tag.style.textAlign = 'center';
-                      tag.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
                       
                       categoryContainer.appendChild(tag);
                     });
