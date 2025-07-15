@@ -402,8 +402,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Simple string format
                 content += `<li style="margin-bottom: 0.25rem;">${deliverable}</li>`;
               } else if (deliverable.name) {
-                // Object format with name/description
-                let deliverableContent = deliverable.name;
+                // Object format with name/description/url (url is optional)
+                let deliverableContent = '';
+                if (deliverable.url) {
+                  deliverableContent += `<a href="${deliverable.url}" target="_blank">${deliverable.name}</a>`;
+                } else {
+                  deliverableContent += deliverable.name;
+                }
                 if (deliverable.description) {
                   deliverableContent += ` - ${deliverable.description}`;
                 }
