@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   const BRANCH_WIDTH = 15;
   const LINE_HEIGHT = 30;
-  const MAIN_BRANCH_X = 0; // Adjusted for removed padding
+      const MAIN_BRANCH_X = 5; // Small padding to ensure main line is fully visible
   
   // Function to calculate complete entry height (text + stack on mobile)
   function calculateCompleteEntryHeight(commit) {
@@ -632,7 +632,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const commitEl = document.createElement('div');
     commitEl.className = 'git-commit';
     commitEl.style.position = 'absolute';
-    commitEl.style.left = (xPosition - 5) + 'px'; // Center 10px dot on branch line
+    // Adjust dot position to account for canvas positioning on mobile
+    const canvasLeftOffset = isMobile() ? 8 : 16; // var(--space-2) = 8px, var(--space-4) = 16px
+    commitEl.style.left = (xPosition - 5 + canvasLeftOffset) + 'px'; // Center 10px dot on branch line
     commitEl.style.top = dotY + 'px'; // Use dot position for the actual dot
     
     // Debug: Check exact dot positioning

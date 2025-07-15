@@ -1292,7 +1292,7 @@ blockquote p {
   // Mobile: move git graph to left edge
   @media (max-width: 768px) {
     padding: var(--space-2) 0 var(--space-4) 0;
-    margin-left: calc(-1 * var(--space-4));
+    margin-left: calc(-1 * var(--space-2)); // Less aggressive left positioning
   }
 }
 
@@ -1303,9 +1303,9 @@ blockquote p {
   pointer-events: none;
   z-index: 1;
   
-  // Mobile: position canvas at left edge
+  // Mobile: position canvas with small padding to ensure visibility
   @media (max-width: 768px) {
-    left: 0;
+    left: var(--space-2);
     top: var(--space-2);
   }
 }
