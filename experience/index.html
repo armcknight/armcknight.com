@@ -635,7 +635,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Create tag cloud for technology stack (positioned to the right)
     if (commit.type === 'end' && element.dataset.stack) {
-      const stack = element.dataset.stack.split(',').map(s => s.trim()).filter(s => s);
+      const stack = element.dataset.stack.split(',').map(s => s.trim()).filter(s => s).sort((a, b) => a.length - b.length);
       if (stack.length > 0) {
         const tagCloud = document.createElement('div');
         tagCloud.className = 'stack-tag-cloud';
