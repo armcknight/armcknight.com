@@ -7,18 +7,21 @@
   <meta name="description" content="{{ page.abstract | default: site.description | default: '' }}">
   <meta name="author" content="Andrew McKnight">
   <meta name="copyright" content="Andrew McKnight Copyright (c) 2024">
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ site.url }}{{ page.url }}">
   <meta property="og:title" content="{% if page.title %}{{ page.title }} - {% endif %}{{ site.title | default: 'Andrew McKnight' }}">
   <meta property="og:description" content="{{ page.abstract | default: site.description | default: '' }}">
+  <meta property="og:image"  content="/assets/images/me.jpeg">
   
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="{{ site.url }}{{ page.url }}">
   <meta property="twitter:title" content="{% if page.title %}{{ page.title }} - {% endif %}{{ site.title | default: 'Andrew McKnight' }}">
   <meta property="twitter:description" content="{{ page.abstract | default: site.description | default: '' }}">
+  <meta name="twitter:image" content="/assets/images/me.jpeg">
   
   <!-- Stylesheets -->
   <link rel="stylesheet" href="{{ '/assets/css/modern.css' | relative_url }}">
