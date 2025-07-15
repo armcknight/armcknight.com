@@ -96,12 +96,21 @@
       if (!floatingButton || !footer) return;
       
       const buttonSpacing = 24; // var(--space-6) = 1.5rem = 24px
+      const scrollThreshold = 200; // Show button after scrolling 200px down
       
       function updateButtonPosition() {
+        const scrollY = window.scrollY;
         const footerRect = footer.getBoundingClientRect();
         const windowHeight = window.innerHeight;
         
-        // Check if footer is visible from the bottom
+        // Show/hide based on scroll position
+        if (scrollY > scrollThreshold) {
+          floatingButton.classList.add('visible');
+        } else {
+          floatingButton.classList.remove('visible');
+        }
+        
+        // Position relative to footer when footer is visible
         if (footerRect.top < windowHeight) {
           // Footer is visible, position button above footer
           const footerVisibleHeight = windowHeight - footerRect.top;
