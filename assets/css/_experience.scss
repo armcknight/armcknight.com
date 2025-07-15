@@ -170,15 +170,15 @@
   flex-wrap: wrap;
 }
 
-  .stack-tag {
-    font-family: var(--font-family-sans);
-  font-size: var(--text-sm);
+.stack-tag {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-xs);
   background-color: var(--background-alt);
   color: var(--text-secondary);
-  padding: 3px 8px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  transition: all 0.15s ease;
+  padding: var(--space-1) var(--space-2);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
 }
 
 .stack-tag:hover {

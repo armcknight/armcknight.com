@@ -8,6 +8,11 @@ init:
 _logs-dir:
 	mkdir -p logs
 
+update-resume:
+	pushd resume && make build
+	cp resume/build/cv.pdf assets/pdf/andrew-mcknight-cv.pdf
+	cp resume/build/ios_resume.pdf assets/pdf/andrew-mcknight-resume-ios.pdf
+
 build: _logs-dir
 	rbenv exec bundle exec jekyll build --destination _site 2>&1 | tee logs/jekyll_build.log
 

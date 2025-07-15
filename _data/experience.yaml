@@ -10,7 +10,7 @@ experience:
     stack: 
       - languages: [Swift, Objective-C++]
       - frameworks: [SwiftUI]
-      - tools: [XcodeGen]
+      - tools: [XcodeGen, Swiftlint, clang-format, CodeCov, pre-commit, Fastlane]
       - infrastructure: [GitHub Actions, SauceLabs]
     highlights:
       - Integrating Specto's profiling feature into Sentry's Cocoa SDK
