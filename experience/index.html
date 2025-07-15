@@ -67,7 +67,7 @@ Git-style timeline - start simple with just dates
              data-location="{{ edu.location }}"
 
              data-highlights="{{ edu.highlights | jsonify | escape }}"
-             data-honors="{{ edu.honors | map: 'award' | join: '||' }}"
+             data-honors="{{ edu.honors | jsonify | escape }}"
              data-tags="{{ edu.tags | join: ',' }}"
              data-era="education">
           <div class="commit-dot"></div>
@@ -311,14 +311,30 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Add education honors
       if (element.dataset.honors) {
-        const honors = element.dataset.honors.split('||').slice(0, 3); // Show first 3 honors
-        const filteredHonors = honors.filter(honor => honor.trim());
-        if (filteredHonors.length > 0) {
-          content += `<ul style="margin: 0.5rem 0; padding-left: 1.5rem;">`;
-          filteredHonors.forEach(honor => {
-            content += `<li style="margin-bottom: 0.25rem;">🏆 ${honor.trim()}</li>`;
-          });
-          content += `</ul>`;
+        try {
+          const honors = JSON.parse(element.dataset.honors);
+          if (honors && honors.length > 0) {
+            content += `<h3 style="font-size: 1rem; font-weight: 600; margin: 0.5rem 0 0.25rem 0;">Honors:</h3>`;
+            content += `<ul style="margin: 0.5rem 0; padding-left: 1.5rem; list-style: none;">`;
+            honors.slice(0, 3).forEach(honor => { // Show first 3 honors
+              content += `<li style="margin-bottom: 0.5rem; position: relative; padding-left: 1.5rem;"><span style="position: absolute; left: 0;">🏆</span>`;
+              content += `<strong>${honor.award}</strong>`;
+              if (honor.year || honor.institution) {
+                content += `<br/><span style="font-size: 0.9rem; color: #666;">`;
+                if (honor.year) content += honor.year;
+                if (honor.year && honor.institution) content += ' - ';
+                if (honor.institution) content += honor.institution;
+                content += `</span>`;
+              }
+              if (honor.description) {
+                content += `<br/><span style="font-size: 0.9rem; font-style: italic;">${honor.description}</span>`;
+              }
+              content += `</li>`;
+            });
+            content += `</ul>`;
+          }
+        } catch (e) {
+          // Skip if JSON parsing fails
         }
       }
       
@@ -546,14 +562,30 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Add education honors
       if (element.dataset.honors) {
-        const honors = element.dataset.honors.split('||').slice(0, 3); // Show first 3 honors
-        const filteredHonors = honors.filter(honor => honor.trim());
-        if (filteredHonors.length > 0) {
-          content += `<ul style="margin: 0.5rem 0; padding-left: 1.5rem;">`;
-          filteredHonors.forEach(honor => {
-            content += `<li style="margin-bottom: 0.25rem;">🏆 ${honor.trim()}</li>`;
-          });
-          content += `</ul>`;
+        try {
+          const honors = JSON.parse(element.dataset.honors);
+          if (honors && honors.length > 0) {
+            content += `<h3 style="font-size: 1rem; font-weight: 600; margin: 0.5rem 0 0.25rem 0;">Honors:</h3>`;
+            content += `<ul style="margin: 0.5rem 0; padding-left: 1.5rem; list-style: none;">`;
+            honors.slice(0, 3).forEach(honor => { // Show first 3 honors
+              content += `<li style="margin-bottom: 0.5rem; position: relative; padding-left: 1.5rem;"><span style="position: absolute; left: 0;">🏆</span>`;
+              content += `<strong>${honor.award}</strong>`;
+              if (honor.year || honor.institution) {
+                content += `<br/><span style="font-size: 0.9rem; color: #666;">`;
+                if (honor.year) content += honor.year;
+                if (honor.year && honor.institution) content += ' - ';
+                if (honor.institution) content += honor.institution;
+                content += `</span>`;
+              }
+              if (honor.description) {
+                content += `<br/><span style="font-size: 0.9rem; font-style: italic;">${honor.description}</span>`;
+              }
+              content += `</li>`;
+            });
+            content += `</ul>`;
+          }
+        } catch (e) {
+          // Skip if JSON parsing fails
         }
       }
       
