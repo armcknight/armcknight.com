@@ -464,6 +464,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const dotY = commitPositions[index].yPosition; // Use mapped commit position for dot
     const xPosition = getBranchX(commit.branch);
     
+    // Skip rendering start commits (but keep them in positioning for git graph)
+    if (commit.type === 'start') {
+      return;
+    }
+    
     // Create commit element (for the dot)
     const commitEl = document.createElement('div');
     commitEl.className = 'git-commit';
