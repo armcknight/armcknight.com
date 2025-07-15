@@ -1,5 +1,16 @@
 // Experience page specific styles
 
+// Git timeline color palette - standard websafe 16 colors
+:root {
+  --git-maroon: #800000;      // Maroon
+  --git-green: #008000;       // Green
+  --git-olive: #808000;       // Olive
+  --git-purple: #800080;      // Purple
+  --git-teal: #008080;        // Teal
+  --git-red: #FF0000;         // Red
+  --git-blue: #0000FF;        // Blue
+}
+
 // Experience categories
 .experience-category {
   margin-bottom: var(--space-16);
@@ -159,8 +170,8 @@
   flex-wrap: wrap;
 }
 
-.stack-tag {
-  font-family: var(--font-famly-sans);
+  .stack-tag {
+    font-family: var(--font-family-sans);
   font-size: var(--text-sm);
   background-color: var(--background-alt);
   color: var(--text-secondary);

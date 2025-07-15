@@ -992,27 +992,16 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   function getBranchColor(branchIndex) {
+    // Get standard websafe colors from CSS custom properties
+    const style = getComputedStyle(document.documentElement);
     const colors = [
-      '#123458', // navy DEFAULT
-      '#D4C9BE', // beige DEFAULT
-      '#030303', // almost black
-      '#F1EFEC', // light cream
-      '#1a4066', // darker navy
-      '#c7bab0', // darker beige
-      '#0a1f3a', // darkest navy
-      '#e8e4df', // lighter cream
-      '#2d5a8c', // medium navy
-      '#b8a995', // medium beige
-      '#051125', // very dark navy
-      '#f5f2ee', // very light cream
-      '#1e4a74', // navy variation
-      '#d0c2b5', // beige variation
-      '#070c14', // dark variation
-      '#ebe7e2', // cream variation
-      '#16335a', // navy shade
-      '#c2b3a6', // beige shade
-      '#0d1420', // dark shade
-      '#f8f6f3', // lightest cream
+      style.getPropertyValue('--git-maroon').trim(),       // Maroon
+      style.getPropertyValue('--git-green').trim(),        // Green
+      style.getPropertyValue('--git-olive').trim(),        // Olive
+      style.getPropertyValue('--git-purple').trim(),       // Purple
+      style.getPropertyValue('--git-teal').trim(),         // Teal
+      style.getPropertyValue('--git-red').trim(),          // Red
+      style.getPropertyValue('--git-blue').trim(),         // Blue
     ];
     return colors[branchIndex % colors.length]; // Cycle through colors
   }
