@@ -68,6 +68,11 @@ Git-style timeline - start simple with just dates
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  // Mobile detection helper
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
+  
   // Simple date parser
   function parseDate(dateStr) {
     if (!dateStr) return null;
@@ -394,12 +399,85 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add to document to measure, then remove
     document.body.appendChild(tempElement);
-    const textHeight = tempElement.offsetHeight;
+    let textHeight = tempElement.offsetHeight;
     document.body.removeChild(tempElement);
+    
+    // On mobile, add stack height to text height since stack is embedded in content
+    if (isMobile() && commit.type === 'end' && element && element.dataset.stack) {
+      try {
+        const stackData = JSON.parse(element.dataset.stack);
+        if (stackData && Array.isArray(stackData)) {
+          // Create temporary stack section to measure its height
+          const tempStackSection = document.createElement('div');
+          tempStackSection.style.position = 'absolute';
+          tempStackSection.style.left = '-9999px';
+          tempStackSection.style.top = '-9999px';
+          tempStackSection.style.visibility = 'hidden';
+          tempStackSection.style.width = '280px'; // Same as mobile text width
+          tempStackSection.style.marginTop = '1rem';
+          tempStackSection.style.marginBottom = '1rem';
+          tempStackSection.style.fontSize = '0.9rem';
+          tempStackSection.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+          
+          stackData.forEach(categoryObj => {
+            if (categoryObj && typeof categoryObj === 'object') {
+              Object.keys(categoryObj).forEach(category => {
+                const categoryItems = categoryObj[category];
+                if (categoryItems && Array.isArray(categoryItems) && categoryItems.length > 0) {
+                  // Category heading
+                  const heading = document.createElement('div');
+                  heading.style.fontSize = '0.8rem';
+                  heading.style.fontWeight = '600';
+                  heading.style.color = '#4b5563';
+                  heading.style.marginBottom = '4px';
+                  heading.style.marginTop = '8px';
+                  heading.textContent = category;
+                  tempStackSection.appendChild(heading);
+                  
+                  // Tags container
+                  const tagsContainer = document.createElement('div');
+                  tagsContainer.style.display = 'flex';
+                  tagsContainer.style.flexWrap = 'wrap';
+                  tagsContainer.style.gap = '4px';
+                  tagsContainer.style.marginBottom = '8px';
+                  
+                  const sortedItems = [...categoryItems].sort((a, b) => a.length - b.length);
+                  sortedItems.forEach(tech => {
+                    const tag = document.createElement('span');
+                    tag.textContent = tech;
+                    tag.style.fontSize = '0.75rem';
+                    tag.style.backgroundColor = '#f3f4f6';
+                    tag.style.color = '#666';
+                    tag.style.padding = '2px 6px';
+                    tag.style.borderRadius = '4px';
+                    tag.style.border = '1px solid #e5e7eb';
+                    tag.style.whiteSpace = 'nowrap';
+                    tagsContainer.appendChild(tag);
+                  });
+                  
+                  tempStackSection.appendChild(tagsContainer);
+                }
+              });
+            }
+          });
+          
+          // Measure the stack section height
+          document.body.appendChild(tempStackSection);
+          const stackHeight = tempStackSection.offsetHeight;
+          document.body.removeChild(tempStackSection);
+          
+          // Add stack height to text height
+          textHeight += stackHeight;
+        }
+      } catch (e) {
+        console.error('Error measuring mobile stack height:', e);
+      }
+    }
     
     // Calculate stack height for end commits by actually rendering and measuring
     let stackHeight = 0;
-    if (commit.type === 'end' && element && element.dataset.stack) {
+    if (commit.type === 'end' && element && element.dataset.stack && !isMobile()) {
+      // Only calculate stack height for desktop (mobile embeds it in text)
       try {
         const stackData = JSON.parse(element.dataset.stack);
         if (stackData && Array.isArray(stackData)) {
@@ -476,7 +554,14 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
     
-    return Math.max(textHeight, stackHeight);
+    // Responsive height calculation
+    if (isMobile()) {
+      // Mobile: stack is embedded in text content, so just use text height
+      return textHeight;
+    } else {
+      // Desktop: stack appears alongside text, so use the maximum
+      return Math.max(textHeight, stackHeight);
+    }
   }
   
   // NEW APPROACH: Text-first layout to prevent overlaps
@@ -497,8 +582,29 @@ document.addEventListener('DOMContentLoaded', function() {
       textHeight: textHeight
     });
     
-    // Use actual measured height + reasonable buffer
-    const entrySpacing = textHeight + 30; // Actual height + 30px buffer
+    // Use actual measured height + reasonable buffer (more spacing on mobile)
+    let buffer = isMobile() ? 80 : 30; // Much more space on mobile for stacked layout
+    
+    // Extra buffer for entries with technology stacks on mobile
+    if (isMobile() && commit.type === 'end' && commit.element && commit.element.dataset.stack) {
+      try {
+        const stackData = JSON.parse(commit.element.dataset.stack);
+        if (stackData && Array.isArray(stackData) && stackData.length > 0) {
+          buffer += 40; // Additional buffer for stack entries
+        }
+      } catch (e) {
+        // If stack parsing fails, still add some extra buffer
+        buffer += 20;
+      }
+    }
+    
+    const entrySpacing = textHeight + buffer;
+    
+    // Debug logging for mobile
+    if (isMobile() && commit.company) {
+      console.log(`Mobile spacing - ${commit.company}: textHeight=${textHeight}, buffer=${buffer}, total=${entrySpacing}`);
+    }
+    
     cumulativeY += entrySpacing;
   });
   
@@ -569,7 +675,8 @@ document.addEventListener('DOMContentLoaded', function() {
     info.style.top = textY + 'px'; // Use text position for the text (no offset needed)
     info.style.fontSize = '1.125rem'; // --text-lg: match website body text
     info.style.lineHeight = '1.75';   // match website body text
-    info.style.width = '450px';       // Reasonable width that fits with git graph
+    // Responsive text width
+    info.style.width = isMobile() ? '280px' : '450px'; // Narrower on mobile to prevent horizontal scroll
     info.style.fontFamily = 'Charter, Georgia, Times New Roman, serif';
     info.style.whiteSpace = 'normal'; // Allow wrapping for multi-line content
     
@@ -709,76 +816,132 @@ document.addEventListener('DOMContentLoaded', function() {
     
     info.innerHTML = content;
     
-    // Create tag cloud for technology stack (positioned to the right)
+    // Create tag cloud for technology stack
     if (commit.type === 'end' && element && element.dataset.stack) {
       try {
         const stackData = JSON.parse(element.dataset.stack);
         const hasContent = stackData && Array.isArray(stackData) && stackData.length > 0;
         
         if (hasContent) {
-          const tagCloud = document.createElement('div');
-          tagCloud.className = 'stack-tag-cloud';
-          tagCloud.style.position = 'absolute';
-          tagCloud.style.left = (textAreaX + 460) + 'px'; // Position to the right of text
-          tagCloud.style.top = textY + 'px';
-          tagCloud.style.display = 'flex';
-          tagCloud.style.flexDirection = 'column';
-          tagCloud.style.gap = '8px';
-          tagCloud.style.alignItems = 'flex-start';
-          tagCloud.style.maxWidth = '120px';
-          
-          stackData.forEach(categoryObj => {
-            if (categoryObj && typeof categoryObj === 'object') {
-              Object.keys(categoryObj).forEach(category => {
-                const categoryItems = categoryObj[category];
-                if (categoryItems && Array.isArray(categoryItems) && categoryItems.length > 0) {
-                  // Create heading for the category
-                  const heading = document.createElement('div');
-                  heading.style.fontSize = '0.7rem';
-                  heading.style.fontWeight = '600';
-                  heading.style.color = '#4b5563';
-                  heading.style.marginBottom = '3px';
-                  heading.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-                  heading.textContent = category;
-                  tagCloud.appendChild(heading);
-                  
-                  // Create container for this category's tags
-                  const categoryContainer = document.createElement('div');
-                  categoryContainer.style.display = 'flex';
-                  categoryContainer.style.flexDirection = 'row';
-                  categoryContainer.style.flexWrap = 'wrap';
-                  categoryContainer.style.gap = '3px';
-                  categoryContainer.style.marginBottom = '4px';
-                  
-                  // Sort items by length for better packing
-                  const sortedItems = [...categoryItems].sort((a, b) => a.length - b.length);
-                  
-                  sortedItems.forEach(tech => {
-                    const tag = document.createElement('span');
-                    tag.className = 'stack-tag';
-                    tag.textContent = tech;
-                    tag.style.fontSize = '0.75rem';
-                    tag.style.backgroundColor = '#f3f4f6';
-                    tag.style.color = '#666';
-                    tag.style.padding = '3px 8px';
-                    tag.style.borderRadius = '6px';
-                    tag.style.border = '1px solid #e5e7eb';
-                    tag.style.whiteSpace = 'normal';
-                    tag.style.wordBreak = 'break-word';
-                    tag.style.maxWidth = '120px';
-                    tag.style.textAlign = 'center';
-                    tag.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+          if (isMobile()) {
+            // MOBILE: Append stack below text content
+            const stackSection = document.createElement('div');
+            stackSection.style.marginTop = '1rem';
+            stackSection.style.marginBottom = '1rem';
+            stackSection.style.fontSize = '0.9rem';
+            stackSection.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            
+            stackData.forEach(categoryObj => {
+              if (categoryObj && typeof categoryObj === 'object') {
+                Object.keys(categoryObj).forEach(category => {
+                  const categoryItems = categoryObj[category];
+                  if (categoryItems && Array.isArray(categoryItems) && categoryItems.length > 0) {
+                    // Category heading
+                    const heading = document.createElement('div');
+                    heading.style.fontSize = '0.8rem';
+                    heading.style.fontWeight = '600';
+                    heading.style.color = '#4b5563';
+                    heading.style.marginBottom = '4px';
+                    heading.style.marginTop = '8px';
+                    heading.textContent = category;
+                    stackSection.appendChild(heading);
                     
-                    categoryContainer.appendChild(tag);
-                  });
-                  
-                  tagCloud.appendChild(categoryContainer);
-                }
-              });
-            }
-          });
-          
-          commitsContainer.appendChild(tagCloud);
+                    // Tags container
+                    const tagsContainer = document.createElement('div');
+                    tagsContainer.style.display = 'flex';
+                    tagsContainer.style.flexWrap = 'wrap';
+                    tagsContainer.style.gap = '4px';
+                    tagsContainer.style.marginBottom = '8px';
+                    
+                    const sortedItems = [...categoryItems].sort((a, b) => a.length - b.length);
+                    sortedItems.forEach(tech => {
+                      const tag = document.createElement('span');
+                      tag.textContent = tech;
+                      tag.style.fontSize = '0.75rem';
+                      tag.style.backgroundColor = '#f3f4f6';
+                      tag.style.color = '#666';
+                      tag.style.padding = '2px 6px';
+                      tag.style.borderRadius = '4px';
+                      tag.style.border = '1px solid #e5e7eb';
+                      tag.style.whiteSpace = 'nowrap';
+                      tagsContainer.appendChild(tag);
+                    });
+                    
+                    stackSection.appendChild(tagsContainer);
+                  }
+                });
+              }
+            });
+            
+            // Append to the text info element instead of positioning absolutely
+            info.appendChild(stackSection);
+            
+          } else {
+            // DESKTOP: Absolute positioning to the right
+            const tagCloud = document.createElement('div');
+            tagCloud.className = 'stack-tag-cloud';
+            tagCloud.style.position = 'absolute';
+            tagCloud.style.left = (textAreaX + 460) + 'px';
+            tagCloud.style.top = textY + 'px';
+            tagCloud.style.maxWidth = '120px';
+            tagCloud.style.display = 'flex';
+            tagCloud.style.flexDirection = 'column';
+            tagCloud.style.gap = '8px';
+            tagCloud.style.alignItems = 'flex-start';
+            
+            stackData.forEach(categoryObj => {
+              if (categoryObj && typeof categoryObj === 'object') {
+                Object.keys(categoryObj).forEach(category => {
+                  const categoryItems = categoryObj[category];
+                  if (categoryItems && Array.isArray(categoryItems) && categoryItems.length > 0) {
+                    // Create heading for the category
+                    const heading = document.createElement('div');
+                    heading.style.fontSize = '0.7rem';
+                    heading.style.fontWeight = '600';
+                    heading.style.color = '#4b5563';
+                    heading.style.marginBottom = '3px';
+                    heading.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                    heading.textContent = category;
+                    tagCloud.appendChild(heading);
+                    
+                    // Create container for this category's tags
+                    const categoryContainer = document.createElement('div');
+                    categoryContainer.style.display = 'flex';
+                    categoryContainer.style.flexDirection = 'row';
+                    categoryContainer.style.flexWrap = 'wrap';
+                    categoryContainer.style.gap = '3px';
+                    categoryContainer.style.marginBottom = '4px';
+                    
+                    // Sort items by length for better packing
+                    const sortedItems = [...categoryItems].sort((a, b) => a.length - b.length);
+                    
+                    sortedItems.forEach(tech => {
+                      const tag = document.createElement('span');
+                      tag.className = 'stack-tag';
+                      tag.textContent = tech;
+                      tag.style.fontSize = '0.75rem';
+                      tag.style.backgroundColor = '#f3f4f6';
+                      tag.style.color = '#666';
+                      tag.style.padding = '3px 8px';
+                      tag.style.borderRadius = '6px';
+                      tag.style.border = '1px solid #e5e7eb';
+                      tag.style.whiteSpace = 'normal';
+                      tag.style.wordBreak = 'break-word';
+                      tag.style.maxWidth = '120px';
+                      tag.style.textAlign = 'center';
+                      tag.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                      
+                      categoryContainer.appendChild(tag);
+                    });
+                    
+                    tagCloud.appendChild(categoryContainer);
+                  }
+                });
+              }
+            });
+            
+            commitsContainer.appendChild(tagCloud);
+          }
         }
       } catch (e) {
         console.error('Error parsing stack data:', e);
@@ -970,8 +1133,22 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Set container dimensions to accommodate both git graph and text area
   commitsContainer.style.height = totalHeight + 'px';
-  commitsContainer.style.width = (textAreaX + 580) + 'px'; // Extra space for text area and tag cloud column
+  
+  // Responsive container width
+  const containerWidth = isMobile() ? 
+    (textAreaX + 300) + 'px' : // Mobile: narrower width to prevent horizontal scroll
+    (textAreaX + 580) + 'px';  // Desktop: extra space for text area and tag cloud column
+  commitsContainer.style.width = containerWidth;
   commitsContainer.style.position = 'relative';
+
+  // Handle window resize for responsive behavior
+  window.addEventListener('resize', function() {
+    // Refresh the layout when window is resized
+    setTimeout(function() {
+      location.reload();
+    }, 100);
+  });
+
 });
 </script>
 

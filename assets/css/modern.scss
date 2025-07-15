@@ -1273,6 +1273,12 @@ blockquote p {
     margin-bottom: var(--space-6);
     color: var(--text-primary);
   }
+  
+  // Mobile: prevent horizontal scrolling
+  @media (max-width: 768px) {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
 }
 
 .git-graph {
@@ -1282,6 +1288,12 @@ blockquote p {
   padding: var(--space-4);
   background: var(--background);
   overflow: auto;
+  
+  // Mobile: move git graph to left edge
+  @media (max-width: 768px) {
+    padding: var(--space-2) 0 var(--space-4) 0;
+    margin-left: calc(-1 * var(--space-4));
+  }
 }
 
 #git-canvas {
@@ -1290,6 +1302,12 @@ blockquote p {
   left: var(--space-4);
   pointer-events: none;
   z-index: 1;
+  
+  // Mobile: position canvas at left edge
+  @media (max-width: 768px) {
+    left: 0;
+    top: var(--space-2);
+  }
 }
 
 // Canvas-based branch lines - no additional styling needed
@@ -1300,6 +1318,19 @@ blockquote p {
   height: 100%;
   z-index: 2;
   padding: var(--space-4);
+  
+  // Mobile: adjust padding to prevent horizontal scroll
+  @media (max-width: 768px) {
+    padding: var(--space-2) 0;
+  }
+}
+
+.stack-tag-cloud {
+  // Mobile: ensure proper text wrapping and spacing
+  @media (max-width: 768px) {
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
 }
 
 .git-commit {
