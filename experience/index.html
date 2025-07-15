@@ -52,6 +52,7 @@ Git-style timeline - start simple with just dates
              data-location="{{ edu.location }}"
 
              data-highlights="{{ edu.highlights | jsonify | escape }}"
+             data-publications="{{ edu.publications | jsonify | escape }}"
              data-honors="{{ edu.honors | jsonify | escape }}"
              data-tags="{{ edu.tags | join: ',' }}"
              data-era="education">
@@ -318,6 +319,32 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
       
+      // Add education publications
+      if (element.dataset.publications) {
+        try {
+          const publications = JSON.parse(element.dataset.publications);
+          if (publications && publications.length > 0) {
+            content += `<h3 style="font-size: 1rem; font-weight: 600; margin: 0.5rem 0 0.25rem 0;">Publications:</h3>`;
+            content += `<ul style="margin: 0.5rem 0; padding-left: 1.5rem; list-style: none;">`;
+            publications.forEach(pub => {
+              content += `<li style="margin-bottom: 0.75rem; position: relative; padding-left: 1.5rem;"><span style="position: absolute; left: 0;">📄</span>`;
+              if (pub.url) {
+                content += `<a href="${pub.url}" target="_blank" style="color: #2563eb; text-decoration: none; font-weight: 500;">${pub.title}</a>`;
+              } else {
+                content += `<span style="font-weight: 500;">${pub.title}</span>`;
+              }
+              if (pub.year) {
+                content += `<br/><span style="font-size: 0.9rem; color: #666;">${pub.year}</span>`;
+              }
+              content += `</li>`;
+            });
+            content += `</ul>`;
+          }
+        } catch (e) {
+          // Skip if JSON parsing fails
+        }
+      }
+      
       // Add education honors
       if (element.dataset.honors) {
         try {
@@ -325,20 +352,32 @@ document.addEventListener('DOMContentLoaded', function() {
           if (honors && honors.length > 0) {
             content += `<h3 style="font-size: 1rem; font-weight: 600; margin: 0.5rem 0 0.25rem 0;">Honors:</h3>`;
             content += `<ul style="margin: 0.5rem 0; padding-left: 1.5rem; list-style: none;">`;
-            honors.slice(0, 3).forEach(honor => { // Show first 3 honors
+            honors.forEach(honor => { // Show all honors
               content += `<li style="margin-bottom: 0.5rem; position: relative; padding-left: 1.5rem;"><span style="position: absolute; left: 0;">🏆</span>`;
               content += `<strong>${honor.award}</strong>`;
-              if (honor.year || honor.institution) {
-                content += `<br/><span style="font-size: 0.9rem; color: #666;">`;
-                if (honor.year) content += honor.year;
-                if (honor.year && honor.institution) content += ' - ';
-                if (honor.institution) content += honor.institution;
-                content += `</span>`;
+              if (honor.year) {
+                content += `<br/><span style="font-size: 0.9rem; color: #666;">${honor.year}</span>`;
               }
               if (honor.description) {
                 content += `<br/><span style="font-size: 0.9rem; font-style: italic;">${honor.description}</span>`;
               }
               content += `</li>`;
+            });
+            content += `</ul>`;
+          }
+        } catch (e) {
+          // Skip if JSON parsing fails
+        }
+      }
+      
+      // Add details for education entries (in addition to highlights)
+      if (element.dataset.details) {
+        try {
+          const details = JSON.parse(element.dataset.details);
+          if (details && details.length > 0) {
+            content += `<ul style="margin: 0.5rem 0; padding-left: 1.5rem;">`;
+            details.slice(0, 4).forEach(detail => { // Show first 4 details
+              content += `<li style="margin-bottom: 0.25rem;">${detail}</li>`;
             });
             content += `</ul>`;
           }
@@ -736,6 +775,32 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
       
+      // Add education publications
+      if (element.dataset.publications) {
+        try {
+          const publications = JSON.parse(element.dataset.publications);
+          if (publications && publications.length > 0) {
+            content += `<h3 style="font-size: 1rem; font-weight: 600; margin: 0.5rem 0 0.25rem 0;">Publications:</h3>`;
+            content += `<ul style="margin: 0.5rem 0; padding-left: 1.5rem; list-style: none;">`;
+            publications.forEach(pub => {
+              content += `<li style="margin-bottom: 0.75rem; position: relative; padding-left: 1.5rem;"><span style="position: absolute; left: 0;">📄</span>`;
+              if (pub.url) {
+                content += `<a href="${pub.url}" target="_blank" style="color: #2563eb; text-decoration: none; font-weight: 500;">${pub.title}</a>`;
+              } else {
+                content += `<span style="font-weight: 500;">${pub.title}</span>`;
+              }
+              if (pub.year) {
+                content += `<br/><span style="font-size: 0.9rem; color: #666;">${pub.year}</span>`;
+              }
+              content += `</li>`;
+            });
+            content += `</ul>`;
+          }
+        } catch (e) {
+          // Skip if JSON parsing fails
+        }
+      }
+      
       // Add education honors
       if (element.dataset.honors) {
         try {
@@ -743,20 +808,32 @@ document.addEventListener('DOMContentLoaded', function() {
           if (honors && honors.length > 0) {
             content += `<h3 style="font-size: 1rem; font-weight: 600; margin: 0.5rem 0 0.25rem 0;">Honors:</h3>`;
             content += `<ul style="margin: 0.5rem 0; padding-left: 1.5rem; list-style: none;">`;
-            honors.slice(0, 3).forEach(honor => { // Show first 3 honors
+            honors.forEach(honor => { // Show all honors
               content += `<li style="margin-bottom: 0.5rem; position: relative; padding-left: 1.5rem;"><span style="position: absolute; left: 0;">🏆</span>`;
               content += `<strong>${honor.award}</strong>`;
-              if (honor.year || honor.institution) {
-                content += `<br/><span style="font-size: 0.9rem; color: #666;">`;
-                if (honor.year) content += honor.year;
-                if (honor.year && honor.institution) content += ' - ';
-                if (honor.institution) content += honor.institution;
-                content += `</span>`;
+              if (honor.year) {
+                content += `<br/><span style="font-size: 0.9rem; color: #666;">${honor.year}</span>`;
               }
               if (honor.description) {
                 content += `<br/><span style="font-size: 0.9rem; font-style: italic;">${honor.description}</span>`;
               }
               content += `</li>`;
+            });
+            content += `</ul>`;
+          }
+        } catch (e) {
+          // Skip if JSON parsing fails
+        }
+      }
+      
+      // Add details for education entries (in addition to highlights)
+      if (element.dataset.details) {
+        try {
+          const details = JSON.parse(element.dataset.details);
+          if (details && details.length > 0) {
+            content += `<ul style="margin: 0.5rem 0; padding-left: 1.5rem;">`;
+            details.slice(0, 4).forEach(detail => { // Show first 4 details
+              content += `<li style="margin-bottom: 0.25rem;">${detail}</li>`;
             });
             content += `</ul>`;
           }
