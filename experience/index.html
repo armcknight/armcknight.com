@@ -1161,11 +1161,24 @@ document.addEventListener('DOMContentLoaded', function() {
   commitsContainer.style.position = 'relative';
 
   // Handle window resize for responsive behavior
+  let initialWidth = window.innerWidth;
+  let resizeTimeout;
+  
   window.addEventListener('resize', function() {
-    // Refresh the layout when window is resized
-    setTimeout(function() {
-      location.reload();
-    }, 100);
+    // Debounce resize events to avoid rapid firing
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(function() {
+      const currentWidth = window.innerWidth;
+      const widthChange = Math.abs(currentWidth - initialWidth);
+      
+      // Only reload on significant width changes (more than 50px difference)
+      // This prevents reloads from mobile address bar changes or small viewport adjustments
+      if (widthChange > 50) {
+        // Update initial width before reload to prevent repeated reloads
+        initialWidth = currentWidth;
+        location.reload();
+      }
+    }, 300); // Wait for resize events to settle
   });
 
 });
