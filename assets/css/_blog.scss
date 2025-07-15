@@ -143,6 +143,19 @@
   margin-bottom: 0;
 }
 
+// Image captions
+.caption {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-6);
+  display: block;
+  text-align: center;
+  line-height: 1.4;
+}
+
 // Back to top button
 .back-to-top {
   display: inline-flex;
