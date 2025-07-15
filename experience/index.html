@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (commit.type === 'start') {
       // START COMMITS: Show contextual start information (minimal)
-      content = `<strong>${commit.company} - Started ${commit.originalDate}</strong>`;
+      content = `<h1 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem 0;">${commit.company} - Started ${commit.originalDate}</h1>`;
       
     } else {
       // END COMMITS: Show date range and all detailed information
@@ -260,24 +260,26 @@ document.addEventListener('DOMContentLoaded', function() {
       const isCurrentJob = endDate === 'Current';
       
       if (isCurrentJob) {
-        content = `<strong>${commit.company} - ${startDate} to Present</strong>`;
+        content = `<h1 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem 0;">${commit.company} - ${startDate} to Present</h1>`;
       } else {
-        content = `<strong>${commit.company} - ${startDate} - ${endDate}</strong>`;
+        content = `<h1 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem 0;">${commit.company} - ${startDate} - ${endDate}</h1>`;
       }
       
       // Add title if available
       if (element.dataset.title) {
-        content += `<br/><em>${element.dataset.title}</em>`;
+        content += `<h2 style="font-size: 1rem; font-weight: 500; margin: 0 0 0.5rem 0; font-style: italic;">${element.dataset.title}</h2>`;
       }
       
-      // Add location if available
-      if (element.dataset.location) {
-        content += `<br/>${element.dataset.location}`;
-      }
-      
-      // Add employment type if available
-      if (element.dataset.employmentType) {
-        content += ` ${element.dataset.employmentType}`;
+      // Add location and employment type if available
+      if (element.dataset.location || element.dataset.employmentType) {
+        let locationInfo = '';
+        if (element.dataset.location) {
+          locationInfo += element.dataset.location;
+        }
+        if (element.dataset.employmentType) {
+          locationInfo += ` ${element.dataset.employmentType}`;
+        }
+        content += `<p style="margin: 0 0 0.5rem 0;">${locationInfo}</p>`;
       }
       
       // Add highlights for experience and education entries
@@ -310,11 +312,14 @@ document.addEventListener('DOMContentLoaded', function() {
       // Add education honors
       if (element.dataset.honors) {
         const honors = element.dataset.honors.split('||').slice(0, 3); // Show first 3 honors
-        honors.forEach(honor => {
-          if (honor.trim()) {
-            content += `<br/>🏆 ${honor.trim()}`;
-          }
-        });
+        const filteredHonors = honors.filter(honor => honor.trim());
+        if (filteredHonors.length > 0) {
+          content += `<ul style="margin: 0.5rem 0; padding-left: 1.5rem;">`;
+          filteredHonors.forEach(honor => {
+            content += `<li style="margin-bottom: 0.25rem;">🏆 ${honor.trim()}</li>`;
+          });
+          content += `</ul>`;
+        }
       }
       
       // Skip adding stack to content - will be rendered as tag cloud separately
@@ -324,7 +329,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
           const deliverables = JSON.parse(element.dataset.deliverables);
           if (deliverables && deliverables.length > 0) {
-            content += `<br/><strong>Deliverables:</strong>`;
+            content += `<h3 style="font-size: 1rem; font-weight: 600; margin: 0.5rem 0 0.25rem 0;">Deliverables:</h3>`;
             content += `<ul style="margin: 0.5rem 0; padding-left: 1.5rem;">`;
             deliverables.forEach(deliverable => {
               if (typeof deliverable === 'string') {
@@ -481,7 +486,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (commit.type === 'start') {
       // START COMMITS: Show contextual start information (minimal)
-      content = `<strong>${commit.company} - Started ${commit.originalDate}</strong>`;
+      content = `<h1 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem 0;">${commit.company} - Started ${commit.originalDate}</h1>`;
       
     } else {
       // END COMMITS: Show date range and all detailed information
@@ -490,24 +495,26 @@ document.addEventListener('DOMContentLoaded', function() {
       const isCurrentJob = endDate === 'Current';
       
       if (isCurrentJob) {
-        content = `<strong>${commit.company} - ${startDate} to Present</strong>`;
+        content = `<h1 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem 0;">${commit.company} - ${startDate} to Present</h1>`;
       } else {
-        content = `<strong>${commit.company} - ${startDate} - ${endDate}</strong>`;
+        content = `<h1 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem 0;">${commit.company} - ${startDate} - ${endDate}</h1>`;
       }
       
       // Add title if available
       if (element.dataset.title) {
-        content += `<br/><em>${element.dataset.title}</em>`;
+        content += `<h2 style="font-size: 1rem; font-weight: 500; margin: 0 0 0.5rem 0; font-style: italic;">${element.dataset.title}</h2>`;
       }
       
-      // Add location if available
-      if (element.dataset.location) {
-        content += `<br/>${element.dataset.location}`;
-      }
-      
-      // Add employment type if available
-      if (element.dataset.employmentType) {
-        content += ` ${element.dataset.employmentType}`;
+      // Add location and employment type if available
+      if (element.dataset.location || element.dataset.employmentType) {
+        let locationInfo = '';
+        if (element.dataset.location) {
+          locationInfo += element.dataset.location;
+        }
+        if (element.dataset.employmentType) {
+          locationInfo += ` ${element.dataset.employmentType}`;
+        }
+        content += `<p style="margin: 0 0 0.5rem 0;">${locationInfo}</p>`;
       }
       
       // Add highlights for experience and education entries
@@ -540,11 +547,14 @@ document.addEventListener('DOMContentLoaded', function() {
       // Add education honors
       if (element.dataset.honors) {
         const honors = element.dataset.honors.split('||').slice(0, 3); // Show first 3 honors
-        honors.forEach(honor => {
-          if (honor.trim()) {
-            content += `<br/>🏆 ${honor.trim()}`;
-          }
-        });
+        const filteredHonors = honors.filter(honor => honor.trim());
+        if (filteredHonors.length > 0) {
+          content += `<ul style="margin: 0.5rem 0; padding-left: 1.5rem;">`;
+          filteredHonors.forEach(honor => {
+            content += `<li style="margin-bottom: 0.25rem;">🏆 ${honor.trim()}</li>`;
+          });
+          content += `</ul>`;
+        }
       }
       
       // Add deliverables for experience entries
@@ -552,7 +562,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
           const deliverables = JSON.parse(element.dataset.deliverables);
           if (deliverables && deliverables.length > 0) {
-            content += `<br/><strong>Deliverables:</strong>`;
+            content += `<h3 style="font-size: 1rem; font-weight: 600; margin: 0.5rem 0 0.25rem 0;">Deliverables:</h3>`;
             content += `<ul style="margin: 0.5rem 0; padding-left: 1.5rem;">`;
             deliverables.forEach(deliverable => {
               if (typeof deliverable === 'string') {
