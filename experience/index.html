@@ -151,6 +151,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
+  // Add birth commit as the anchor point for the timeline
+  allCommits.push({
+    date: new Date(1985, 0, 1), // January 1, 1985
+    company: "Born 1985",
+    type: 'birth',
+    era: 'birth',
+    element: null,
+    originalDate: "1985"
+  });
+  
   // Sort chronologically (newest first) - important for git graph branch logic
   allCommits.sort((a, b) => b.date - a.date);
   
@@ -231,8 +241,13 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Apply branch assignments to commits
   allCommits.forEach(commit => {
-    const key = commit.company + commit.era;
-    commit.branch = branchAssignments[key];
+    if (commit.type === 'birth') {
+      // Birth commit always goes on the main branch
+      commit.branch = 0;
+    } else {
+      const key = commit.company + commit.era;
+      commit.branch = branchAssignments[key];
+    }
   });
   
   // Create git graph visualization
@@ -252,6 +267,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (commit.type === 'start') {
       // START COMMITS: Show contextual start information (minimal)
       content = `<h1 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem 0;">${commit.company} - Started ${commit.originalDate}</h1>`;
+      
+    } else if (commit.type === 'birth') {
+      // BIRTH COMMIT: Special anchor point for timeline
+      content = `<h1 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem 0;">${commit.company}</h1>`;
       
     } else {
       // END COMMITS: Show date range and all detailed information
@@ -395,7 +414,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Calculate stack height for end commits by actually rendering and measuring
     let stackHeight = 0;
-    if (commit.type === 'end' && element.dataset.stack) {
+    if (commit.type === 'end' && element && element.dataset.stack) {
       try {
         const stackData = JSON.parse(element.dataset.stack);
         if (stackData && Array.isArray(stackData)) {
@@ -577,6 +596,10 @@ document.addEventListener('DOMContentLoaded', function() {
       // START COMMITS: Show contextual start information (minimal)
       content = `<h1 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem 0;">${commit.company} - Started ${commit.originalDate}</h1>`;
       
+    } else if (commit.type === 'birth') {
+      // BIRTH COMMIT: Special anchor point for timeline
+      content = `<h1 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem 0;">${commit.company}</h1>`;
+      
     } else {
       // END COMMITS: Show date range and all detailed information
       const startDate = element.dataset.start;
@@ -702,7 +725,7 @@ document.addEventListener('DOMContentLoaded', function() {
     info.innerHTML = content;
     
     // Create tag cloud for technology stack (positioned to the right)
-    if (commit.type === 'end' && element.dataset.stack) {
+    if (commit.type === 'end' && element && element.dataset.stack) {
       try {
         const stackData = JSON.parse(element.dataset.stack);
         const hasContent = stackData && Array.isArray(stackData) && stackData.length > 0;
@@ -820,11 +843,16 @@ document.addEventListener('DOMContentLoaded', function() {
     ctx.lineWidth = 2;
     ctx.lineCap = 'round';
     
-    // Draw main branch line (full height)
+    // Draw main branch line (stop at birth commit)
     ctx.strokeStyle = getBranchColor(0);
     ctx.beginPath();
     ctx.moveTo(MAIN_BRANCH_X, 0);
-    ctx.lineTo(MAIN_BRANCH_X, totalHeight);
+    
+    // Find the birth commit's Y position to end the line there
+    const birthCommitIndex = commits.findIndex(commit => commit.type === 'birth');
+    const birthCommitY = birthCommitIndex !== -1 ? commitPositions[birthCommitIndex].yPosition : totalHeight;
+    
+    ctx.lineTo(MAIN_BRANCH_X, birthCommitY);
     ctx.stroke();
     
     // Find the start and end positions for each branch
