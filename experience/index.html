@@ -249,8 +249,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const LINE_HEIGHT = 30;
   const MAIN_BRANCH_X = 0; // Adjusted for removed padding
   
-  // Function to calculate actual rendered text height
-  function calculateTextHeight(commit) {
+  // Function to calculate complete entry height (text + stack on mobile)
+  function calculateCompleteEntryHeight(commit) {
     const element = commit.element;
     let content = '';
     
@@ -389,35 +389,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // Create a temporary element with exact same styling to measure actual height
     const tempElement = document.createElement('div');
     tempElement.style.position = 'absolute';
+    tempElement.style.left = '-9999px';
+    tempElement.style.top = '-9999px';
     tempElement.style.visibility = 'hidden';
     tempElement.style.fontSize = '1.125rem'; // --text-lg: match website body text
     tempElement.style.lineHeight = '1.75';   // match website body text
-    tempElement.style.width = '450px';       // Reasonable width that fits with git graph
+    tempElement.style.width = isMobile() ? '280px' : '450px'; // Responsive width
     tempElement.style.fontFamily = 'Charter, Georgia, Times New Roman, serif';
     tempElement.style.whiteSpace = 'normal';
     tempElement.innerHTML = content;
     
-    // Add to document to measure, then remove
-    document.body.appendChild(tempElement);
-    let textHeight = tempElement.offsetHeight;
-    document.body.removeChild(tempElement);
-    
-    // On mobile, add stack height to text height since stack is embedded in content
+    // On mobile, add stack content directly to temp element for accurate measurement
     if (isMobile() && commit.type === 'end' && element && element.dataset.stack) {
       try {
         const stackData = JSON.parse(element.dataset.stack);
         if (stackData && Array.isArray(stackData)) {
-          // Create temporary stack section to measure its height
-          const tempStackSection = document.createElement('div');
-          tempStackSection.style.position = 'absolute';
-          tempStackSection.style.left = '-9999px';
-          tempStackSection.style.top = '-9999px';
-          tempStackSection.style.visibility = 'hidden';
-          tempStackSection.style.width = '280px'; // Same as mobile text width
-          tempStackSection.style.marginTop = '1rem';
-          tempStackSection.style.marginBottom = '1rem';
-          tempStackSection.style.fontSize = '0.9rem';
-          tempStackSection.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+          const stackSection = document.createElement('div');
+          stackSection.style.marginTop = '1rem';
+          stackSection.style.marginBottom = '1rem';
+          stackSection.style.fontSize = '0.9rem';
+          stackSection.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
           
           stackData.forEach(categoryObj => {
             if (categoryObj && typeof categoryObj === 'object') {
@@ -432,7 +423,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   heading.style.marginBottom = '4px';
                   heading.style.marginTop = '8px';
                   heading.textContent = category;
-                  tempStackSection.appendChild(heading);
+                  stackSection.appendChild(heading);
                   
                   // Tags container
                   const tagsContainer = document.createElement('div');
@@ -455,23 +446,27 @@ document.addEventListener('DOMContentLoaded', function() {
                     tagsContainer.appendChild(tag);
                   });
                   
-                  tempStackSection.appendChild(tagsContainer);
+                  stackSection.appendChild(tagsContainer);
                 }
               });
             }
           });
           
-          // Measure the stack section height
-          document.body.appendChild(tempStackSection);
-          const stackHeight = tempStackSection.offsetHeight;
-          document.body.removeChild(tempStackSection);
-          
-          // Add stack height to text height
-          textHeight += stackHeight;
+          tempElement.appendChild(stackSection);
         }
       } catch (e) {
-        console.error('Error measuring mobile stack height:', e);
+        console.error('Error adding stack to temp element:', e);
       }
+    }
+    
+    // Add to document to measure, then remove
+    document.body.appendChild(tempElement);
+    const textHeight = tempElement.offsetHeight;
+    document.body.removeChild(tempElement);
+    
+    // Debug logging for mobile
+    if (isMobile() && commit.company) {
+      console.log(`Pre-render measurement - ${commit.company}: textHeight=${textHeight}px`);
     }
     
     // Calculate stack height for end commits by actually rendering and measuring
@@ -554,9 +549,9 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
     
-    // Responsive height calculation
+    // Return the complete entry height
     if (isMobile()) {
-      // Mobile: stack is embedded in text content, so just use text height
+      // Mobile: stack is embedded in text content, so textHeight includes everything
       return textHeight;
     } else {
       // Desktop: stack appears alongside text, so use the maximum
@@ -573,36 +568,22 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Layout all commits with fixed spacing to prevent overlaps
   allCommits.forEach((commit, index) => {
-    const textHeight = calculateTextHeight(commit);
+    const completeHeight = calculateCompleteEntryHeight(commit);
     const yPosition = cumulativeY;
     
     textPositions.push({
       commit: commit,
       yPosition: yPosition,
-      textHeight: textHeight
+      textHeight: completeHeight
     });
     
-    // Use actual measured height + reasonable buffer (more spacing on mobile)
-    let buffer = isMobile() ? 80 : 30; // Much more space on mobile for stacked layout
-    
-    // Extra buffer for entries with technology stacks on mobile
-    if (isMobile() && commit.type === 'end' && commit.element && commit.element.dataset.stack) {
-      try {
-        const stackData = JSON.parse(commit.element.dataset.stack);
-        if (stackData && Array.isArray(stackData) && stackData.length > 0) {
-          buffer += 40; // Additional buffer for stack entries
-        }
-      } catch (e) {
-        // If stack parsing fails, still add some extra buffer
-        buffer += 20;
-      }
-    }
-    
-    const entrySpacing = textHeight + buffer;
+    // Use actual measured height + small fixed spacing between entries
+    const spacingBetweenEntries = 20; // Fixed spacing between entries
+    const entrySpacing = completeHeight + spacingBetweenEntries;
     
     // Debug logging for mobile
     if (isMobile() && commit.company) {
-      console.log(`Mobile spacing - ${commit.company}: textHeight=${textHeight}, buffer=${buffer}, total=${entrySpacing}`);
+      console.log(`Mobile entry - ${commit.company}: completeHeight=${completeHeight}, spacing=${spacingBetweenEntries}, total=${entrySpacing}, cumulativeY=${cumulativeY}`);
     }
     
     cumulativeY += entrySpacing;
@@ -673,6 +654,11 @@ document.addEventListener('DOMContentLoaded', function() {
     info.style.position = 'absolute';
     info.style.left = textAreaX + 'px'; // Position in text area, not relative to dot
     info.style.top = textY + 'px'; // Use text position for the text (no offset needed)
+    
+    // Debug logging for mobile positioning
+    if (isMobile() && commit.company) {
+      console.log(`Mobile positioning - ${commit.company}: textY=${textY}, textHeight=${commitPositions[index].textHeight}`);
+    }
     info.style.fontSize = '1.125rem'; // --text-lg: match website body text
     info.style.lineHeight = '1.75';   // match website body text
     // Responsive text width
