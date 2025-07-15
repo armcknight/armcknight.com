@@ -3,19 +3,20 @@
 
 // Modern Variables
 :root {
-  // Colors - Clean, minimal palette
-  --text-primary: #1a1a1a;
-  --text-secondary: #666;
-  --text-muted: #999;
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --accent-rgb: 37, 99, 235;
-  --border: #e5e7eb;
-  --border-rgb: 229, 231, 235;
+  // Colors - Minimal, refined palette
+  --text-primary: #030303;
+  --text-secondary: #123458;
+  --text-muted: #666;
+  --accent: #123458;
+  --accent-light: #2978cc;
+  --accent-hover: #0a1f3a;
+  --accent-rgb: 18, 52, 88;
+  --border: #D4C9BE;
+  --border-rgb: 212, 201, 190;
   --background: #ffffff;
-  --background-alt: #f9fafb;
-  --code-bg: #f3f4f6;
-  --code-border: #e5e7eb;
+  --background-alt: #F1EFEC;
+  --code-bg: #F1EFEC;
+  --code-border: #D4C9BE;
   
   // Typography
   --font-family-serif: 'Charter', 'Georgia', 'Times New Roman', serif;
@@ -243,7 +244,7 @@ blockquote p {
 
 .site-nav a:hover,
 .site-nav a.active {
-  color: var(--accent);
+  color: var(--accent-light);
 }
 
 // Social links
@@ -263,7 +264,7 @@ blockquote p {
 }
 
 .social-links a:hover {
-  color: var(--accent);
+  color: var(--accent-light);
 }
 
 .social-links svg {
@@ -292,7 +293,7 @@ blockquote p {
 
 .page-subtitle {
   font-size: var(--text-xl);
-  color: var(--text-secondary);
+  color: var(--text-primary);
   font-weight: 400;
   margin-bottom: 0;
 }
@@ -365,7 +366,7 @@ blockquote p {
 }
 
 .blog-post-abstract {
-  color: var(--text-secondary);
+  color: var(--text-primary);
   margin-bottom: var(--space-2);
   line-height: 1.6;
 }

@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', function() {
             publications.forEach(pub => {
               content += `<li style="margin-bottom: 0.75rem; position: relative; padding-left: 1.5rem;"><span style="position: absolute; left: 0;">📄</span>`;
               if (pub.url) {
-                content += `<a href="${pub.url}" target="_blank" style="color: #2563eb; text-decoration: none; font-weight: 500;">${pub.title}</a>`;
+                content += `<a href="${pub.url}" target="_blank" style="color: #123458; text-decoration: none; font-weight: 500;">${pub.title}</a>`;
               } else {
                 content += `<span style="font-weight: 500;">${pub.title}</span>`;
               }
@@ -458,7 +458,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   const heading = document.createElement('div');
                   heading.style.fontSize = '0.8rem';
                   heading.style.fontWeight = '600';
-                  heading.style.color = '#4b5563';
+                  heading.style.color = '#123458';
                   heading.style.marginBottom = '4px';
                   heading.style.marginTop = '8px';
                   heading.textContent = category;
@@ -476,11 +476,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     const tag = document.createElement('span');
                     tag.textContent = tech;
                     tag.style.fontSize = '0.75rem';
-                    tag.style.backgroundColor = '#f3f4f6';
+                    tag.style.backgroundColor = '#F1EFEC';
                     tag.style.color = '#666';
                     tag.style.padding = '2px 6px';
                     tag.style.borderRadius = '4px';
-                    tag.style.border = '1px solid #e5e7eb';
+                    tag.style.border = '1px solid #D4C9BE';
                     tag.style.whiteSpace = 'nowrap';
                     tagsContainer.appendChild(tag);
                   });
@@ -536,7 +536,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   const heading = document.createElement('div');
                   heading.style.fontSize = '0.7rem';
                   heading.style.fontWeight = '600';
-                  heading.style.color = '#4b5563';
+                  heading.style.color = '#123458';
                   heading.style.marginBottom = '3px';
                   heading.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
                   heading.textContent = category;
@@ -558,11 +558,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     tag.className = 'stack-tag';
                     tag.textContent = tech;
                     tag.style.fontSize = '0.75rem';
-                    tag.style.backgroundColor = '#f3f4f6';
+                    tag.style.backgroundColor = '#F1EFEC';
                     tag.style.color = '#666';
                     tag.style.padding = '3px 8px';
                     tag.style.borderRadius = '6px';
-                    tag.style.border = '1px solid #e5e7eb';
+                    tag.style.border = '1px solid #D4C9BE';
                     tag.style.whiteSpace = 'normal';
                     tag.style.wordBreak = 'break-word';
                     tag.style.maxWidth = '120px';
@@ -785,7 +785,7 @@ document.addEventListener('DOMContentLoaded', function() {
             publications.forEach(pub => {
               content += `<li style="margin-bottom: 0.75rem; position: relative; padding-left: 1.5rem;"><span style="position: absolute; left: 0;">📄</span>`;
               if (pub.url) {
-                content += `<a href="${pub.url}" target="_blank" style="color: #2563eb; text-decoration: none; font-weight: 500;">${pub.title}</a>`;
+                content += `<a href="${pub.url}" target="_blank" style="color: #123458; text-decoration: none; font-weight: 500;">${pub.title}</a>`;
               } else {
                 content += `<span style="font-weight: 500;">${pub.title}</span>`;
               }
@@ -905,7 +905,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const heading = document.createElement('div');
                     heading.style.fontSize = '0.8rem';
                     heading.style.fontWeight = '600';
-                    heading.style.color = '#4b5563';
+                    heading.style.color = '#123458';
                     heading.style.marginBottom = '4px';
                     heading.style.marginTop = '8px';
                     heading.textContent = category;
@@ -923,11 +923,11 @@ document.addEventListener('DOMContentLoaded', function() {
                       const tag = document.createElement('span');
                       tag.textContent = tech;
                       tag.style.fontSize = '0.75rem';
-                      tag.style.backgroundColor = '#f3f4f6';
+                      tag.style.backgroundColor = '#F1EFEC';
                       tag.style.color = '#666';
                       tag.style.padding = '2px 6px';
                       tag.style.borderRadius = '4px';
-                      tag.style.border = '1px solid #e5e7eb';
+                      tag.style.border = '1px solid #D4C9BE';
                       tag.style.whiteSpace = 'nowrap';
                       tagsContainer.appendChild(tag);
                     });
@@ -963,7 +963,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const heading = document.createElement('div');
                     heading.style.fontSize = '0.7rem';
                     heading.style.fontWeight = '600';
-                    heading.style.color = '#4b5563';
+                    heading.style.color = '#123458';
                     heading.style.marginBottom = '3px';
                     heading.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
                     heading.textContent = category;
@@ -985,11 +985,11 @@ document.addEventListener('DOMContentLoaded', function() {
                       tag.className = 'stack-tag';
                       tag.textContent = tech;
                       tag.style.fontSize = '0.75rem';
-                      tag.style.backgroundColor = '#f3f4f6';
+                      tag.style.backgroundColor = '#F1EFEC';
                       tag.style.color = '#666';
                       tag.style.padding = '3px 8px';
                       tag.style.borderRadius = '6px';
-                      tag.style.border = '1px solid #e5e7eb';
+                      tag.style.border = '1px solid #D4C9BE';
                       tag.style.whiteSpace = 'normal';
                       tag.style.wordBreak = 'break-word';
                       tag.style.maxWidth = '120px';
@@ -1028,26 +1028,26 @@ document.addEventListener('DOMContentLoaded', function() {
   
   function getBranchColor(branchIndex) {
     const colors = [
-      '#2563eb', // blue
-      '#dc2626', // red
-      '#059669', // green
-      '#7c3aed', // purple
-      '#ea580c', // orange
-      '#f59e0b', // yellow
-      '#0891b2', // cyan
-      '#be185d', // pink
-      '#65a30d', // lime
-      '#c2410c', // red-orange
-      '#7c2d12', // brown
-      '#374151', // gray
-      '#1e40af', // blue-700
-      '#b91c1c', // red-700
-      '#047857', // emerald-700
-      '#6d28d9', // violet-700
-      '#c2410c', // orange-700
-      '#a16207', // yellow-700
-      '#0e7490', // cyan-700
-      '#be185d', // rose-700
+      '#123458', // navy DEFAULT
+      '#D4C9BE', // beige DEFAULT
+      '#030303', // almost black
+      '#F1EFEC', // light cream
+      '#1a4066', // darker navy
+      '#c7bab0', // darker beige
+      '#0a1f3a', // darkest navy
+      '#e8e4df', // lighter cream
+      '#2d5a8c', // medium navy
+      '#b8a995', // medium beige
+      '#051125', // very dark navy
+      '#f5f2ee', // very light cream
+      '#1e4a74', // navy variation
+      '#d0c2b5', // beige variation
+      '#070c14', // dark variation
+      '#ebe7e2', // cream variation
+      '#16335a', // navy shade
+      '#c2b3a6', // beige shade
+      '#0d1420', // dark shade
+      '#f8f6f3', // lightest cream
     ];
     return colors[branchIndex % colors.length]; // Cycle through colors
   }
