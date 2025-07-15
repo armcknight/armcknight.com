@@ -11,7 +11,7 @@ experience:
       - languages: [Swift, Objective-C++]
       - frameworks: [SwiftUI]
       - tools: [XcodeGen, Swiftlint, clang-format, CodeCov, pre-commit, Fastlane]
-      - infrastructure: [GitHub Actions, SauceLabs]
+      - infrastructure: [GitHub Actions, SauceLabs, TestFlight]
     highlights:
       - Integrating Specto's profiling feature into Sentry's Cocoa SDK
       - "User Feedback widget: first user-facing UI shipped in Sentry Cocoa SDK"

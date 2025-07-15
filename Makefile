@@ -8,7 +8,7 @@ init:
 _logs-dir:
 	mkdir -p logs
 
-update-resume:
+resume:
 	pushd resume && make build
 	cp resume/build/cv.pdf assets/pdf/andrew-mcknight-cv.pdf
 	cp resume/build/ios_resume.pdf assets/pdf/andrew-mcknight-resume-ios.pdf
