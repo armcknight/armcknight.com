@@ -643,7 +643,8 @@ document.addEventListener('DOMContentLoaded', function() {
         tagCloud.style.left = (textAreaX + 460) + 'px'; // Position to the right of text
         tagCloud.style.top = textY + 'px';
         tagCloud.style.display = 'flex';
-        tagCloud.style.flexDirection = 'column';
+        tagCloud.style.flexDirection = 'row';
+        tagCloud.style.flexWrap = 'wrap';
         tagCloud.style.gap = '3px';
         tagCloud.style.alignItems = 'flex-start';
         tagCloud.style.maxWidth = '120px';

@@ -112,7 +112,7 @@ experience:
     location: Cambridge, MA
     employment_type: (FTE)
     tags: [iOS, mobile, crash-reporting, backend, fullstack, data, analytics, scala, java]
-    stack: [C/ObjC/Swift, Java/Scala/Clojure, Rails, React/Coffeescript, Storm/Heron, Cascading/Scalding, Graphite, Vertica/Zeppelin, Beanstalk/Kafka, Redis/Cassandra, AWS, TeamCity, Chef,  Protobuf]
+    stack: [Objective-C, C, Swift, Java, Scala, Clojure, Rails, React, Coffeescript, Storm, Heron, Cascading, Scalding, Graphite, Vertica, Zeppelin, Beanstalk, Kafka, Redis, Cassandra, AWS, TeamCity, Chef, Protobuf]
     deliverables:
       - Crashlytics/Fabric SDKs, Mac app and command line tools, front- and back-end maintenance and analytics, Unity iOS support
     highlights:
