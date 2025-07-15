@@ -46,7 +46,7 @@ Git-style timeline - start simple with just dates
              data-employment-type="{{ job.employment_type }}"
              data-highlights="{{ job.highlights | jsonify | escape }}"
              data-tags="{{ job.tags | join: ',' }}"
-             data-stack="{{ job.stack | join: ',' }}"
+             data-stack="{{ job.stack | jsonify | escape }}"
              data-deliverables="{{ job.deliverables | jsonify | escape }}"
              data-era="{{ job.era }}">
           <div class="commit-dot"></div>
@@ -396,11 +396,32 @@ document.addEventListener('DOMContentLoaded', function() {
     // Calculate stack height for end commits
     let stackHeight = 0;
     if (commit.type === 'end' && element.dataset.stack) {
-      const stack = element.dataset.stack.split(',').map(s => s.trim()).filter(s => s);
-      if (stack.length > 0) {
-        // Each tag: 0.75rem font (12px) + 6px padding + 2px border + 3px gap
-        // Approximation: 12px + 6px + 2px + 3px = 23px per tag
-        stackHeight = stack.length * 23;
+      try {
+        const stackData = JSON.parse(element.dataset.stack);
+        if (stackData && Array.isArray(stackData)) {
+          let totalItems = 0;
+          let categoryCount = 0;
+          
+          stackData.forEach(categoryObj => {
+            if (categoryObj && typeof categoryObj === 'object') {
+              Object.keys(categoryObj).forEach(category => {
+                const categoryItems = categoryObj[category];
+                if (categoryItems && Array.isArray(categoryItems) && categoryItems.length > 0) {
+                  categoryCount++; // Count category headings
+                  totalItems += categoryItems.length;
+                }
+              });
+            }
+          });
+          
+          if (totalItems > 0) {
+            // Each tag: 0.75rem font (12px) + 6px padding + 2px border + 3px gap = 23px per tag
+            // Category headings: 0.7rem font (11px) + 3px margin + 8px gap = 22px per category
+            stackHeight = (totalItems * 23) + (categoryCount * 22);
+          }
+        }
+      } catch (e) {
+        console.error('Error parsing stack data for height calculation:', e);
       }
     }
     
@@ -635,40 +656,77 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Create tag cloud for technology stack (positioned to the right)
     if (commit.type === 'end' && element.dataset.stack) {
-      const stack = element.dataset.stack.split(',').map(s => s.trim()).filter(s => s).sort((a, b) => a.length - b.length);
-      if (stack.length > 0) {
-        const tagCloud = document.createElement('div');
-        tagCloud.className = 'stack-tag-cloud';
-        tagCloud.style.position = 'absolute';
-        tagCloud.style.left = (textAreaX + 460) + 'px'; // Position to the right of text
-        tagCloud.style.top = textY + 'px';
-        tagCloud.style.display = 'flex';
-        tagCloud.style.flexDirection = 'row';
-        tagCloud.style.flexWrap = 'wrap';
-        tagCloud.style.gap = '3px';
-        tagCloud.style.alignItems = 'flex-start';
-        tagCloud.style.maxWidth = '120px';
+      try {
+        const stackData = JSON.parse(element.dataset.stack);
+        const hasContent = stackData && Array.isArray(stackData) && stackData.length > 0;
         
-        stack.forEach(tech => {
-          const tag = document.createElement('span');
-          tag.className = 'stack-tag';
-          tag.textContent = tech;
-          tag.style.fontSize = '0.75rem';
-          tag.style.backgroundColor = '#f3f4f6';
-          tag.style.color = '#666';
-          tag.style.padding = '3px 8px';
-          tag.style.borderRadius = '6px';
-          tag.style.border = '1px solid #e5e7eb';
-          tag.style.whiteSpace = 'normal';
-          tag.style.wordBreak = 'break-word';
-          tag.style.maxWidth = '120px';
-          tag.style.textAlign = 'center';
-          tag.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        if (hasContent) {
+          const tagCloud = document.createElement('div');
+          tagCloud.className = 'stack-tag-cloud';
+          tagCloud.style.position = 'absolute';
+          tagCloud.style.left = (textAreaX + 460) + 'px'; // Position to the right of text
+          tagCloud.style.top = textY + 'px';
+          tagCloud.style.display = 'flex';
+          tagCloud.style.flexDirection = 'column';
+          tagCloud.style.gap = '8px';
+          tagCloud.style.alignItems = 'flex-start';
+          tagCloud.style.maxWidth = '120px';
           
-          tagCloud.appendChild(tag);
-        });
-        
-        commitsContainer.appendChild(tagCloud);
+          stackData.forEach(categoryObj => {
+            if (categoryObj && typeof categoryObj === 'object') {
+              Object.keys(categoryObj).forEach(category => {
+                const categoryItems = categoryObj[category];
+                if (categoryItems && Array.isArray(categoryItems) && categoryItems.length > 0) {
+                  // Create heading for the category
+                  const heading = document.createElement('div');
+                  heading.style.fontSize = '0.7rem';
+                  heading.style.fontWeight = '600';
+                  heading.style.color = '#4b5563';
+                  heading.style.marginBottom = '3px';
+                  heading.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                  heading.textContent = category;
+                  tagCloud.appendChild(heading);
+                  
+                  // Create container for this category's tags
+                  const categoryContainer = document.createElement('div');
+                  categoryContainer.style.display = 'flex';
+                  categoryContainer.style.flexDirection = 'row';
+                  categoryContainer.style.flexWrap = 'wrap';
+                  categoryContainer.style.gap = '3px';
+                  categoryContainer.style.marginBottom = '4px';
+                  
+                  // Sort items by length for better packing
+                  const sortedItems = [...categoryItems].sort((a, b) => a.length - b.length);
+                  
+                  sortedItems.forEach(tech => {
+                    const tag = document.createElement('span');
+                    tag.className = 'stack-tag';
+                    tag.textContent = tech;
+                    tag.style.fontSize = '0.75rem';
+                    tag.style.backgroundColor = '#f3f4f6';
+                    tag.style.color = '#666';
+                    tag.style.padding = '3px 8px';
+                    tag.style.borderRadius = '6px';
+                    tag.style.border = '1px solid #e5e7eb';
+                    tag.style.whiteSpace = 'normal';
+                    tag.style.wordBreak = 'break-word';
+                    tag.style.maxWidth = '120px';
+                    tag.style.textAlign = 'center';
+                    tag.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                    
+                    categoryContainer.appendChild(tag);
+                  });
+                  
+                  tagCloud.appendChild(categoryContainer);
+                }
+              });
+            }
+          });
+          
+          commitsContainer.appendChild(tagCloud);
+        }
+      } catch (e) {
+        console.error('Error parsing stack data:', e);
       }
     }
     

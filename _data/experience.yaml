@@ -7,7 +7,11 @@ experience:
     location: Remote
     employment_type: (FTE)
     tags: [iOS, macOS, tvOS, watchOS, visionOS, cocoa, swiftUI, mobile, swift, objective-c++, xcodegen, github-actions]
-    stack: [Swift, Objective-C++, SwiftUI, XcodeGen, GitHub Actions, SauceLabs]
+    stack: 
+      - languages: [Swift, Objective-C++]
+      - frameworks: [SwiftUI]
+      - tools: [XcodeGen]
+      - infrastructure: [GitHub Actions, SauceLabs]
     highlights:
       - Integrating Specto's profiling feature into Sentry's Cocoa SDK
       - "User Feedback widget: first user-facing UI shipped in Sentry Cocoa SDK"
@@ -22,7 +26,10 @@ experience:
     location: Remote
     employment_type: (FTE)
     tags: [iOS, macOS, mobile, objective-c++, swift, cocoa, protobuf, jinja, xcodegen, bazel, python, go, github-actions]
-    stack: [Objective-C++, Swift, Protobuf, Jinja, XcodeGen, Bazel, Python, Go, GitHub Actions]
+    stack: 
+      - languages: [Objective-C++, Swift, Go, Python]
+      - tools: [Protobuf, Jinja, XcodeGen, Bazel]
+      - infrastructure: [GitHub Actions]
     highlights:
       - Mobile app profiling SDK with shared C++ core between iOS and Android
       - Python scripts to generate scoped Xcode projects from Bazel targets (pre `rules-xcode`)
@@ -36,7 +43,10 @@ experience:
     location: Remote
     employment_type: (Contract-to-Perm)
     tags: [iOS, mobile, swift, consulting, contract, security, remote]
-    stack: [Swift, SwiftGen, SwiftLint, Sourcery, CircleCI, Postman, Browserstack, Countly]
+    stack: 
+      - languages: [Swift]
+      - tools: [SwiftGen, SwiftLint, Sourcery]
+      - infrastructure: [CircleCI, Browserstack, Countly, Postman]
     highlights:
       - Security-focused app and SDK (NDA)
 
@@ -48,7 +58,10 @@ experience:
     location: Norfolk, VA & Remote
     employment_type: (Contract)
     tags: [iOS, mobile, medical, healthcare, consulting, contract, remote]
-    stack: [ObjC/Swift, MessageUI, Storyboards, CoreGraphics, CoreData, FMDB, SQLite, SSZipArchive, RNCryptor, cocoapods-keys]
+    stack: 
+      - languages: [Objective-C, Swift]
+      - frameworks: [MessageUI, CoreGraphics, CoreData, FMDB, SQLite, SSZipArchive, RNCryptor]
+      - infrastructure: [cocoapods-keys]
     deliverables:
       - name: ClotRx & DementiaRx
         url: http://itunes.apple.com/us/app/clot-rx/id408979176?mt=8
@@ -74,7 +87,10 @@ experience:
     location: Remote
     employment_type: (Contract)
     tags: [iOS, mobile, medical, healthcare, contract, remote, firebase, opencv]
-    stack: [Swift, AVFoundation, OpenCV, Firebase, cocoapods-keys, AWS]
+    stack: 
+      - languages: [Swift]
+      - frameworks: [AVFoundation, OpenCV, Firebase]
+      - infrastructure: [cocoapods-keys, AWS]
     highlights:
       - Replaced application UI and networking with their new SDK
       - Reimplemented major area of app with new UI and platform API
@@ -93,7 +109,11 @@ experience:
     location: Remote
     employment_type: (FTE)
     tags: [iOS, mobile, messaging, sdk, remote, objc, swift]
-    stack: [C/ObjC/Swift, CocoaPods, OCMock, Specta/Expecta, Jenkins, Rails, Thrift, WebSockets/SPDY, SQLite]
+    stack: 
+      - languages: [C, Objective-C, Swift]
+      - frameworks: [OCMock, Specta, Expecta, Rails, Thrift, WebSockets, SPDY]
+      - infrastructure: [CocoaPods, Jenkins]
+      - platforms: [iOS]
     deliverables:
       - ObjC SDKs for data and UI components, an embeddable app layer and fully-functional sample app
     highlights:
@@ -112,7 +132,11 @@ experience:
     location: Cambridge, MA
     employment_type: (FTE)
     tags: [iOS, mobile, crash-reporting, backend, fullstack, data, analytics, scala, java]
-    stack: [Objective-C, C, Swift, Java, Scala, Clojure, Rails, React, Coffeescript, Storm, Heron, Cascading, Scalding, Graphite, Vertica, Zeppelin, Beanstalk, Kafka, Redis, Cassandra, AWS, TeamCity, Chef, Protobuf]
+    stack: 
+      - languages: [Objective-C, C, Swift, Java, Scala, Clojure, Coffeescript]
+      - frameworks: [Rails, React, Protobuf]
+      - infrastructure: [Storm, Heron, Cascading, Scalding, Graphite, Beanstalk, Kafka, Redis, Cassandra, AWS, TeamCity, Chef]
+      - reporting:[Vertica, Zeppelin]
     deliverables:
       - Crashlytics/Fabric SDKs, Mac app and command line tools, front- and back-end maintenance and analytics, Unity iOS support
     highlights:
@@ -132,7 +156,10 @@ experience:
     location: Cambridge, MA
     employment_type: (FTE)
     tags: [iOS, mobile, medical, wearables, bluetooth, objc, swift]
-    stack: [ObjC/Swift, CoreBluetooth, Android]
+    stack: 
+      - languages: [Objective-C, Swift]
+      - frameworks: [CoreBluetooth, NSOperation]
+      - platforms: [iOS, Android]
     deliverables:
       - Companion iOS app for wearable peripheral with BTLE link
     highlights:
@@ -150,7 +177,10 @@ experience:
     location: Boston, MA
     employment_type: (FTE)
     tags: [iOS, mobile, consulting, objc, swift, ecommerce]
-    stack: [ObjC/Swift, Jenkins, TeamCity]
+    stack: 
+      - languages: [Objective-C, Swift]
+      - infrastructure: [Jenkins, TeamCity]
+      - platforms: [iOS]
     deliverables:
       - name: Care.com
         url: https://itunes.apple.com/us/app/care.com/id328453619?mt=8
@@ -197,7 +227,9 @@ experience:
     location: Hampton, VA
     employment_type: (Intern)
     tags: [desktop, dotnet, cad, testing, qa, intern, csharp]
-    stack: [C#, VisualBasic, SQL, QF-Test, Coverity, Visual Studio, TeamFoundation]
+    stack: 
+      - languages: [C#, VisualBasic, SQL]
+      - tools: [QF-Test, Coverity, Visual Studio, TeamFoundation]
     highlights:
       - Automated framework- and GUI-level testing, regression testing in numerical modules
       - Manual acceptance testing for new features and fixes
@@ -210,7 +242,9 @@ experience:
     location: Norfolk, VA
     employment_type: (Capstone Project)
     tags: [iOS, mobile, student, academic, capstone, objc, leadership]
-    stack: [ObjC, OpenEars, MapQuest]
+    stack: 
+      - languages: [Objective-C]
+      - tools: [OpenEars, MapQuest]
     highlights:
       - Co-lead of 7 member team
       - 4 presentations given to visiting professors and industry executives
@@ -252,6 +286,9 @@ experience:
     location: Norfolk, VA
     employment_type: (Contract)
     tags: [flash, actionscript, web]
+    stack: 
+      - languages: [ActionScript]
+      - tools: [Flash Studio]
     deliverables:
       - Flash-based website to custom-design longboards
     highlights:
