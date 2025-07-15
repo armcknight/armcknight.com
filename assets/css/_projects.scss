@@ -22,6 +22,18 @@
   gap: var(--space-6);
 }
 
+// Full-width layout for coding challenges
+.coding-challenges .projects-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.coding-challenges .project-card {
+  width: 100%;
+  max-width: none;
+}
+
 .project-card {
   background-color: var(--background-alt);
   border: 1px solid var(--border);
@@ -105,6 +117,32 @@
   opacity: 0.8;
 }
 
+// Coding challenges specific styles
+.coding-challenges .project-links {
+  margin-bottom: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.challenge-progress {
+  margin-bottom: var(--space-4);
+  background-color: var(--code-bg);
+  padding: var(--space-3);
+}
+
+.progress-text {
+  font-family: var(--font-family-mono);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  margin: 0;
+  white-space: pre-wrap;
+  line-height: 1.4;
+
+  // override .pre styles
+  border: 0px;
+  padding: 0px;
+  padding-top: var(--space-3);
+}
+
 // Alternative project layouts (used on some pages)
 .work-content {
   // Container for work/projects content
@@ -183,5 +221,17 @@
   
   .project-stack {
     gap: var(--space-1);
+  }
+
+  .challenge-progress {
+    padding: var(--space-2);
+  }
+
+  .progress-text {
+    font-size: var(--text-xxs);
+  }
+
+  .coding-challenges .projects-grid {
+    gap: var(--space-4);
   }
 } 
