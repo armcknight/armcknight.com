@@ -393,32 +393,79 @@ document.addEventListener('DOMContentLoaded', function() {
     const textHeight = tempElement.offsetHeight;
     document.body.removeChild(tempElement);
     
-    // Calculate stack height for end commits
+    // Calculate stack height for end commits by actually rendering and measuring
     let stackHeight = 0;
     if (commit.type === 'end' && element.dataset.stack) {
       try {
         const stackData = JSON.parse(element.dataset.stack);
         if (stackData && Array.isArray(stackData)) {
-          let totalItems = 0;
-          let categoryCount = 0;
+          // Create temporary element with same styling as actual stack container
+          const tempStackContainer = document.createElement('div');
+          tempStackContainer.style.position = 'absolute';
+          tempStackContainer.style.left = '-9999px'; // Hide off-screen
+          tempStackContainer.style.top = '-9999px';
+          tempStackContainer.style.display = 'flex';
+          tempStackContainer.style.flexDirection = 'column';
+          tempStackContainer.style.gap = '8px';
+          tempStackContainer.style.alignItems = 'flex-start';
+          tempStackContainer.style.maxWidth = '120px';
+          tempStackContainer.style.visibility = 'hidden';
           
           stackData.forEach(categoryObj => {
             if (categoryObj && typeof categoryObj === 'object') {
               Object.keys(categoryObj).forEach(category => {
                 const categoryItems = categoryObj[category];
                 if (categoryItems && Array.isArray(categoryItems) && categoryItems.length > 0) {
-                  categoryCount++; // Count category headings
-                  totalItems += categoryItems.length;
+                  // Create heading for the category
+                  const heading = document.createElement('div');
+                  heading.style.fontSize = '0.7rem';
+                  heading.style.fontWeight = '600';
+                  heading.style.color = '#4b5563';
+                  heading.style.marginBottom = '3px';
+                  heading.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                  heading.textContent = category;
+                  tempStackContainer.appendChild(heading);
+                  
+                  // Create container for this category's tags
+                  const categoryContainer = document.createElement('div');
+                  categoryContainer.style.display = 'flex';
+                  categoryContainer.style.flexDirection = 'row';
+                  categoryContainer.style.flexWrap = 'wrap';
+                  categoryContainer.style.gap = '3px';
+                  categoryContainer.style.marginBottom = '4px';
+                  
+                  // Sort items by length for better packing
+                  const sortedItems = [...categoryItems].sort((a, b) => a.length - b.length);
+                  
+                  sortedItems.forEach(tech => {
+                    const tag = document.createElement('span');
+                    tag.className = 'stack-tag';
+                    tag.textContent = tech;
+                    tag.style.fontSize = '0.75rem';
+                    tag.style.backgroundColor = '#f3f4f6';
+                    tag.style.color = '#666';
+                    tag.style.padding = '3px 8px';
+                    tag.style.borderRadius = '6px';
+                    tag.style.border = '1px solid #e5e7eb';
+                    tag.style.whiteSpace = 'normal';
+                    tag.style.wordBreak = 'break-word';
+                    tag.style.maxWidth = '120px';
+                    tag.style.textAlign = 'center';
+                    tag.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                    
+                    categoryContainer.appendChild(tag);
+                  });
+                  
+                  tempStackContainer.appendChild(categoryContainer);
                 }
               });
             }
           });
           
-          if (totalItems > 0) {
-            // Each tag: 0.75rem font (12px) + 6px padding + 2px border + 3px gap = 23px per tag
-            // Category headings: 0.7rem font (11px) + 3px margin + 8px gap = 22px per category
-            stackHeight = (totalItems * 23) + (categoryCount * 22);
-          }
+          // Add to document to measure, then remove
+          document.body.appendChild(tempStackContainer);
+          stackHeight = tempStackContainer.offsetHeight;
+          document.body.removeChild(tempStackContainer);
         }
       } catch (e) {
         console.error('Error parsing stack data for height calculation:', e);
