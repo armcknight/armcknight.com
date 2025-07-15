@@ -14,7 +14,7 @@
   --border: #D4C9BE;
   --border-rgb: 212, 201, 190;
   --background: #ffffff;
-  --background-alt: #F1EFEC;
+  --background-alt: #f2f1ef;
   --code-bg: #F1EFEC;
   --code-border: #D4C9BE;
   
@@ -833,7 +833,7 @@ blockquote p {
 }
 
 .category-description {
-  color: var(--text-secondary);
+  color: var(--text-primary);
   margin-bottom: var(--space-8);
   font-size: var(--text-lg);
 }
@@ -871,7 +871,7 @@ blockquote p {
 }
 
 .project-description {
-  color: var(--text-secondary);
+  color: var(--text-primary);
   line-height: 1.6;
   margin-bottom: var(--space-4);
 }
