@@ -672,7 +672,7 @@ document.addEventListener('DOMContentLoaded', function() {
     commitEl.className = 'git-commit';
     commitEl.style.position = 'absolute';
     // Adjust dot position to account for canvas positioning on mobile
-    const canvasLeftOffset = isMobile() ? 8 : 16; // var(--space-2) = 8px, var(--space-4) = 16px
+    const canvasLeftOffset = isMobile() ? 8 : 0; // Mobile: 8px, Desktop: -4px to align with canvas
     commitEl.style.left = (xPosition - 5 + canvasLeftOffset) + 'px'; // Center 10px dot on branch line
     commitEl.style.top = dotY + 'px'; // Use dot position for the actual dot
     
