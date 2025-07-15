@@ -36,7 +36,7 @@ experience:
     location: Remote
     employment_type: (Contract-to-Perm)
     tags: [iOS, mobile, swift, consulting, contract, security, remote]
-    stack: [Swift, SwiftGen, SwiftLint, Sourcery, CircleCI, Postman, Browserstack, Countly, GitHub/GitLab, JIRA]
+    stack: [Swift, SwiftGen, SwiftLint, Sourcery, CircleCI, Postman, Browserstack, Countly]
     highlights:
       - Security-focused app and SDK (NDA)
 
@@ -48,7 +48,7 @@ experience:
     location: Norfolk, VA & Remote
     employment_type: (Contract)
     tags: [iOS, mobile, medical, healthcare, consulting, contract, remote]
-    stack: [ObjC/Swift, MessageUI, Storyboards, CoreGraphics, CoreData, FMDB, SQLite, SSZipArchive, RNCryptor, cocoapods-keys, Trello, BitBucket]
+    stack: [ObjC/Swift, MessageUI, Storyboards, CoreGraphics, CoreData, FMDB, SQLite, SSZipArchive, RNCryptor, cocoapods-keys]
     deliverables:
       - name: ClotRx & DementiaRx
         url: http://itunes.apple.com/us/app/clot-rx/id408979176?mt=8
@@ -74,7 +74,7 @@ experience:
     location: Remote
     employment_type: (Contract)
     tags: [iOS, mobile, medical, healthcare, contract, remote, firebase, opencv]
-    stack: [Swift, AVFoundation, OpenCV, Firebase, cocoapods-keys, AWS, JIRA, BitBucket]
+    stack: [Swift, AVFoundation, OpenCV, Firebase, cocoapods-keys, AWS]
     highlights:
       - Replaced application UI and networking with their new SDK
       - Reimplemented major area of app with new UI and platform API
@@ -112,7 +112,7 @@ experience:
     location: Cambridge, MA
     employment_type: (FTE)
     tags: [iOS, mobile, crash-reporting, backend, fullstack, data, analytics, scala, java]
-    stack: [C/ObjC/Swift, Java/Scala/Clojure, Rails, React/Coffeescript, Storm/Heron, Cascading/Scalding, Graphite, Vertica/Zeppelin, Beanstalk/Kafka, Redis/Cassandra, AWS, TeamCity, Chef, Trello, Protobuf]
+    stack: [C/ObjC/Swift, Java/Scala/Clojure, Rails, React/Coffeescript, Storm/Heron, Cascading/Scalding, Graphite, Vertica/Zeppelin, Beanstalk/Kafka, Redis/Cassandra, AWS, TeamCity, Chef,  Protobuf]
     deliverables:
       - Crashlytics/Fabric SDKs, Mac app and command line tools, front- and back-end maintenance and analytics, Unity iOS support
     highlights:
@@ -132,7 +132,7 @@ experience:
     location: Cambridge, MA
     employment_type: (FTE)
     tags: [iOS, mobile, medical, wearables, bluetooth, objc, swift]
-    stack: [ObjC/Swift, CoreBluetooth, Android, JIRA]
+    stack: [ObjC/Swift, CoreBluetooth, Android]
     deliverables:
       - Companion iOS app for wearable peripheral with BTLE link
     highlights:
@@ -150,7 +150,7 @@ experience:
     location: Boston, MA
     employment_type: (FTE)
     tags: [iOS, mobile, consulting, objc, swift, ecommerce]
-    stack: [ObjC/Swift, Jenkins, TeamCity, Trello, Basecamp]
+    stack: [ObjC/Swift, Jenkins, TeamCity]
     deliverables:
       - name: Care.com
         url: https://itunes.apple.com/us/app/care.com/id328453619?mt=8
@@ -253,9 +253,9 @@ experience:
     employment_type: (Contract)
     tags: [flash, actionscript, web]
     deliverables:
-      - Flash-based website to custom-design boards
+      - Flash-based website to custom-design longboards
     highlights:
-      - Paid with a couple custom designed longboards, which I got to help build myself!
+      - Paid with a couple custom longboards, which I got to help build myself!
 
   - start: June 2003
     end: June 2009
