@@ -75,7 +75,12 @@ experience:
         description: antibiotic dosage calculator
         details:
           - Ported from another developer's preexisting Android app
-      - name: Current project under NDA
+      - name: eConsent
+        description: HIPAA-compliant informed consent app for clinical trials
+        details:
+          - Interactive quiz-based presentation of study details
+          - Signature collection and export to PDF
+          - Interface with backend API to upload finished consents
     highlights:
       - Multiple releases and design iterations of all apps
 

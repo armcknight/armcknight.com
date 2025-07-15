@@ -21,6 +21,8 @@ serve: build
 endserve:
 	killall Python
 
+# separate multiple paths with a comma and place in a double quoted string, e.g.:
+#   make bust-cache PATHS="/experience,/experience/,/experience/index.html"
 bust-cache:
 	aws --profile armcknight cloudfront create-invalidation --distribution-id E6BG42FYZHWB0 --paths "$(PATHS)"
 
