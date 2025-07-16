@@ -8,6 +8,7 @@ init:
 _logs-dir:
 	mkdir -p logs
 
+.PHONY: resume
 resume:
 	pushd resume && make build
 	cp resume/build/cv.pdf assets/pdf/andrew-mcknight-cv.pdf
