@@ -42,8 +42,8 @@ I’ve tried setting up reasonable blocks of time for each task, leaving some av
 
 For more important items, like those related to taxes, I can add a Calendar event alert before it’s actually due–a reminder for my Reminder. I want my Calendar events to be proactive; the notifications from Reminders should serve as a signal for things I thought I should be doing but am not, and deserve some reflection.
 
-{% include blog-post-image.html source="ipad-splitscreen-reminders-calendar-50-50.png" narrow="true" mobile_fullwidth="true" alt="A setup I plan to use a lot: iPad split-screen multitasking with Reminders and Calendar showing two views of the same plan. Floating Safari or Trello over top forms a trifecta of task managemnt." %}
-{% include blog-post-image.html source="ipad-splitscreen-reminders-calendar-30-70.png" narrow="true" mobile_fullwidth="true" alt="Giving Calendar a little room to breath opens up options to view weekly, monthly and yearly views." %}
+{% include blog-post-image.html source="ipad-splitscreen-reminders-calendar-50-50.jpg" narrow="true" mobile_fullwidth="true" alt="A setup I plan to use a lot: iPad split-screen multitasking with Reminders and Calendar showing two views of the same plan. Floating Safari or Trello over top forms a trifecta of task managemnt." %}
+{% include blog-post-image.html source="ipad-splitscreen-reminders-calendar-30-70.jpg" narrow="true" mobile_fullwidth="true" alt="Giving Calendar a little room to breath opens up options to view weekly, monthly and yearly views." %}
 
 Mostly I plan to manage the tasks via Reminders on my iPhone and iPad, which with a split-screen calendar next to it provides a nice overview of my day, week, whatever, and I almost always have at least one of those devices going alongside my laptop while I work. Today, I still keep these and other admin and communications-focused apps open on my laptop, but they’re relegated to a separate desktop space, again to facilitate focus while writing code.
 
