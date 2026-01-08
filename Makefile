@@ -14,13 +14,19 @@ resume:
 	cp resume/build/cv.pdf assets/pdf/andrew-mcknight-cv.pdf
 	cp resume/build/ios_resume.pdf assets/pdf/andrew-mcknight-resume-ios.pdf
 
-build: _logs-dir
+optimize-images:
+	@echo "Stripping EXIF data from images in blog/img/..."
+	@find blog/img -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" \) -exec exiftool -all= -overwrite_original {} \;
+	@echo "Optimizing images in blog/img/..."
+	@imageoptim blog/img/**/*.{jpg,jpeg,png,gif}
+
+build: _logs-dir optimize-images
 	rbenv exec bundle exec jekyll build --destination _site 2>&1 | tee logs/jekyll_build.log
 
 deploy: _logs-dir
 	aws s3 sync _site/ s3://armcknight.com/ --profile armcknight --acl public-read --delete | tee logs/web_deploy.log
 
-serve: build
+serve:
 	pushd _site && python3 -m http.server 4000 --bind localhost &
 	open http://localhost:4000
 
