@@ -65,3 +65,5 @@ flycheck_*.el
 
 # ignore vim swap files
 *.swp
+/build.log
+/serve.log
