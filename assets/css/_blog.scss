@@ -143,6 +143,28 @@
   margin-bottom: 0;
 }
 
+// Gist embeds
+.gist-container {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  margin: var(--space-4) 0;
+}
+
+.gist-container .gist {
+  margin: 0;
+}
+
+.gist-container .gist .gist-file {
+  margin-bottom: 0;
+  border: none;
+}
+
+.gist-container .gist .gist-data {
+  max-height: 240px; // ~10 lines
+  overflow-y: auto;
+}
+
 // Image captions
 .caption {
   font-family: var(--font-family-sans);
