@@ -17,7 +17,7 @@ I use claude purely in the terminal with `tmux` (via `tmuxinator`) splitting the
 
 I have anywhere from 2 to 6 or 7 of these going at any given time.
 
-To start a new task, I navigate a new terminal window to the root of my repo and enter "work start <branch name copied from linear task>" (we use Linear at work for task management; I try to add all the context I'd want Claude to have to take an initial swing at the problem there, which helpfully doubles as context for any other humans looking at it, including my future self; for a similar concept, see [Building Software From Blog Posts](https://build.ms/2025/12/15/building-software-from-blog-posts/)). Here's what that does:
+To start a new task, I navigate a new terminal window to the root of my repo and enter "work start <branch name copied from linear task>" (we use Linear at work for task management; I try to add all the context I'd want Claude to have to take an initial swing at the problem there, which helpfully doubles as context for any other humans looking at it, including my future self; for a similar concept, see <a href="https://build.ms/2025/12/15/building-software-from-blog-posts/">Building Software From Blog Posts</a>). Here's what that does:
 
 - creates a new git worktree, copying my .env files from the repo root
 - spins up the tmux session for it.
