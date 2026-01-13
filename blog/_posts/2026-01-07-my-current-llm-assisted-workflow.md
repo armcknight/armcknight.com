@@ -32,7 +32,7 @@ That also has subcommands for `term` which I can use to spin up a tmux session i
 
 In the Claude pane there, I issue a `/start` command, which does the following:
 
-- fetch all the Linear task info using their API (I used to use their MCP, but it's way slower and doesn't offer me anything over the API)
+- fetch all the Linear task info using their API (I used to use their MCP, but it's way slower and doesn't offer me anything over the API; I landed on [`linctl`](https://github.com/dorkitude/linctl) instead)
 - mark the issue as "In Progress"
 - prepare an implementation plan for my approval.
 
