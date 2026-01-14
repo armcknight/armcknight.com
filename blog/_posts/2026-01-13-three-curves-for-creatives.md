@@ -5,6 +5,7 @@ author: Andrew McKnight
 layout: post
 tags: software tech
 abstract: "Some simple graphical frameworks for thinking about what—and how—we build and use technology."
+thumbnail: technology-s-curve.png
 ---
 
 I recently saw someone bring up a curve I've seen before, and it reminded me of another one I'd been thinking about recently in the context of LLMs, which reminded me of a third one I saw a long time ago (and which I've searched for several times in the past without success, but Google must've improved since then, because it just now served it right up to me). I'll present them in that respective order below.
