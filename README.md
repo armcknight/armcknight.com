@@ -1,45 +1,23 @@
-source for armcknight.com
+# armcknight.com
 
-# Dependencies
+`armcknight.com` and `www.armcknight.com` now 301 redirect to `mcknight.io`, preserving the request path and query string.
 
-### Jekyll
+## How it works
 
-The blog is built from markdown documents for individual posts into HTML using Jekyll. Then, posts are composed into `index.html`.
+A [CloudFront Function](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cloudfront-functions.html) runs at the viewer-request stage on the CloudFront distribution (`E6BG42FYZHWB0`). It returns a 301 before the request ever reaches the origin, so no backend is needed.
 
-The entire site is run through Jekyll for simplicity, and the generated `_site` directory (`.gitignore`d) is pushed to the appropriate branch for GitHub pages to render.
+The function source lives at `infra/cloudfront/redirect-to-mcknight-io.js`.
 
-### SASS
+## Usage
 
-Uses SASS for style sheets.
+Test the function against a sample event (DEVELOPMENT stage):
 
-# Building
+    make test
 
-To build the entire site, including SASS stylesheets, run
+Deploy an updated function to LIVE:
 
-	make build
+    make deploy
 
-To preview the site on a local machine (after building),
+Check distribution deployment status:
 
-	make serve
-
-don't forget to
-
-	make endserve
-
-when you're done!
-
-# Publishing
-
-Sync the `_site/` directory to the armcknight.com bucket on AWS. Excludes .git/
-
-	make publish
-
-and might want to bust the cloudfront cache:
-
-    make bust-cache PATHS=/path
-
-# TODO
-
-- [ ] for each entry in links, list other tags each link has besides the main heading it's appearing under
-- [ ] if a tag index only has one entry, hide the "Previously:" header
-- [ ] build projects and experience pages
+    make status

@@ -1,45 +1,34 @@
+CF_PROFILE := armcknight
+CF_DISTRIBUTION := E6BG42FYZHWB0
+CF_FUNCTION := armcknight-com-redirect-to-mcknight-io
+
+.PHONY: init
 init:
 	which brew || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 	brew bundle ||:
-	rbenv install --skip-existing
-	rbenv exec gem update bundler
-	rbenv exec bundle update
 
-_logs-dir:
-	mkdir -p logs
+.PHONY: deploy
+deploy:
+	$(eval ETAG := $(shell aws --profile $(CF_PROFILE) cloudfront describe-function --name $(CF_FUNCTION) --stage DEVELOPMENT --query 'ETag' --output text))
+	aws --profile $(CF_PROFILE) cloudfront update-function \
+		--name $(CF_FUNCTION) \
+		--if-match $(ETAG) \
+		--function-config '{"Comment":"301 redirect armcknight.com to mcknight.io preserving path+query","Runtime":"cloudfront-js-2.0"}' \
+		--function-code fileb://infra/cloudfront/redirect-to-mcknight-io.js
+	$(eval ETAG := $(shell aws --profile $(CF_PROFILE) cloudfront describe-function --name $(CF_FUNCTION) --stage DEVELOPMENT --query 'ETag' --output text))
+	aws --profile $(CF_PROFILE) cloudfront publish-function \
+		--name $(CF_FUNCTION) \
+		--if-match $(ETAG)
 
-.PHONY: resume
-resume:
-	pushd resume && make build
-	cp resume/build/pdfs/cv.pdf assets/pdf/andrew-mcknight-cv.pdf
-	cp resume/build/pdfs/ios_resume.pdf assets/pdf/andrew-mcknight-resume-ios.pdf
+.PHONY: status
+status:
+	aws --profile $(CF_PROFILE) cloudfront get-distribution --id $(CF_DISTRIBUTION) --query 'Distribution.Status' --output text
 
-optimize-images:
-	@echo "Stripping EXIF data from images in blog/img/..."
-	@find blog/img -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" \) -exec exiftool -all= -overwrite_original {} \;
-	@echo "Optimizing images in blog/img/..."
-	@imageoptim blog/img/**/*.{jpg,jpeg,png,gif}
-
-build: _logs-dir optimize-images
-	rbenv exec bundle exec jekyll build --destination _site 2>&1 | tee logs/jekyll_build.log
-
-deploy: _logs-dir
-	aws s3 sync _site/ s3://armcknight.com/ --profile armcknight --acl public-read --delete | tee logs/web_deploy.log
-
-serve:
-	pushd _site && python3 -m http.server 4000 --bind localhost &
-	open http://localhost:4000
-
-endserve:
-	killall Python
-
-# separate multiple paths with a comma and place in a double quoted string, e.g.:
-#   make bust-cache PATHS="/experience,/experience/,/experience/index.html"
-bust-cache:
-	aws --profile armcknight cloudfront create-invalidation --distribution-id E6BG42FYZHWB0 --paths "$(PATHS)"
-
-bust-blog-cache:
-	aws --profile armcknight cloudfront create-invalidation --distribution-id E6BG42FYZHWB0 --paths "/blog/" "/blog/index.html"
-
-check-cache-invalidation-status:
-	aws --profile armcknight cloudfront list-invalidations --distribution-id E6BG42FYZHWB0
+.PHONY: test
+test:
+	aws --profile $(CF_PROFILE) cloudfront test-function \
+		--name $(CF_FUNCTION) \
+		--if-match $$(aws --profile $(CF_PROFILE) cloudfront describe-function --name $(CF_FUNCTION) --stage DEVELOPMENT --query 'ETag' --output text) \
+		--stage DEVELOPMENT \
+		--event-object "$$(echo '{"version":"1.0","context":{"eventType":"viewer-request"},"viewer":{"ip":"1.2.3.4"},"request":{"method":"GET","uri":"/blog/foo","querystring":{"bar":{"value":"baz"}},"headers":{"host":{"value":"armcknight.com"}}}}' | base64)" \
+		--query 'TestResult.{Error:FunctionErrorMessage,Output:FunctionOutput}' --output table
