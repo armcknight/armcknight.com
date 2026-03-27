@@ -11,8 +11,8 @@ _logs-dir:
 .PHONY: resume
 resume:
 	pushd resume && make build
-	cp resume/build/cv.pdf assets/pdf/andrew-mcknight-cv.pdf
-	cp resume/build/ios_resume.pdf assets/pdf/andrew-mcknight-resume-ios.pdf
+	cp resume/build/pdfs/cv.pdf assets/pdf/andrew-mcknight-cv.pdf
+	cp resume/build/pdfs/ios_resume.pdf assets/pdf/andrew-mcknight-resume-ios.pdf
 
 optimize-images:
 	@echo "Stripping EXIF data from images in blog/img/..."
